@@ -1,0 +1,327 @@
+import { Fn, Stack, aws_apigateway as apigateway } from 'aws-cdk-lib';
+
+import { resolveModelResourceId } from './openapi-adapter';
+
+/**
+ * Extended `JsonSchema`.
+ *
+ * Introduces the following new properties,
+ * - `modelRef`: reference to another `IModel`.
+ */
+export interface JsonSchemaEx extends apigateway.JsonSchema {
+  /** Reference to another `IModel`. */
+  modelRef?: apigateway.IModel;
+  /** Extension of `additionalItems`. */
+  additionalItems?: JsonSchemaEx[];
+  /** Extension of `additionalProperties`. */
+  additionalProperties?: boolean | JsonSchemaEx;
+  /** Extension of `allOf`. */
+  allOf?: JsonSchemaEx[];
+  /** Extension of `anyOf`. */
+  anyOf?: JsonSchemaEx[];
+  /** Extension of `contains`. */
+  contains?: JsonSchemaEx | JsonSchemaEx[];
+  /** Extension of `definitions`. */
+  definitions?: { [k: string]: JsonSchemaEx };
+  /** Extension of `dependencies`. */
+  dependencies?: { [k: string]: JsonSchemaEx | string[] };
+  /** Extension of `items`. */
+  items?: JsonSchemaEx | JsonSchemaEx[];
+  /** Extension of `not`. */
+  not?: JsonSchemaEx;
+  /** Extension of `oneOf`. */
+  oneOf?: JsonSchemaEx[];
+  /** Extension of `patternProperties`. */
+  patternProperties?: { [k: string]: JsonSchemaEx };
+  /** Extension of `properties`. */
+  properties?: { [k: string]: JsonSchemaEx };
+  /** Extension of `propertyNames`. */
+  propertyNames?: JsonSchemaEx;
+};
+
+// Non-recursive properties of JsonSchemaEx.
+const NON_RECURSIVE_PROPERTIES = [
+  'default',
+  'description',
+  'enum',
+  'exclusiveMaximum',
+  'exclusiveMinimum',
+  'format',
+  'id',
+  'maxItems',
+  'maxLength',
+  'maxProperties',
+  'maximum',
+  'minItems',
+  'minLength',
+  'minProperties',
+  'minimum',
+  'multipleOf',
+  'pattern',
+  'ref',
+  'required',
+  'schema',
+  'title',
+  'type',
+  'uniqueItems',
+] as const;
+type NonRecursiveProperty = typeof NON_RECURSIVE_PROPERTIES[number];
+
+// Single schema properties of JsonSchemaEx.
+// `JsonSchema`
+const SINGLE_SCHEMA_PROPERTIES = [
+  'not',
+  'propertyNames',
+] as const;
+type SingleSchemaProperty = typeof SINGLE_SCHEMA_PROPERTIES[number];
+
+// Array schema properties of JsonSchemaEx.
+// `JsonSchema[]`
+const ARRAY_SCHEMA_PROPERTIES = [
+  'additionalItems',
+  'allOf',
+  'anyOf',
+  'oneOf',
+] as const;
+type ArraySchemaProperty = typeof ARRAY_SCHEMA_PROPERTIES[number];
+
+// One-or-more schema properties of JsonSchemaEx.
+// `JsonSchema | JsonSchema[]`
+const ONE_OR_MORE_SCHEMA_PROPERTIES = [
+  'contains',
+  'items',
+] as const;
+type OneOrMoreSchemaProperty = typeof ONE_OR_MORE_SCHEMA_PROPERTIES[number];
+
+// Map schema properties of JsonSchemaEx.
+// `{ [k: string]: JsonSchema }`
+const MAP_SCHEMA_PROPERTIES = [
+  'definitions',
+  'patternProperties',
+  'properties',
+] as const;
+type MapSchemaProperty = typeof MAP_SCHEMA_PROPERTIES[number];
+
+/** Output type of `translateJsonSchemaEx`. */
+export type TranslateJsonSchemaExOutput = {
+  /** Equivalent `JsonSchema` for the API Gateway model. */
+  gatewaySchema: apigateway.JsonSchema;
+  /** Equivalent `JsonSchema` for the OpenAPI specification. */
+  openapiSchema: apigateway.JsonSchema;
+};
+
+/**
+ * Translates a given `JsonSchemaEx`.
+ *
+ * Intepretation of `modelRef` is different between the API Gateway model and
+ * the OpenAPI specification.
+ * - interpreted as an external model URL for the API Gateway model.
+ * - interpreted as an internal hash for the OpenAPI specification.
+ */
+export function translateJsonSchemaEx(
+  restApi: apigateway.IRestApi,
+  schema: JsonSchemaEx,
+): TranslateJsonSchemaExOutput {
+  // copies properties to the following objects
+  let gatewaySchema = {};
+  let openapiSchema = {};
+  // `translateSubschemas` updates `gatewaySchema` and `openapiSchema` in a
+  // type-safe manner.
+  function translateProperty<P extends keyof apigateway.JsonSchema>(
+    prop: P,
+    translate: (
+      restApi: apigateway.IRestApi,
+      value: Exclude<JsonSchemaEx[P], undefined>,
+    ) => {
+      gatewayValue: Exclude<apigateway.JsonSchema[P], undefined>,
+      openapiValue: Exclude<apigateway.JsonSchema[P], undefined>,
+    },
+  ) {
+    if (Object.prototype.hasOwnProperty.call(schema, prop)) {
+      const value = schema[prop];
+      if (value != null) {
+        const {
+          gatewayValue,
+          openapiValue,
+        } = translate(restApi, value);
+        gatewaySchema = {
+          ...gatewaySchema,
+          [prop]: gatewayValue,
+        };
+        openapiSchema = {
+          ...openapiSchema,
+          [prop]: openapiValue,
+        };
+      } else {
+        gatewaySchema = {
+          ...gatewaySchema,
+          [prop]: undefined,
+        };
+        openapiSchema = {
+          ...openapiSchema,
+          [prop]: undefined,
+        };
+      }
+    }
+  }
+  // shallowly copies non-recursive properties
+  for (const prop of NON_RECURSIVE_PROPERTIES) {
+    translateProperty(prop, (_, value) => ({
+      gatewayValue: value,
+      openapiValue: value,
+    }));
+  }
+  // copies recursive properties
+  for (const prop of SINGLE_SCHEMA_PROPERTIES) {
+    translateProperty(prop, translateSingleSchemaProperty);
+  }
+  for (const prop of ARRAY_SCHEMA_PROPERTIES) {
+    translateProperty(prop, translateArraySchemaProperty);
+  }
+  for (const prop of ONE_OR_MORE_SCHEMA_PROPERTIES) {
+    translateProperty(prop, translateOneOrMoreSchemaProperty);
+  }
+  for (const prop of MAP_SCHEMA_PROPERTIES) {
+    translateProperty(prop, translateMapSchemaProperty);
+  }
+  // deals with corner cases
+  // - additionalProperties: boolean | JsonSchemaEx
+  translateProperty('additionalProperties', (_, value) => {
+    if (typeof value === 'boolean') {
+      return {
+        gatewayValue: value,
+        openapiValue: value,
+      };
+    } else {
+      return translateSingleSchemaProperty(restApi, value);
+    }
+  });
+  // - definitions: { [k: string]: JsonSchemaEx | string[] }
+  translateProperty('dependencies', (_, map) => {
+    const gatewayValue: { [k: string]: apigateway.JsonSchema | string[] } = {};
+    const openapiValue: { [k: string]: apigateway.JsonSchema | string[] } = {};
+    for (const key in map) {
+      const value = map[key];
+      if (Array.isArray(value)) {
+        // string[]
+        gatewayValue[key] = value;
+        openapiValue[key] = value;
+      } else {
+        const translated = translateSingleSchemaProperty(restApi, value);
+        gatewayValue[key] = translated.gatewayValue;
+        openapiValue[key] = translated.openapiValue;
+      }
+    }
+    return {
+      gatewayValue,
+      openapiValue,
+    };
+  });
+  // resolves the modelRef
+  if (schema.modelRef != null) {
+    const model = schema.modelRef;
+    const modelId = resolveModelResourceId(Stack.of(restApi), model);
+    if (schema.ref != null) {
+      console.warn(
+        'translateJsonSchemaEx',
+        'ref is replaced with modelRef',
+        schema.ref,
+      );
+    }
+    gatewaySchema = {
+      ...gatewaySchema,
+      ref: `https://apigateway.amazonaws.com/restapis/${restApi.restApiId}/models/${model.modelId}`,
+    };
+    openapiSchema = {
+      ...openapiSchema,
+      ref: `#/components/schemas/${modelId}`,
+    };
+  }
+  return {
+    gatewaySchema,
+    openapiSchema,
+  };
+}
+
+// Translates a single schema property.
+function translateSingleSchemaProperty(
+  restApi: apigateway.IRestApi,
+  value: JsonSchemaEx,
+): {
+  gatewayValue: apigateway.JsonSchema,
+  openapiValue: apigateway.JsonSchema,
+} {
+  const {
+    gatewaySchema: gatewayValue,
+    openapiSchema: openapiValue,
+  } = translateJsonSchemaEx(restApi, value);
+  return {
+    gatewayValue,
+    openapiValue,
+  };
+}
+
+// Translates an array schema property.
+function translateArraySchemaProperty(
+  restApi: apigateway.IRestApi,
+  values: JsonSchemaEx[],
+): {
+  gatewayValue: apigateway.JsonSchema[],
+  openapiValue: apigateway.JsonSchema[],
+} {
+  return values.reduce(
+    (accum, value) => {
+      const {
+        gatewaySchema,
+        openapiSchema,
+      } = translateJsonSchemaEx(restApi, value);
+      accum.gatewayValue.push(gatewaySchema);
+      accum.openapiValue.push(openapiSchema);
+      return accum;
+    },
+    {
+      gatewayValue: [] as apigateway.JsonSchema[],
+      openapiValue: [] as apigateway.JsonSchema[],
+    },
+  );
+}
+
+// Translates a one-or-more schema property.
+function translateOneOrMoreSchemaProperty(
+  restApi: apigateway.IRestApi,
+  values: JsonSchemaEx | JsonSchemaEx[],
+): {
+  gatewayValue: apigateway.JsonSchema | apigateway.JsonSchema[],
+  openapiValue: apigateway.JsonSchema | apigateway.JsonSchema[],
+} {
+  if (Array.isArray(values)) {
+    // JsonSchemaEx[]
+    return translateArraySchemaProperty(restApi, values);
+  } else {
+    return translateSingleSchemaProperty(restApi, values);
+  }
+}
+
+// Translates a map schema property.
+function translateMapSchemaProperty(
+  restApi: apigateway.IRestApi,
+  map: { [k: string]: JsonSchemaEx },
+): {
+  gatewayValue: { [k: string]: apigateway.JsonSchema },
+  openapiValue: { [k: string]: apigateway.JsonSchema },
+} {
+  const gatewayValue: { [k: string]: apigateway.JsonSchema } = {};
+  const openapiValue: { [k: string]: apigateway.JsonSchema } = {};
+  for (const key in map) {
+    const {
+      gatewaySchema,
+      openapiSchema,
+    } = translateJsonSchemaEx(restApi, map[key]);
+    gatewayValue[key] = gatewaySchema;
+    openapiValue[key] = openapiSchema;
+  }
+  return {
+    gatewayValue,
+    openapiValue,
+  };
+}
