@@ -20,7 +20,7 @@ export interface IRestApiWithSpec extends apigateway.RestApi {
   /**
    * Root resource ('/') with the features to build the OpenAPI specification.
    */
-  root: IRootResourceWithSpec;
+  root: IBaseResourceWithSpec;
 
   /** Adds a new model. */
   addModel(id: string, props: ModelOptionsWithSpec): apigateway.Model;
@@ -31,12 +31,21 @@ export interface IRestApiWithSpec extends apigateway.RestApi {
  *
  * This interface is necessary because `RestApi.root` might not satisfy
  * `Resource`.
+ *
+ * It might not be obvious but this interface is a super-interface of
+ * `IResourceWithSpec`.
  */
-export interface IRootResourceWithSpec extends apigateway.IResource {
+export interface IBaseResourceWithSpec extends apigateway.IResource {
+  /** Default method options with the OpenAPI specification. */
+  defaultMethodOptions?: MethodOptionsWithSpec;
+
+  /** Parent resource. Always `undefined`. */
+  parentResource?: IBaseResourceWithSpec;
+
   /** Adds a new child resource with the OpenAPI specification. */
   addResource(
     pathPart: string,
-    options?: apigateway.ResourceOptions, // TODO: augment the type
+    options?: ResourceOptionsWithSpec,
   ): IResourceWithSpec;
 
   /** Adds a method with the OpenAPI specification. */
@@ -51,10 +60,16 @@ export interface IRootResourceWithSpec extends apigateway.IResource {
  * `IResource` augmented with the features to build the OpenAPI specification.
  */
 export interface IResourceWithSpec extends apigateway.Resource {
+  /** Default method options with the OpenAPI specification. */
+  defaultMethodOptions?: MethodOptionsWithSpec;
+
+  /** Parent resource. `undefined` if this resource is the root. */
+  parentResource?: IBaseResourceWithSpec;
+
   /** Adds a new child resource with the OpenAPI specification. */
   addResource(
     pathPart: string,
-    options?: apigateway.ResourceOptions, // TODO: augment the type
+    options?: ResourceOptionsWithSpec,
   ): IResourceWithSpec;
 
   /** Adds a method with the OpenAPI specification. */
@@ -74,6 +89,15 @@ export interface IResourceWithSpec extends apigateway.Resource {
 export type ModelOptionsWithSpec = Omit<apigateway.ModelOptions, 'schema'> & {
   /** Extended schema definition. */
   schema: JsonSchemaEx;
+};
+
+/**
+ * `ResourceOptions` augmented with the properties necessary to build the
+ * OpenAPI specification.
+ */
+export type ResourceOptionsWithSpec = Omit<apigateway.ResourceOptions, 'defaultMethodOptions'> & {
+  /** Default method options with the OpenAPI specification. */
+  defaultMethodOptions?: MethodOptionsWithSpec;
 };
 
 /**

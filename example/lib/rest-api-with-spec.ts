@@ -11,6 +11,7 @@ import {
 
 import { translateJsonSchemaEx } from './json-schema-ex';
 import {
+  IBaseResourceWithSpec,
   IResourceWithSpec,
   IRestApiWithSpec,
   MethodOptionsWithSpec,
@@ -217,6 +218,7 @@ class ResourceWithSpec {
     private builder: OpenApiBuilder,
     private restApi: IRestApiWithSpec,
     private resource: apigateway.IResource,
+    private parent?: IBaseResourceWithSpec,
   ) {}
 
   /**
@@ -227,15 +229,16 @@ class ResourceWithSpec {
     builder: OpenApiBuilder,
     restApi: IRestApiWithSpec,
     resource: apigateway.IResource,
+    parent?: IBaseResourceWithSpec,
   ): IResourceWithSpec {
     builder.addPath(resource.path, {
       // methods are assigned by `addMethod`
-      // TODO: does anyone want to set the following properties?
+      // TODO: does anyone want to set the following properties per resource?
       // - summary
       // - description
       // - parameters
     });
-    const wrapper = new ResourceWithSpec(builder, restApi, resource);
+    const wrapper = new ResourceWithSpec(builder, restApi, resource, parent);
     wrapper.facade = new Proxy(resource, {
       get: (target, prop, receiver) => {
         switch (prop) {
@@ -243,6 +246,12 @@ class ResourceWithSpec {
             return wrapper.getAddResource();
           case 'addMethod':
             return wrapper.getAddMethod();
+          case 'parentResource':
+            return parent;
+          case 'defaultMethodOptions':
+            // MethodOptions may be safely interpreted as MethodOptionsWithSpec
+            // as long as Resource preserves properties, and it does so far.
+            return resource.defaultMethodOptions;
           default:
             return Reflect.get(target, prop, receiver);
         }
@@ -261,6 +270,7 @@ class ResourceWithSpec {
         this.builder,
         this.restApi,
         this.resource.addResource(pathPart, options),
+        this.facade,
       );
       // TODO: interpret options
     };
@@ -272,6 +282,7 @@ class ResourceWithSpec {
    */
   getAddMethod(): IResourceWithSpec['addMethod'] {
     return (httpMethod, target, options) => {
+      const baseParameters = collectBaseParameterObjects(this.facade);
       const {
         methodOptions,
         parameters,
@@ -305,7 +316,7 @@ class ResourceWithSpec {
         summary: options?.summary,
         description: options?.description,
         requestBody,
-        parameters,
+        parameters: mergeParameterObjects(baseParameters, parameters),
         responses,
         security,
       };
@@ -419,4 +430,49 @@ function translateRequestParameters(
     },
     parameters,
   };
+}
+
+// Traverses the Resource tree up to the root and collects parameters for the
+// OpenAPI specification.
+//
+// Returns `undefined` if `resource` is the root.
+function collectBaseParameterObjects(
+  resource?: IBaseResourceWithSpec,
+): ParameterObject[] | undefined {
+  if (resource == null) {
+    return undefined;
+  }
+  const baseParameters = collectBaseParameterObjects(resource.parentResource);
+  const { parameters } =
+    translateRequestParameters(resource.defaultMethodOptions);
+  return mergeParameterObjects(baseParameters, parameters);
+}
+
+// Merges given arrays of `ParameterObject`s.
+//
+// Returns `baseParameters` if `parameters` is `undefined`.
+// Returns `parameters` if `baseParameters` is `undefined`.
+// Returns `undefined` if `baseParameters` and `parameters` are both
+// `undefined`.
+function mergeParameterObjects(
+  baseParameters?: ParameterObject[],
+  parameters?: ParameterObject[],
+): ParameterObject[] | undefined {
+  if (parameters == null) {
+    return baseParameters;
+  }
+  if (baseParameters == null) {
+    return parameters;
+  }
+  // overwrites `baseParameters` with `parameters`
+  const mergedParameters = [...baseParameters];
+  for (const parameter of parameters) {
+    const index = mergedParameters.findIndex(p => p.name === parameter.name);
+    if (index !== -1) {
+      mergedParameters[index] = parameter;
+    } else {
+      mergedParameters.push(parameter);
+    }
+  }
+  return mergedParameters;
 }
