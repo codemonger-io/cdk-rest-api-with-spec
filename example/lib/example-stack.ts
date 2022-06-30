@@ -1,6 +1,14 @@
-import { Stack, StackProps, aws_apigateway as apigateway } from 'aws-cdk-lib';
+import * as path from 'path';
+import {
+  Stack,
+  StackProps,
+  aws_apigateway as apigateway,
+  aws_lambda as lambda,
+  aws_lambda_nodejs as nodejs,
+} from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 
+import { augmentAuthorizer } from './authorizer';
 import { JsonSchemaEx } from './json-schema-ex';
 import { RestApiWithSpec } from './rest-api-with-spec';
 
@@ -27,6 +35,25 @@ export class ExampleStack extends Stack {
         throttlingBurstLimit: 50,
       },
     });
+
+    // authorizer
+    const authorizer = augmentAuthorizer(
+      new apigateway.TokenAuthorizer(
+        this,
+        'ExampleAuthorizer',
+        {
+          handler: new nodejs.NodejsFunction(this, 'authorizer', {
+            description: 'Example authorizer',
+            runtime: lambda.Runtime.NODEJS_16_X,
+          }),
+        },
+      ),
+      {
+        type: 'apiKey',
+        in: 'header',
+        name: 'Authorization',
+      },
+    );
 
     // validators
     // - full request validator
@@ -167,6 +194,7 @@ export class ExampleStack extends Stack {
         operationName: 'addNewPet',
         summary: 'Add pet',
         description: 'Adds a new pet to the store',
+        authorizer,
         requestValidator: fullRequestValidator,
         requestModels: {
           'application/json': newPetModel,
