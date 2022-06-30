@@ -264,5 +264,111 @@ export class ExampleStack extends Stack {
         ],
       },
     );
+    // /pet/{petId}
+    const petId = pet.addResource('{petId}', {
+      defaultMethodOptions: {
+        requestParameterSchemas: {
+          'method.request.path.petId': {
+            description: 'ID of pet',
+            required: true,
+            schema: {
+              type: apigateway.JsonSchemaType.INTEGER,
+              format: 'int64',
+            },
+          },
+        },
+      },
+    });
+    // - GET
+    petId.addMethod(
+      'GET',
+      new apigateway.MockIntegration({
+        passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
+        requestTemplates: {
+          'application/json': '{"statusCode": 200}',
+        },
+        integrationResponses: [
+          {
+            statusCode: '200',
+            responseTemplates: {
+              'application/json': `[
+                {
+                  "id": 123,
+                  "name": "Monaka",
+                  "status": "sold"
+                }
+              ]`
+            },
+          },
+        ],
+      }),
+      {
+        operationName: 'getPetById',
+        summary: 'Find pet by ID',
+        description: 'Returns a single pet',
+        requestValidator: fullRequestValidator,
+        methodResponses: [
+          {
+            statusCode: '200',
+            description: 'successful operation',
+            responseModels: {
+              'application/json': petModel,
+            },
+          },
+          {
+            statusCode: '400',
+            description: 'Invalid ID supplied',
+          },
+          {
+            statusCode: '404',
+            description: 'Pet not found',
+          },
+        ],
+      },
+    );
+    // - POST
+    petId.addMethod(
+      'POST',
+      new apigateway.MockIntegration(),
+      {
+        operationName: 'updatePetWithForm',
+        summary: 'Updates a pet in the store with form data',
+        description: '',
+        authorizer,
+        requestParameterSchemas: {
+          // overrides the default method options
+          'method.request.path.petId': {
+            description: 'ID of pet that needs to be updated',
+            required: true,
+            schema: {
+              type: apigateway.JsonSchemaType.INTEGER,
+              format: 'int64',
+            },
+          },
+          'method.request.querystring.name': {
+            description: 'Name of pet that needs to be updated',
+            schema: {
+              type: apigateway.JsonSchemaType.STRING,
+            },
+          },
+          'method.request.querystring.status': {
+            description: 'Status of pet that needs to be updated',
+            schema: {
+              type: apigateway.JsonSchemaType.STRING,
+            },
+          },
+        },
+        methodResponses: [
+          {
+            statusCode: '200',
+            description: 'successful operation',
+          },
+          {
+            statusCode: '405',
+            description: 'Invalid input',
+          },
+        ],
+      },
+    );
   }
 }
