@@ -122,7 +122,7 @@ export class RestApiWithSpec {
     props: Props,
   ): IRestApiWithSpec {
     const newRestApi = props?.newRestApi ?? defaultRestApiFactory;;
-    const restApi = newRestApi(scope, 'RestApi', props);
+    const restApi = newRestApi(scope, id, props);
     const wrapper = new RestApiWithSpec(restApi, props);
     wrapper.facade = new Proxy(restApi, {
       get: (target, prop, receiver) => {
