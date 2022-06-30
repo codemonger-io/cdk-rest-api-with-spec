@@ -2,6 +2,7 @@ import * as assert from 'assert';
 import { aws_apigateway as apigateway } from 'aws-cdk-lib';
 import { BaseParameterObject } from 'openapi3-ts';
 
+import { IAuthorizerWithSpec } from './authorizer';
 import { JsonSchemaEx } from './json-schema-ex';
 
 /**
@@ -81,7 +82,9 @@ export type ModelOptionsWithSpec = Omit<apigateway.ModelOptions, 'schema'> & {
  *
  * `operationName` corresponds to `paths[path][method].operationId`.
  */
-export type MethodOptionsWithSpec = Omit<apigateway.MethodOptions, 'methodResponses'> & {
+export type MethodOptionsWithSpec = Omit<apigateway.MethodOptions, 'authorizer' | 'methodResponses'> & {
+  /** Authorizer augmented with the OpenAPI specification. */
+  authorizer?: IAuthorizerWithSpec;
   /**
    * Summary of the method.
    *
