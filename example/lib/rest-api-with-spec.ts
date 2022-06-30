@@ -2,7 +2,12 @@ import * as assert from 'assert';
 import * as fs from 'fs';
 import { Stack, aws_apigateway as apigateway } from 'aws-cdk-lib';
 import { Construct, Node } from 'constructs';
-import { OpenApiBuilder, ParameterObject, SchemaObject } from 'openapi3-ts';
+import {
+  OpenApiBuilder,
+  OperationObject,
+  ParameterObject,
+  SchemaObject,
+} from 'openapi3-ts';
 
 import { translateJsonSchemaEx } from './json-schema-ex';
 import {
@@ -18,6 +23,7 @@ import {
   requestModelsToRequestBody,
   resolveModelResourceId,
 } from './openapi-adapter';
+import { resolveResourceId } from './utils';
 
 declare global {
   // allows Proxy's constructor to modify the return type (T → U).
@@ -91,6 +97,7 @@ export class RestApiWithSpec {
       // TODO: how about to make a PR to openapi3-ts
       components: {
         schemas: {},
+        securitySchemes: {},
       },
     });
     // synthesizes the OpenAPI specification at validation.
@@ -278,12 +285,29 @@ class ResourceWithSpec {
       const responses = options?.methodResponses != null
         ? methodResponsesToResponses(this.restApi, options.methodResponses)
         : undefined;
+      const authorizer = options?.authorizer;
+      let security: OperationObject['security'] = undefined;
+      if (authorizer?.securitySchemeObject != null) {
+        const authorizerId =
+          resolveResourceId(Stack.of(this.restApi), authorizer.authorizerId);
+        this.builder.addSecurityScheme(
+          authorizerId,
+          authorizer.securitySchemeObject,
+        ); // this overwrites the security schema every time the authorizer is
+           // referenced in a MethodOptions but should not matter
+        security = [
+          {
+            [authorizerId]: [],
+          },
+        ];
+      }
       pathItem[httpMethod.toLowerCase()] = {
         summary: options?.summary,
         description: options?.description,
         requestBody,
         parameters,
         responses,
+        security,
       };
       return method;
     };
