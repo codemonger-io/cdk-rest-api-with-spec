@@ -242,6 +242,10 @@ class ResourceWithSpec {
       },
     });
     // creates path-wise parameters shared among all operations under this path
+    // 1. creates the default path parameter if the path part is a parameter
+    const defaultParameters = translatePathPart(wrapper.facade);
+    // 2. overrides the default path parameter with parameters define in
+    //    defaultMethodOptions
     const {
       parameters,
     } = translateRequestParameters(wrapper.facade.defaultMethodOptions);
@@ -249,7 +253,7 @@ class ResourceWithSpec {
       // TODO: does anyone want to set the following properties per resource?
       // - summary
       // - description
-      parameters,
+      parameters: mergeParameterObjects(defaultParameters, parameters),
     });
     return wrapper.facade;
   }
@@ -316,6 +320,38 @@ class ResourceWithSpec {
       return method;
     };
   }
+}
+
+// Translates the path part of a given resource.
+//
+// Returns an array containing the following parameter object if the path part
+// represents a path parameter `{<name>}`.
+// - name: `<name>`
+// - in: 'path'
+// - required: true
+// - schema:
+//     - type: 'string'
+//
+// Otherwise, returns `undefined`.
+function translatePathPart(
+  resource: IBaseResourceWithSpec,
+): ParameterObject[] | undefined {
+  // locates /{name} at the end
+  const match = resource.path.match(/\/\{(.+)\}$/);
+  if (match == null) {
+    return undefined;
+  }
+  const name = match[1];
+  return [
+    {
+      name,
+      in: 'path',
+      required: true,
+      schema: {
+        type: 'string',
+      },
+    },
+  ];
 }
 
 // Translates a given `MethodOptionsWithSpec`.
@@ -423,4 +459,33 @@ function translateRequestParameters(
     },
     parameters,
   };
+}
+
+// Merges given arrays of `ParameterObject`s.
+//
+// Returns `baseParameters` if `parameters` is `undefined`.
+// Returns `parameters` if `baseParameters` is `undefined`.
+// Returns `undefined` if `baseParameters` and `parameters` are both
+// `undefined`.
+function mergeParameterObjects(
+  baseParameters?: ParameterObject[],
+  parameters?: ParameterObject[],
+): ParameterObject[] | undefined {
+  if (parameters == null) {
+    return baseParameters;
+  }
+  if (baseParameters == null) {
+    return parameters;
+  }
+  // overwrites `baseParameters` with `parameters`
+  const mergedParameters = [...baseParameters];
+  for (const parameter of parameters) {
+    const index = mergedParameters.findIndex(p => p.name === parameter.name);
+    if (index !== -1) {
+      mergedParameters[index] = parameter;
+    } else {
+      mergedParameters.push(parameter);
+    }
+  }
+  return mergedParameters;
 }
