@@ -111,7 +111,7 @@ export class RestApiWithSpec {
     id: string,
     props: Props,
   ): IRestApiWithSpec {
-    const newRestApi = props?.newRestApi ?? defaultRestApiFactory;;
+    const newRestApi = props?.newRestApi ?? defaultRestApiFactory;
     const restApi = newRestApi(scope, id, props);
     const wrapper = new RestApiWithSpec(restApi, props);
     wrapper.facade = new Proxy(restApi, {
@@ -220,13 +220,6 @@ class ResourceWithSpec {
     resource: apigateway.IResource,
     parent?: IBaseResourceWithSpec,
   ): IResourceWithSpec {
-    builder.addPath(resource.path, {
-      // methods are assigned by `addMethod`
-      // TODO: does anyone want to set the following properties per resource?
-      // - summary
-      // - description
-      // - parameters
-    });
     const wrapper = new ResourceWithSpec(builder, restApi, resource, parent);
     wrapper.facade = new Proxy(resource, {
       get: (target, prop, receiver) => {
@@ -238,13 +231,25 @@ class ResourceWithSpec {
           case 'parentResource':
             return parent;
           case 'defaultMethodOptions':
-            // MethodOptions may be safely interpreted as MethodOptionsWithSpec
-            // as long as Resource preserves properties, and it does so far.
+            // `resource.defaultMethodOptions: MethodOptions` may be interpreted
+            // as MethodOptionsWithSpec without any loss of information as long
+            // as Resource preserves its properties, and it does as far as I
+            // know.
             return resource.defaultMethodOptions;
           default:
             return Reflect.get(target, prop, receiver);
         }
       },
+    });
+    // creates path-wise parameters shared among all operations under this path
+    const {
+      parameters,
+    } = translateRequestParameters(wrapper.facade.defaultMethodOptions);
+    builder.addPath(resource.path, {
+      // TODO: does anyone want to set the following properties per resource?
+      // - summary
+      // - description
+      parameters,
     });
     return wrapper.facade;
   }
@@ -271,7 +276,6 @@ class ResourceWithSpec {
    */
   getAddMethod(): IResourceWithSpec['addMethod'] {
     return (httpMethod, target, options) => {
-      const baseParameters = collectBaseParameterObjects(this.facade);
       const {
         methodOptions,
         parameters,
@@ -305,7 +309,7 @@ class ResourceWithSpec {
         summary: options?.summary,
         description: options?.description,
         requestBody,
-        parameters: mergeParameterObjects(baseParameters, parameters),
+        parameters,
         responses,
         security,
       };
@@ -419,49 +423,4 @@ function translateRequestParameters(
     },
     parameters,
   };
-}
-
-// Traverses the Resource tree up to the root and collects parameters for the
-// OpenAPI specification.
-//
-// Returns `undefined` if `resource` is the root.
-function collectBaseParameterObjects(
-  resource?: IBaseResourceWithSpec,
-): ParameterObject[] | undefined {
-  if (resource == null) {
-    return undefined;
-  }
-  const baseParameters = collectBaseParameterObjects(resource.parentResource);
-  const { parameters } =
-    translateRequestParameters(resource.defaultMethodOptions);
-  return mergeParameterObjects(baseParameters, parameters);
-}
-
-// Merges given arrays of `ParameterObject`s.
-//
-// Returns `baseParameters` if `parameters` is `undefined`.
-// Returns `parameters` if `baseParameters` is `undefined`.
-// Returns `undefined` if `baseParameters` and `parameters` are both
-// `undefined`.
-function mergeParameterObjects(
-  baseParameters?: ParameterObject[],
-  parameters?: ParameterObject[],
-): ParameterObject[] | undefined {
-  if (parameters == null) {
-    return baseParameters;
-  }
-  if (baseParameters == null) {
-    return parameters;
-  }
-  // overwrites `baseParameters` with `parameters`
-  const mergedParameters = [...baseParameters];
-  for (const parameter of parameters) {
-    const index = mergedParameters.findIndex(p => p.name === parameter.name);
-    if (index !== -1) {
-      mergedParameters[index] = parameter;
-    } else {
-      mergedParameters.push(parameter);
-    }
-  }
-  return mergedParameters;
 }
