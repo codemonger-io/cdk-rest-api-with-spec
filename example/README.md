@@ -1,14 +1,57 @@
-# Welcome to your CDK TypeScript project
+# Example CDK stack
 
-This is a blank project for CDK development with TypeScript.
+An example CDK stack for `cdk-rest-api-with-spec`.
+This CDK stack was initialized with the following command,
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+```sh
+cdk init --language typescript
+```
 
-## Useful commands
+The CDK version is 2.
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+## Prerequisites
+
+### Installing Node.js
+
+You have to install [Node.js](https://nodejs.org/en/).
+v16.x should work.
+
+## Development
+
+### Setting AWS_PROFILE
+
+```sh
+export AWS_PROFILE=kikuo-jp
+```
+
+### Setting the toolkit stack name
+
+```sh
+TOOLKIT_STACK_NAME=api-with-spec-example-toolkit
+```
+
+### Setting the synthesizer qualifier
+
+```sh
+TOOLKIT_QUALIFIER=apispc2022
+```
+
+### Bootstrapping the toolkit stack
+
+```sh
+npx cdk bootstrap --toolkit-stack-name $TOOLKIT_STACK_NAME --qualifier $TOOLKIT_QUALIFIER
+```
+
+### Synthesizing a CloudFormation template
+
+```sh
+npx cdk synth -c "@aws-cdk/core:bootstrapQualifier=$TOOLKIT_QUALIFIER"
+```
+
+### Deploying the CDK stack
+
+```sh
+npx cdk deploy --toolkit-stack-name $TOOLKIT_STACK_NAME -c "@aws-cdk/core:bootstrapQualifier=$TOOLKIT_QUALIFIER"
+```
+
+You will find a CloudFormation stack `api-with-spec-example` created or updated.
