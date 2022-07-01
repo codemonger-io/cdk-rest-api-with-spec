@@ -1,5 +1,16 @@
 import { Stack, Token } from 'aws-cdk-lib';
 
+declare global {
+  // allows Proxy's constructor to modify the return type (T → U).
+  // https://stackoverflow.com/a/50603826
+  interface ProxyConstructor {
+    new <T extends object, U extends object>(
+      target: T,
+      handler: ProxyHandler<T>,
+    ): U;
+  }
+}
+
 /**
  * Resolves a given reference to a CloudFormation resource.
  *

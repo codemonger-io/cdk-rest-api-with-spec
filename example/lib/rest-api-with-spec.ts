@@ -26,17 +26,6 @@ import {
 } from './openapi-adapter';
 import { resolveResourceId } from './utils';
 
-declare global {
-  // allows Proxy's constructor to modify the return type (T → U).
-  // https://stackoverflow.com/a/50603826
-  interface ProxyConstructor {
-    new <T extends object, U extends object>(
-      target: T,
-      handler: ProxyHandler<T>,
-    ): U;
-  }
-}
-
 /** Factory method of a `RestApi`. */
 export type RestApiFactory = (
   scope: Construct,
