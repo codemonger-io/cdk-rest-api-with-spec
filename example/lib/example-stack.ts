@@ -82,15 +82,18 @@ export class ExampleStack extends Stack {
             description: 'ID of the pet',
             type: apigateway.JsonSchemaType.INTEGER,
             format: 'int64',
+            example: 123,
           },
           name: {
             description: 'Name of the pet',
             type: apigateway.JsonSchemaType.STRING,
+            example: 'Monaka',
           },
           status: {
             description: 'Status of the pet',
             type: apigateway.JsonSchemaType.STRING,
             enum: ['available', 'pending', 'sold'],
+            example: 'sold',
           },
         },
       },
@@ -107,33 +110,13 @@ export class ExampleStack extends Stack {
         items: {
           modelRef: petModel,
         },
-      },
-    });
-    // - new pet
-    const newPetModel = api.addModel('NewPetModel', {
-      description: 'Parameters for a new pet',
-      contentType: 'application/json',
-      schema: {
-        schema: apigateway.JsonSchemaVersion.DRAFT4,
-        title: 'newPet',
-        description: 'Parameters for a new pet',
-        type: apigateway.JsonSchemaType.OBJECT,
-        properties: {
-          id: {
-            description: 'ID of the new pet',
-            type: apigateway.JsonSchemaType.INTEGER,
-            format: 'int64',
+        example: [
+          {
+            id: 123,
+            name: 'Monaka',
+            status: 'sold',
           },
-          name: {
-            description: 'Name of the new pet',
-            type: apigateway.JsonSchemaType.STRING,
-          },
-          tag: {
-            description: 'Tag associated with the new pet',
-            type: apigateway.JsonSchemaType.STRING,
-          },
-        },
-        required: ['id', 'name'],
+        ],
       },
     });
 
@@ -197,7 +180,7 @@ export class ExampleStack extends Stack {
         authorizer,
         requestValidator: fullRequestValidator,
         requestModels: {
-          'application/json': newPetModel,
+          'application/json': petModel,
         },
         methodResponses: [
           {
@@ -274,6 +257,7 @@ export class ExampleStack extends Stack {
             schema: {
               type: apigateway.JsonSchemaType.INTEGER,
               format: 'int64',
+              example: 123,
             },
           },
         },
@@ -343,6 +327,7 @@ export class ExampleStack extends Stack {
             schema: {
               type: apigateway.JsonSchemaType.INTEGER,
               format: 'int64',
+              example: 123,
             },
           },
           'method.request.querystring.name': {
