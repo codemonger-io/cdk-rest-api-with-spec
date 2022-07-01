@@ -39,7 +39,10 @@ export interface IBaseResourceWithSpec extends apigateway.IResource {
   /** Default method options with the OpenAPI specification. */
   defaultMethodOptions?: MethodOptionsWithSpec;
 
-  /** Parent resource. Always `undefined`. */
+  /**
+   * Parent resource.
+   * `undefined` if this resource represents the root.
+   */
   parentResource?: IBaseResourceWithSpec;
 
   /** Adds a new child resource with the OpenAPI specification. */
