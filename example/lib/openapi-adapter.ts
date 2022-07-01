@@ -7,10 +7,11 @@ import {
   SchemaObject,
 } from 'openapi3-ts';
 
+import { JsonSchemaEx } from './json-schema-ex';
 import { MethodResponseWithSpec } from './models';
 
 /**
- * Converts a given `apigateway.JsonSchema` into a `SchemaObject` defined in
+ * Converts a given `JsonSchemaEx` into a `SchemaObject` defined in
  * `openapi3-ts`.
  *
  * The following properties in `schema` are ignored,
@@ -31,7 +32,7 @@ import { MethodResponseWithSpec } from './models';
  * If `type` is an array of `JsonSchemaType`, it is treated as an 'array' type.
  */
 export function jsonSchemaToSchemaObject(
-  schema: apigateway.JsonSchema,
+  schema: JsonSchemaEx,
 ): SchemaObject | ReferenceObject {
   const {
     additionalItems,
@@ -44,6 +45,7 @@ export function jsonSchemaToSchemaObject(
     dependencies,
     description,
     enum: propEnum,
+    example,
     exclusiveMaximum,
     exclusiveMinimum,
     format,
@@ -112,6 +114,7 @@ export function jsonSchemaToSchemaObject(
     default: propDefault,
     description,
     enum: propEnum,
+    example,
     exclusiveMaximum,
     exclusiveMinimum,
     format,
@@ -137,7 +140,7 @@ export function jsonSchemaToSchemaObject(
 }
 
 function mapAdditionalProperties(
-  additionalProperties: apigateway.JsonSchema | boolean | undefined,
+  additionalProperties: JsonSchemaEx | boolean | undefined,
 ): SchemaObject | boolean | undefined {
   if (typeof additionalProperties === 'boolean') {
     return additionalProperties;
@@ -148,7 +151,7 @@ function mapAdditionalProperties(
 }
 
 function mapItems(
-  items: apigateway.JsonSchema | apigateway.JsonSchema[] | undefined,
+  items: JsonSchemaEx | JsonSchemaEx[] | undefined,
 ): SchemaObject | undefined {
   if (items == null) {
     return undefined;
@@ -156,7 +159,7 @@ function mapItems(
   if (Array.isArray(items)) {
     console.warn(
       'jsonSchemaToSchemaObject',
-      'JsonSchema[] as items is ignored',
+      'JsonSchemaEx[] as items is ignored',
       items,
     );
     return undefined;
@@ -165,7 +168,7 @@ function mapItems(
 }
 
 function mapProperties(
-  properties: apigateway.JsonSchema['properties'],
+  properties: JsonSchemaEx['properties'],
 ): SchemaObject['properties'] {
   if (properties == null) {
     return undefined;

@@ -9,6 +9,8 @@ import { resolveModelResourceId } from './openapi-adapter';
  * - `modelRef`: reference to another `IModel`.
  */
 export interface JsonSchemaEx extends apigateway.JsonSchema {
+  /** Example value. */
+  example?: any;
   /** Reference to another `IModel`. */
   modelRef?: apigateway.IModel;
   /** Extension of `additionalItems`. */
@@ -106,8 +108,8 @@ type MapSchemaProperty = typeof MAP_SCHEMA_PROPERTIES[number];
 export type TranslateJsonSchemaExOutput = {
   /** Equivalent `JsonSchema` for the API Gateway model. */
   gatewaySchema: apigateway.JsonSchema;
-  /** Equivalent `JsonSchema` for the OpenAPI specification. */
-  openapiSchema: apigateway.JsonSchema;
+  /** Equivalent `JsonSchemaEx` for the OpenAPI specification. */
+  openapiSchema: JsonSchemaEx;
 };
 
 /**
@@ -134,7 +136,7 @@ export function translateJsonSchemaEx(
       value: Exclude<JsonSchemaEx[P], undefined>,
     ) => {
       gatewayValue: Exclude<apigateway.JsonSchema[P], undefined>,
-      openapiValue: Exclude<apigateway.JsonSchema[P], undefined>,
+      openapiValue: Exclude<JsonSchemaEx[P], undefined>,
     },
   ) {
     if (Object.prototype.hasOwnProperty.call(schema, prop)) {
@@ -199,7 +201,8 @@ export function translateJsonSchemaEx(
   // - definitions: { [k: string]: JsonSchemaEx | string[] }
   translateProperty('dependencies', (_, map) => {
     const gatewayValue: { [k: string]: apigateway.JsonSchema | string[] } = {};
-    const openapiValue: { [k: string]: apigateway.JsonSchema | string[] } = {};
+    const openapiValue: { [k: string]: JsonSchemaEx | string[] } =
+      {};
     for (const key in map) {
       const value = map[key];
       if (Array.isArray(value)) {
@@ -217,6 +220,13 @@ export function translateJsonSchemaEx(
       openapiValue,
     };
   });
+  // - example: gatewaySchema does not support
+  if (Object.prototype.hasOwnProperty.call(schema, 'example')) {
+    openapiSchema = {
+      ...openapiSchema,
+      example: schema.example,
+    };
+  }
   // resolves the modelRef
   if (schema.modelRef != null) {
     const model = schema.modelRef;
@@ -249,7 +259,7 @@ function translateSingleSchemaProperty(
   value: JsonSchemaEx,
 ): {
   gatewayValue: apigateway.JsonSchema,
-  openapiValue: apigateway.JsonSchema,
+  openapiValue: JsonSchemaEx,
 } {
   const {
     gatewaySchema: gatewayValue,
@@ -267,7 +277,7 @@ function translateArraySchemaProperty(
   values: JsonSchemaEx[],
 ): {
   gatewayValue: apigateway.JsonSchema[],
-  openapiValue: apigateway.JsonSchema[],
+  openapiValue: JsonSchemaEx[],
 } {
   return values.reduce(
     (accum, value) => {
@@ -281,7 +291,7 @@ function translateArraySchemaProperty(
     },
     {
       gatewayValue: [] as apigateway.JsonSchema[],
-      openapiValue: [] as apigateway.JsonSchema[],
+      openapiValue: [] as JsonSchemaEx[],
     },
   );
 }
@@ -292,7 +302,7 @@ function translateOneOrMoreSchemaProperty(
   values: JsonSchemaEx | JsonSchemaEx[],
 ): {
   gatewayValue: apigateway.JsonSchema | apigateway.JsonSchema[],
-  openapiValue: apigateway.JsonSchema | apigateway.JsonSchema[],
+  openapiValue: JsonSchemaEx | JsonSchemaEx[],
 } {
   if (Array.isArray(values)) {
     // JsonSchemaEx[]
@@ -308,10 +318,10 @@ function translateMapSchemaProperty(
   map: { [k: string]: JsonSchemaEx },
 ): {
   gatewayValue: { [k: string]: apigateway.JsonSchema },
-  openapiValue: { [k: string]: apigateway.JsonSchema },
+  openapiValue: { [k: string]: JsonSchemaEx },
 } {
   const gatewayValue: { [k: string]: apigateway.JsonSchema } = {};
-  const openapiValue: { [k: string]: apigateway.JsonSchema } = {};
+  const openapiValue: { [k: string]: JsonSchemaEx } = {};
   for (const key in map) {
     const {
       gatewaySchema,
