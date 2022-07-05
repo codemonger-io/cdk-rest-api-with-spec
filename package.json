@@ -1,0 +1,36 @@
+{
+  "name": "cdk-rest-api-with-spec",
+  "version": "0.1.0",
+  "description": "Describes API Gateway and OpenAPI at once",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "CDK",
+    "API Gateway",
+    "OpenAPI"
+  ],
+  "author": "Kikuo Emoto <kemoto@codemonger.io>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.0"
+  },
+  "dependencies": {
+    "openapi3-ts": "^2.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "10.17.27",
+    "aws-cdk-lib": "^2.30.0",
+    "constructs": "^10.1.43",
+    "typescript": "~3.9.7"
+  },
+  "peerDependecnies": {
+    "aws-cdk-lib": "^2.0",
+    "constructs": "^10.0"
+  }
+}
