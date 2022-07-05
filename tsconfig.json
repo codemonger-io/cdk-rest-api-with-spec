@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2018",
-    "module": "commonjs",
+    "module": "esnext",
     "lib": [
       "es2018"
     ],
@@ -22,8 +22,7 @@
       "./node_modules/@types"
     ],
     "outDir": "dist",
-    "declarationMap": true,
-    "sourceMap": true
+    "declarationDir": "dist/dts"
   },
   "include": ["src/**/*.ts"]
 }

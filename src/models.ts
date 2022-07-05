@@ -210,7 +210,7 @@ export class ParameterKey {
       throw new RangeError(`invalid request or response parameter key: ${key}`);
     }
     const direction = match[1];
-    assert(direction === 'request' || direction === 'response');
+    assert.ok(direction === 'request' || direction === 'response');
     const mappingLocation = match[2];
     const name = match[3];
     if (direction === 'response') {

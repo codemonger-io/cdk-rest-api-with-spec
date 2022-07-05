@@ -116,7 +116,7 @@ export class RestApiWithSpec {
     const wrapper = new RestApiWithSpec(restApi, props);
     wrapper.facade = new Proxy(restApi, {
       get: (target, prop, receiver) => {
-        assert(target === restApi);
+        assert.ok(target === restApi);
         switch (prop) {
           case 'underlying':
             return restApi;
