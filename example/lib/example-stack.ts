@@ -8,9 +8,7 @@ import {
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 
-import { augmentAuthorizer } from './authorizer';
-import { JsonSchemaEx } from './json-schema-ex';
-import { RestApiWithSpec } from './rest-api-with-spec';
+import { RestApiWithSpec, augmentAuthorizer } from 'cdk-rest-api-with-spec';
 
 /**
  * Provisions a REST API that represents a modified subset of the Pet Store API.
