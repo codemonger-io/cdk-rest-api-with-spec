@@ -3,6 +3,8 @@ import { SecuritySchemeObject } from 'openapi3-ts';
 
 /**
  * Authorizer augmented with the features to describe the OpenAPI specification.
+ *
+ * @public
  */
 export interface IAuthorizerWithSpec extends apigateway.IAuthorizer {
   /** Security scheme object representing this authorizer. */
@@ -10,20 +12,24 @@ export interface IAuthorizerWithSpec extends apigateway.IAuthorizer {
 }
 
 /**
- * Makes a given `IAuthorizer` an `IAuthorizerWithSpec` by augmenting it with a
- * specified security scheme object.
+ * Makes a given
+ * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IAuthorizer.html | aws_apigateway.IAuthorizer}
+ * an {@link IAuthorizerWithSpec} by augmenting it with a specified security
+ * scheme object.
  *
- * @param authorizer
+ * @param authorizer -
  *
  *   Authorizer to be augmented.
  *
- * @param securitySchemeObject
+ * @param securitySchemeObject -
  *
  *   Security scheme object to add to `authorizer`.
  *
- * @return
+ * @returns
  *
  *   `authorizer` with `securitySchemeObject`.
+ *
+ * @public
  */
 export function augmentAuthorizer(
   authorizer: apigateway.IAuthorizer,
