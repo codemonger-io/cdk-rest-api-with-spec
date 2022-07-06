@@ -30,7 +30,7 @@ import { resolveResourceId } from './utils';
  * Factory method of a
  * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}.
  *
- * @public
+ * @beta
  */
 export type RestApiFactory = (
   scope: Construct,
@@ -41,7 +41,7 @@ export type RestApiFactory = (
 /**
  * Properties for {@link RestApiWithSpec}.
  *
- * @public
+ * @beta
  */
 export interface RestApiWithSpecProps extends apigateway.RestApiProps {
   /**
@@ -53,7 +53,7 @@ export interface RestApiWithSpecProps extends apigateway.RestApiProps {
    *
    * An instance of {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi} will be created if omitted.
    *
-   * @public
+   * @beta
    */
   newRestApi?: RestApiFactory;
   /**
@@ -65,7 +65,7 @@ export interface RestApiWithSpecProps extends apigateway.RestApiProps {
    * {@link https://spec.openapis.org/oas/latest.html#info-object | info.version}
    * in the OpenAPI specification.
    *
-   * @public
+   * @beta
    */
   documentationVersion: string;
 }
@@ -79,7 +79,7 @@ const defaultRestApiFactory: RestApiFactory =
  *
  * @remarks
  *
- * **Please turn on the validation of CDK stacks**.
+ * NOTE: Please turn on the validation of CDK stacks.
  * If you skip the validation of CDK stacks, this construct cannot synthesize
  * the specification.
  * Because this construct utilizes the validation as a trigger to start
@@ -88,7 +88,7 @@ const defaultRestApiFactory: RestApiFactory =
  * The constructor is private.
  * Use {@link RestApiWithSpec.createRestApi} instead.
  *
- * @public
+ * @beta
  */
 export class RestApiWithSpec {
   /** builder of the OpenAPI specification. */
@@ -139,7 +139,7 @@ export class RestApiWithSpec {
    * {@link https://spec.openapis.org/oas/latest.html#info-object | info.title}
    * in the OpenAPI specification.
    *
-   * @public
+   * @beta
    */
   static createRestApi(
     scope: Construct,

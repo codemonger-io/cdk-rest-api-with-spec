@@ -4,7 +4,7 @@ import { SecuritySchemeObject } from 'openapi3-ts';
 /**
  * Authorizer augmented with the features to describe the OpenAPI specification.
  *
- * @public
+ * @beta
  */
 export interface IAuthorizerWithSpec extends apigateway.IAuthorizer {
   /** Security scheme object representing this authorizer. */
@@ -29,7 +29,7 @@ export interface IAuthorizerWithSpec extends apigateway.IAuthorizer {
  *
  *   `authorizer` with `securitySchemeObject`.
  *
- * @public
+ * @beta
  */
 export function augmentAuthorizer(
   authorizer: apigateway.IAuthorizer,
