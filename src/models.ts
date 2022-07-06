@@ -330,7 +330,7 @@ export class ParameterKey {
    * - "multivalueheader"
    * ```
    *
-   * @param key
+   * @param key -
    *
    *   Parameter key to be parsed.
    *
