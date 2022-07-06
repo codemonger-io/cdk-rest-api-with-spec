@@ -12,6 +12,7 @@
   "scripts": {
     "build": "rollup -c",
     "prepare": "npm run build",
+    "doc": "npm run build && api-extractor run --local && api-documenter markdown --input-folder ./temp --output-folder ./api-docs/markdown",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
