@@ -14,9 +14,12 @@ declare global {
 /**
  * Resolves a given reference to a CloudFormation resource.
  *
+ * @remarks
+ *
  * A reference to a CloudFormation resource is encoded as a token similar to
- * "${TOKEN[TOKEN.123]}" in the CDK runtime.
- * `Stack` can resolve a token as a `Ref` intrinsic function like,
+ * `"${TOKEN[TOKEN.123]}"` in the CDK runtime.
+ * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.Stack.html#resolveobj | aws-cdk-lib.Stack.resolve}
+ * can resolve a token as a `Ref` intrinsic function like,
  *
  * ```js
  * {
@@ -27,11 +30,12 @@ declare global {
  * This function resolves `token` and returns the referenced CloudFormation
  * resource ID (`<resource-id>`).
  *
- * @param stack
+ * @param stack -
  *
- *   `Stack` to resolve `token`.
+ *   {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.Stack.html | aws-cdk-lib.Stack}
+ *   to resolve `token`.
  *
- * @param token
+ * @param token -
  *
  *   Token that represents a reference to a CloudFormation resource.
  *
@@ -43,6 +47,8 @@ declare global {
  *
  *   If `token` does not represent a token.
  *   If `token` does not represent a `Ref` intrinsic function.
+ *
+ * @internal
  */
 export function resolveResourceId(stack: Stack, token: string): string {
   if (!Token.isUnresolved(token)) {
