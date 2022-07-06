@@ -9,27 +9,38 @@ import {
 
 import { JsonSchemaEx } from '../json-schema-ex';
 import { MethodResponseWithSpec } from '../models';
+import { resolveResourceId } from './utils';
 
 /**
- * Converts a given `JsonSchemaEx` into a `SchemaObject` defined in
- * `openapi3-ts`.
+ * Converts a given {@link JsonSchemaEx} into a `SchemaObject` defined in
+ * {@link https://github.com/metadevpro/openapi3-ts | openapi3-ts}.
+ *
+ * @remarks
  *
  * The following properties in `schema` are ignored,
- * - `additionalItems`
- * - `contains`
- * - `definitions`
- * - `dependencies`
- * - `id`
- * - `patternProperties`
- * - `propertyNames`
- * - `schema`
+ * ```
+ * - additionalItems
+ * - contains
+ * - definitions
+ * - dependencies
+ * - id
+ * - patternProperties
+ * - propertyNames
+ * - schema
+ * ```
  *
  * If `ref` is presented, other properties will be ignored and a
  * `ReferenceObject` will be returned.
  *
- * If `items` is an array of `JsonSchemaType`, it will be ignored.
+ * If `items` is an array of
+ * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchemaType.html | aws_apigateway.JsonSchemaType},
+ * it will be ignored.
  *
- * If `type` is an array of `JsonSchemaType`, it is treated as an 'array' type.
+ * If `type` is an array of
+ * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchemaType.html | aws_apigateway.JsonSchemaType},
+ * it is treated as an 'array' type.
+ *
+ * @internal
  */
 export function jsonSchemaToSchemaObject(
   schema: JsonSchemaEx,
@@ -222,11 +233,14 @@ function mapType(
 
 /**
  * Converts given request models into `RequestBodyObject` defined in
- * `openapi3-ts`.
+ * {@link https://github.com/metadevpro/openapi3-ts | openapi3-ts}.
  *
- * @param restApi
+ * @param restApi -
  *
- *   `IRestApi` that defines models.
+ *   {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IRestApi.html | aws_apigateway.IRestApi}
+ *   that defines models.
+ *
+ * @internal
  */
 export function requestModelsToRequestBody(
   restApi: apigateway.IRestApi,
@@ -239,11 +253,13 @@ export function requestModelsToRequestBody(
 
 /**
  * Converts given method responses into `ResponsesObject` defined in
- * `openapi3-ts`.
+ * {@link https://github.com/metadevpro/openapi3-ts | openapi3-ts}.
  *
- * @param restApi
+ * @param restApi -
  *
- *   `IRestApi` that defines models.
+ *   {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IRestApi.html | aws_apigateway.IRestApi} that defines models.
+ *
+ * @internal
  */
 export function methodResponsesToResponses(
   restApi: apigateway.IRestApi,
@@ -261,7 +277,9 @@ export function methodResponsesToResponses(
   return responses;
 }
 
-// Converts a given model map into a `ContentObject` defined in `openapi3-ts`.
+/**
+ * Converts a given model map into a `ContentObject` defined in `openapi3-ts`.
+ */
 function modelMapToContentObject(
   stack: Stack,
   modelMap: { [contentType: string]: apigateway.IModel },
