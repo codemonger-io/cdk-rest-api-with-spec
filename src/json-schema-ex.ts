@@ -1,6 +1,6 @@
 import { Fn, Stack, aws_apigateway as apigateway } from 'aws-cdk-lib';
 
-import { resolveModelResourceId } from './private/openapi-adapter';
+import { resolveResourceId } from './private/utils';
 
 /**
  * Extended `JsonSchema`.
@@ -259,7 +259,7 @@ export function translateJsonSchemaEx(
   // resolves the modelRef
   if (schema.modelRef != null) {
     const model = schema.modelRef;
-    const modelId = resolveModelResourceId(Stack.of(restApi), model);
+    const modelId = resolveResourceId(Stack.of(restApi), model.modelId);
     if (schema.ref != null) {
       console.warn(
         'translateJsonSchemaEx',

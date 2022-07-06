@@ -271,50 +271,10 @@ function modelMapToContentObject(
     const model = modelMap[contentType];
     content[contentType] = {
       schema: {
-        '$ref': `#/components/schemas/${resolveModelResourceId(stack, model)}`,
+        '$ref':
+          `#/components/schemas/${resolveResourceId(stack, model.modelId)}`,
       },
     };
   }
   return content;
-}
-
-/**
- * Resolves the CloudFormation resource ID of a given `apigateway.Model`.
- *
- * `model.modelId` is tokenized as something like "${Token[TOKEN.235]}".
- * If we resolve this token with the `Stack.resolve` method, we will get the
- * CloudFormation ID of `model` in the form of the `Ref` intrinsic function.
- *
- * ```js
- * {
- *   Ref: '<resource-id>'
- * }
- * ```
- *
- * @param stack
- *
- *   CDK stack to resolve the CloudFormation resource ID of `model`.
- *
- * @param model
- *
- *   Model whose CloudFormation resource ID is to be resolved.
- *
- * @return
- *
- *   CloudFormation resource ID of `model`.
- *   This is not an actual model ID but still unique in the stack.
- */
-export function resolveModelResourceId(
-  stack: Stack,
-  model: apigateway.IModel,
-): string {
-  const modelIdRef = stack.resolve(model.modelId);
-  if (typeof modelIdRef !== 'object') {
-    throw new RangeError('resolved resource ID must be a Ref');
-  }
-  const resourceId = modelIdRef.Ref;
-  if (typeof resourceId !== 'string') {
-    throw new RangeError('resolved resource ID must be a Ref to a string');
-  }
-  return resourceId;
 }

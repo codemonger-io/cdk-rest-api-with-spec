@@ -22,7 +22,6 @@ import {
   jsonSchemaToSchemaObject,
   methodResponsesToResponses,
   requestModelsToRequestBody,
-  resolveModelResourceId,
 } from './private/openapi-adapter';
 import { resolveResourceId } from './private/utils';
 
@@ -196,7 +195,7 @@ export class RestApiWithSpec {
         schema,
       } = translateModelOptionsWithSpec(this.restApi, props);
       const model = this.restApi.addModel(id, modelOptions);
-      const modelId = resolveModelResourceId(Stack.of(this.restApi), model);
+      const modelId = resolveResourceId(Stack.of(this.restApi), model.modelId);
       // registers the model as a schema
       this.builder.addSchema(modelId, schema);
       return model;
