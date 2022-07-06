@@ -26,28 +26,49 @@ import {
 } from './openapi-adapter';
 import { resolveResourceId } from './utils';
 
-/** Factory method of a `RestApi`. */
+/**
+ * Factory method of a
+ * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}.
+ *
+ * @public
+ */
 export type RestApiFactory = (
   scope: Construct,
   id: string,
   props?: apigateway.RestApiProps,
 ) => apigateway.RestApi;
 
-/** Props for `RestApiWithSpec`. */
-export type Props = apigateway.RestApiProps & Readonly<{
+/**
+ * Properties for {@link RestApiWithSpec}.
+ *
+ * @public
+ */
+export interface RestApiWithSpecProps extends apigateway.RestApiProps {
   /**
-   * Factory method of a `RestApi` construct.
+   * Factory method of a
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}
+   * construct.
    *
-   * An instance of `RestApi` will be created if omitted.
+   * @remarks
+   *
+   * An instance of {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi} will be created if omitted.
+   *
+   * @public
    */
   newRestApi?: RestApiFactory;
   /**
    * Version of the documentation.
    *
-   * Corresponds to `info.version` in the OpenAPI specification.
+   * @remarks
+   *
+   * Corresponds to
+   * {@link https://spec.openapis.org/oas/latest.html#info-object | info.version}
+   * in the OpenAPI specification.
+   *
+   * @public
    */
   documentationVersion: string;
-}>;
+}
 
 const defaultRestApiFactory: RestApiFactory =
   (scope, id, props) => new apigateway.RestApi(scope, id, props);
@@ -56,25 +77,31 @@ const defaultRestApiFactory: RestApiFactory =
  * CDK construct that provisions an API Gateway REST API endpoint and also
  * synthesizes the OpenAPI specification for it.
  *
+ * @remarks
+ *
+ * **Please turn on the validation of CDK stacks**.
  * If you skip the validation of CDK stacks, this construct cannot synthesize
  * the specification.
  * Because this construct utilizes the validation as a trigger to start
  * synthesis.
  *
  * The constructor is private.
- * Use `createRestApi` instead.
+ * Use {@link RestApiWithSpec.createRestApi} instead.
+ *
+ * @public
  */
 export class RestApiWithSpec {
-  // builder of the OpenAPI specification.
+  /** builder of the OpenAPI specification. */
   private builder: OpenApiBuilder;
-  // user-facing object returned by `createRestApi`.
+  /** user-facing object returned by `createRestApi`. */
   private facade: IRestApiWithSpec;
-  // cached root resource.
+  /** cached root resource. */
   private _root: IResourceWithSpec;
 
   private constructor(
     private readonly restApi: apigateway.RestApi,
-    readonly props: Props,
+    /** Properties. */
+    readonly props: RestApiWithSpecProps,
   ) {
     this.builder = new OpenApiBuilder({
       openapi: '3.1.0',
@@ -97,19 +124,27 @@ export class RestApiWithSpec {
   }
 
   /**
-   * Creates an instance of `RestApi` that also synthesizes the OpenAPI
-   * specification.
+   * Creates an instance of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}
+   * that also synthesizes the OpenAPI specification.
    *
-   * Specify `props.newRestApi` if you want to instantiate a subclass of
-   * `RestApi`.
+   * @remarks
    *
-   * `RestApi.restApiId` corresponds to `info.title` in the OpenAPI
-   * specification.
+   * Specify {@link RestApiWithSpecProps.newRestApi | props.newRestApi}
+   * if you want to instantiate a subclass of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}.
+   *
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApiProps.html#restapiname | props.restApiName}
+   * corresponds to
+   * {@link https://spec.openapis.org/oas/latest.html#info-object | info.title}
+   * in the OpenAPI specification.
+   *
+   * @public
    */
   static createRestApi(
     scope: Construct,
     id: string,
-    props: Props,
+    props: RestApiWithSpecProps,
   ): IRestApiWithSpec {
     const newRestApi = props?.newRestApi ?? defaultRestApiFactory;
     const restApi = newRestApi(scope, id, props);
@@ -132,9 +167,11 @@ export class RestApiWithSpec {
     return wrapper.facade;
   }
 
-  // returns the root resource augmented with the features to build the OpenAPI
-  // specification.
-  private getRoot(): IResourceWithSpec {
+  /**
+   * Returns the root resource augmented with the features to build the OpenAPI
+   * specification.
+   */
+  private getRoot(): IRestApiWithSpec['root'] {
     // reuses the instance
     if (this._root != null) {
       return this._root;
@@ -147,8 +184,10 @@ export class RestApiWithSpec {
     return this._root;
   }
 
-  // returns the `addModel` function augmented with the features to build the
-  // OpenAPI specification.
+  /**
+   * Returns the `addModel` function augmented with the features to build the
+   * OpenAPI specification.
+   */
   private getAddModel(): IRestApiWithSpec['addModel'] {
     return (id, props) => {
       // translates the schema
@@ -164,7 +203,7 @@ export class RestApiWithSpec {
     };
   }
 
-  // Synthesizes the OpenAPI specification.
+  /** Synthesizes the OpenAPI specification. */
   private synthesizeOpenApi(): string[] {
     console.log('synthesizeOpenApi', 'synthesizing the OpenAPI specification');
     // TODO: let a user choose the destination
@@ -173,11 +212,19 @@ export class RestApiWithSpec {
   }
 }
 
-// Translates a given `ModelOptionsWithSpec`.
-//
-// Returns an object with the following properties,
-// - `modelOptions`: `ModelOptions` for the underlying `addModel`.
-// - `schema`: `SchemaObject` for the OpenAPI specification.
+/**
+ * Translates a given `ModelOptionsWithSpec`.
+ *
+ * @remarks
+ *
+ * Returns an object with the following properties,
+ *
+ * - `modelOptions`: `ModelOptions` for the underlying `addModel`.
+ *
+ * - `schema`: `SchemaObject` for the OpenAPI specification.
+ *
+ * @private
+ */
 function translateModelOptionsWithSpec(
   restApi: apigateway.IRestApi,
   options: ModelOptionsWithSpec,
@@ -198,9 +245,13 @@ function translateModelOptionsWithSpec(
   };
 }
 
-/** Resource with the OpenAPI specification. */
+/**
+ * Resource with the OpenAPI specification.
+ *
+ * @private
+ */
 class ResourceWithSpec {
-  // user-facing object returned by `createResource`.
+  /** user-facing object returned by `createResource`. */
   private facade: IResourceWithSpec;
 
   private constructor(
@@ -211,8 +262,27 @@ class ResourceWithSpec {
   ) {}
 
   /**
-   * Creates an instance of `IResource` that also synthesizes the OpenAPI
-   * specification.
+   * Augments a given
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IResource.html | aws_apigateway.IResource}
+   * with the features necessary to synthesize the OpenAPI specification.
+   *
+   * @param builder
+   *
+   *   `OpenApiBuilder` that builds the entire OpenAPI specification.
+   *
+   * @param restApi
+   *
+   *   The REST API that owns `resource`.
+   *
+   * @param resource
+   *
+   *   Resource to be augmented.
+   *
+   * @param parent
+   *
+   *   Parent resource.
+   *
+   * @private
    */
   static createResource(
     builder: OpenApiBuilder,
@@ -262,7 +332,7 @@ class ResourceWithSpec {
    * Returns the `addResource` function that takes properties necessary to build
    * the OpenAPI specification.
    */
-  getAddResource(): IResourceWithSpec['addResource'] {
+  private getAddResource(): IResourceWithSpec['addResource'] {
     return (pathPart, options) => {
       return ResourceWithSpec.createResource(
         this.builder,
@@ -278,7 +348,7 @@ class ResourceWithSpec {
    * Returns the `addMethod` function that takes properties necessary to build
    * the OpenAPI specification.
    */
-  getAddMethod(): IResourceWithSpec['addMethod'] {
+  private getAddMethod(): IResourceWithSpec['addMethod'] {
     return (httpMethod, target, options) => {
       const {
         methodOptions,
@@ -322,17 +392,23 @@ class ResourceWithSpec {
   }
 }
 
-// Translates the path part of a given resource.
-//
-// Returns an array containing the following parameter object if the path part
-// represents a path parameter `{<name>}`.
-// - name: `<name>`
-// - in: 'path'
-// - required: true
-// - schema:
-//     - type: 'string'
-//
-// Otherwise, returns `undefined`.
+/**
+ * Translates the path part of a given resource.
+ *
+ * @remarks
+ *
+ * Returns an array containing the following parameter object if the path part
+ * represents a path parameter `{<name>}`.
+ * - name: `<name>`
+ * - in: 'path'
+ * - required: true
+ * - schema:
+ *     - type: 'string'
+ *
+ * Otherwise, returns `undefined`.
+ *
+ * @private
+ */
 function translatePathPart(
   resource: IBaseResourceWithSpec,
 ): ParameterObject[] | undefined {
@@ -354,36 +430,44 @@ function translatePathPart(
   ];
 }
 
-// Translates a given `MethodOptionsWithSpec`.
-//
-// Returns an object containing the following fields,
-// - `methodOptions`: `MethodOptions` for the underlying `addMethod`.
-// - `parameters`: `ParameterObject[]` for the OpenAPI specification.
-//
-// `options.requestParameters` is first evaluated and translated into
-// equivalent `ParameterObject`s.
-// A `ParameterObject` corresponding to `options.requestParameters[key]` has
-// the following properties,
-// - `name`: derived from `key`. See `ParameterKey`.
-// - `in`: derived from `key`. See `ParameterKey`.
-// - `required`: `options.requestParameters[key]`
-// - `schema`:
-//     - `type`: 'string'
-//
-// Then `options.requestParameterSchemas` is evaluated and translated into
-// equivalent `ParameterObject`s.
-// A `ParameterObject` corresponding to `options.requestParameterSchemas[key]`
-// has the following properites,
-// - `name`: derived from `key` (see `ParameterKey`)
-// - `in`: derived from `key` (see `ParameterKey`)
-// - properties of `options.requestParameters[key]`
-//
-// `options.requestParameterSchemas` also overrides `requestParameters`.
-// `requestParameters[key]` becomes
-// `options.requestParameterSchemas[key].required ?? false`
-//
-// Throws a RangeError if `key` specifies the location "multivaluequerystring"
-// or "multivalueheader".
+/**
+ * Translates a given `MethodOptionsWithSpec`.
+ *
+ * @remarks
+ *
+ * Returns an object containing the following fields,
+ * - `methodOptions`: `MethodOptions` for the underlying `addMethod`.
+ * - `parameters`: `ParameterObject[]` for the OpenAPI specification.
+ *
+ * `options.requestParameters` is first evaluated and translated into
+ * equivalent `ParameterObject`s.
+ *  A `ParameterObject` corresponding to `options.requestParameters[key]` has
+ * the following properties,
+ * - `name`: derived from `key`. See `ParameterKey`.
+ * - `in`: derived from `key`. See `ParameterKey`.
+ * - `required`: `options.requestParameters[key]`
+ * - `schema`:
+ *     - `type`: 'string'
+ *
+ * Then `options.requestParameterSchemas` is evaluated and translated into
+ * equivalent `ParameterObject`s.
+ * A `ParameterObject` corresponding to `options.requestParameterSchemas[key]`
+ * has the following properites,
+ * - `name`: derived from `key` (see `ParameterKey`)
+ * - `in`: derived from `key` (see `ParameterKey`)
+ * - properties of `options.requestParameters[key]`
+ *
+ * `options.requestParameterSchemas` also overrides `requestParameters`.
+ * `requestParameters[key]` becomes
+ * `options.requestParameterSchemas[key].required ?? false`
+ *
+ * @throws RangeError
+ *
+ *   If `key` specifies the location "multivaluequerystring" or
+ *   "multivalueheader".
+ *
+ * @private
+ */
 function translateRequestParameters(
   options?: MethodOptionsWithSpec,
 ): {
@@ -461,12 +545,17 @@ function translateRequestParameters(
   };
 }
 
-// Merges given arrays of `ParameterObject`s.
-//
-// Returns `baseParameters` if `parameters` is `undefined`.
-// Returns `parameters` if `baseParameters` is `undefined`.
-// Returns `undefined` if `baseParameters` and `parameters` are both
-// `undefined`.
+/**
+ * Merges given arrays of `ParameterObject`s.
+ *
+ * @returns
+ *
+ *   `baseParameters` if `parameters` is `undefined`.
+ *   `parameters` if `baseParameters` is `undefined`.
+ *   `undefined` if `baseParameters` and `parameters` are both `undefined`.
+ *
+ * @private
+ */
 function mergeParameterObjects(
   baseParameters?: ParameterObject[],
   parameters?: ParameterObject[],
