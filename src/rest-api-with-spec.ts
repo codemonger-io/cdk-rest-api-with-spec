@@ -176,7 +176,7 @@ export class RestApiWithSpec {
     if (this._root != null) {
       return this._root;
     }
-    this._root = ResourceWithSpec.createResource(
+    this._root = ResourceWithSpec.augmentResource(
       this.builder,
       this.facade,
       this.restApi.root,
@@ -248,10 +248,15 @@ function translateModelOptionsWithSpec(
 /**
  * Resource with the OpenAPI specification.
  *
+ * @remarks
+ *
+ * The constructor is private.
+ * Use `augmentResource` instead.
+ *
  * @private
  */
 class ResourceWithSpec {
-  /** user-facing object returned by `createResource`. */
+  /** user-facing object returned by `augmentResource`. */
   private facade: IResourceWithSpec;
 
   private constructor(
@@ -262,9 +267,8 @@ class ResourceWithSpec {
   ) {}
 
   /**
-   * Augments a given
-   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IResource.html | aws_apigateway.IResource}
-   * with the features necessary to synthesize the OpenAPI specification.
+   * Augments a given `aws_apigateway.IResource` with the features necessary to
+   * synthesize the OpenAPI specification.
    *
    * @param builder
    *
@@ -284,7 +288,7 @@ class ResourceWithSpec {
    *
    * @private
    */
-  static createResource(
+  static augmentResource(
     builder: OpenApiBuilder,
     restApi: IRestApiWithSpec,
     resource: apigateway.IResource,
@@ -334,7 +338,7 @@ class ResourceWithSpec {
    */
   private getAddResource(): IResourceWithSpec['addResource'] {
     return (pathPart, options) => {
-      return ResourceWithSpec.createResource(
+      return ResourceWithSpec.augmentResource(
         this.builder,
         this.restApi,
         this.resource.addResource(pathPart, options),
