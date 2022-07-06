@@ -5,8 +5,15 @@ import { resolveModelResourceId } from './openapi-adapter';
 /**
  * Extended `JsonSchema`.
  *
+ * @remarks
+ *
  * Introduces the following new properties,
- * - `modelRef`: reference to another `IModel`.
+ * ```
+ * - example: example value.
+ * - modelRef: reference to another IModel.
+ * ```
+ *
+ * @beta
  */
 export interface JsonSchemaEx extends apigateway.JsonSchema {
   /** Example value. */
@@ -41,7 +48,7 @@ export interface JsonSchemaEx extends apigateway.JsonSchema {
   propertyNames?: JsonSchemaEx;
 };
 
-// Non-recursive properties of JsonSchemaEx.
+/** Non-recursive properties of JsonSchemaEx. */
 const NON_RECURSIVE_PROPERTIES = [
   'default',
   'description',
@@ -69,16 +76,22 @@ const NON_RECURSIVE_PROPERTIES = [
 ] as const;
 type NonRecursiveProperty = typeof NON_RECURSIVE_PROPERTIES[number];
 
-// Single schema properties of JsonSchemaEx.
-// `JsonSchema`
+/**
+ * Single schema properties of `JsonSchemaEx`.
+ *
+ * → `JsonSchema`
+ */
 const SINGLE_SCHEMA_PROPERTIES = [
   'not',
   'propertyNames',
 ] as const;
 type SingleSchemaProperty = typeof SINGLE_SCHEMA_PROPERTIES[number];
 
-// Array schema properties of JsonSchemaEx.
-// `JsonSchema[]`
+/**
+ * Array schema properties of `JsonSchemaEx`.
+ *
+ * → `JsonSchema[]`
+ */
 const ARRAY_SCHEMA_PROPERTIES = [
   'additionalItems',
   'allOf',
@@ -87,16 +100,22 @@ const ARRAY_SCHEMA_PROPERTIES = [
 ] as const;
 type ArraySchemaProperty = typeof ARRAY_SCHEMA_PROPERTIES[number];
 
-// One-or-more schema properties of JsonSchemaEx.
-// `JsonSchema | JsonSchema[]`
+/**
+ * One-or-more schema properties of `JsonSchemaEx`.
+ *
+ * → `JsonSchema | JsonSchema[]`
+ */
 const ONE_OR_MORE_SCHEMA_PROPERTIES = [
   'contains',
   'items',
 ] as const;
 type OneOrMoreSchemaProperty = typeof ONE_OR_MORE_SCHEMA_PROPERTIES[number];
 
-// Map schema properties of JsonSchemaEx.
-// `{ [k: string]: JsonSchema }`
+/**
+ * Map schema properties of `JsonSchemaEx`.
+ *
+ * → `{ [k: string]: JsonSchema }`
+ */
 const MAP_SCHEMA_PROPERTIES = [
   'definitions',
   'patternProperties',
@@ -104,7 +123,11 @@ const MAP_SCHEMA_PROPERTIES = [
 ] as const;
 type MapSchemaProperty = typeof MAP_SCHEMA_PROPERTIES[number];
 
-/** Output type of `translateJsonSchemaEx`. */
+/**
+ * Output type of {@link translateJsonSchemaEx}.
+ *
+ * @beta
+ */
 export type TranslateJsonSchemaExOutput = {
   /** Equivalent `JsonSchema` for the API Gateway model. */
   gatewaySchema: apigateway.JsonSchema;
@@ -113,12 +136,18 @@ export type TranslateJsonSchemaExOutput = {
 };
 
 /**
- * Translates a given `JsonSchemaEx`.
+ * Translates a given {@link JsonSchemaEx}.
  *
- * Intepretation of `modelRef` is different between the API Gateway model and
- * the OpenAPI specification.
+ * @remarks
+ *
+ * Intepretation of {@link JsonSchemaEx.modelRef} is different between the API
+ * Gateway model and the OpenAPI specification.
+ * ```
  * - interpreted as an external model URL for the API Gateway model.
  * - interpreted as an internal hash for the OpenAPI specification.
+ * ```
+ *
+ * @beta
  */
 export function translateJsonSchemaEx(
   restApi: apigateway.IRestApi,
@@ -253,7 +282,7 @@ export function translateJsonSchemaEx(
   };
 }
 
-// Translates a single schema property.
+/** Translates a single schema property. */
 function translateSingleSchemaProperty(
   restApi: apigateway.IRestApi,
   value: JsonSchemaEx,
@@ -271,7 +300,7 @@ function translateSingleSchemaProperty(
   };
 }
 
-// Translates an array schema property.
+/** Translates an array schema property. */
 function translateArraySchemaProperty(
   restApi: apigateway.IRestApi,
   values: JsonSchemaEx[],
@@ -296,7 +325,7 @@ function translateArraySchemaProperty(
   );
 }
 
-// Translates a one-or-more schema property.
+/** Translates a one-or-more schema property. */
 function translateOneOrMoreSchemaProperty(
   restApi: apigateway.IRestApi,
   values: JsonSchemaEx | JsonSchemaEx[],
@@ -312,7 +341,7 @@ function translateOneOrMoreSchemaProperty(
   }
 }
 
-// Translates a map schema property.
+/** Translates a map schema property. */
 function translateMapSchemaProperty(
   restApi: apigateway.IRestApi,
   map: { [k: string]: JsonSchemaEx },
