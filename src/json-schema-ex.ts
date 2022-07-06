@@ -3,7 +3,8 @@ import { Fn, Stack, aws_apigateway as apigateway } from 'aws-cdk-lib';
 import { resolveResourceId } from './private/utils';
 
 /**
- * Extended `JsonSchema`.
+ * Extended
+ * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html | aws_apigateway.JsonSchema}.
  *
  * @remarks
  *
@@ -18,33 +19,75 @@ import { resolveResourceId } from './private/utils';
 export interface JsonSchemaEx extends apigateway.JsonSchema {
   /** Example value. */
   example?: any;
-  /** Reference to another `IModel`. */
+  /**
+   * Reference to another
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IModel.html | aws_apigateway.IModel}.
+   */
   modelRef?: apigateway.IModel;
-  /** Extension of `additionalItems`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#additionalitems | additionalItems}.
+   */
   additionalItems?: JsonSchemaEx[];
-  /** Extension of `additionalProperties`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#additionalproperties | additionalProperties}.
+   */
   additionalProperties?: boolean | JsonSchemaEx;
-  /** Extension of `allOf`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#allof | allOf}.
+   */
   allOf?: JsonSchemaEx[];
-  /** Extension of `anyOf`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#anyof | anyOf}.
+   */
   anyOf?: JsonSchemaEx[];
-  /** Extension of `contains`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#contains | contains}.
+   */
   contains?: JsonSchemaEx | JsonSchemaEx[];
-  /** Extension of `definitions`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#definitions | definitions}.
+   */
   definitions?: { [k: string]: JsonSchemaEx };
-  /** Extension of `dependencies`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#dependencies | dependencies}.
+   */
   dependencies?: { [k: string]: JsonSchemaEx | string[] };
-  /** Extension of `items`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#items | items}.
+   */
   items?: JsonSchemaEx | JsonSchemaEx[];
-  /** Extension of `not`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#not | not}.
+   */
   not?: JsonSchemaEx;
-  /** Extension of `oneOf`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#oneof | oneOf}.
+   */
   oneOf?: JsonSchemaEx[];
-  /** Extension of `patternProperties`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#patternproperties | patternProperties}.
+   */
   patternProperties?: { [k: string]: JsonSchemaEx };
-  /** Extension of `properties`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#properties-1 | properties}.
+   */
   properties?: { [k: string]: JsonSchemaEx };
-  /** Extension of `propertyNames`. */
+  /**
+   * Extension of
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#propertynames | propertyNames}.
+   */
   propertyNames?: JsonSchemaEx;
 };
 
