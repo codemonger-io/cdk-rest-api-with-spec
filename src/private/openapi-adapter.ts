@@ -7,8 +7,8 @@ import {
   SchemaObject,
 } from 'openapi3-ts';
 
-import { JsonSchemaEx } from './json-schema-ex';
-import { MethodResponseWithSpec } from './models';
+import { JsonSchemaEx } from '../json-schema-ex';
+import { MethodResponseWithSpec } from '../models';
 
 /**
  * Converts a given `JsonSchemaEx` into a `SchemaObject` defined in

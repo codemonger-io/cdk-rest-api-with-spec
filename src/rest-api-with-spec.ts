@@ -23,8 +23,8 @@ import {
   methodResponsesToResponses,
   requestModelsToRequestBody,
   resolveModelResourceId,
-} from './openapi-adapter';
-import { resolveResourceId } from './utils';
+} from './private/openapi-adapter';
+import { resolveResourceId } from './private/utils';
 
 /**
  * Factory method of a

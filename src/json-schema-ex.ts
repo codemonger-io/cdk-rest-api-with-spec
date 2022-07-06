@@ -1,6 +1,6 @@
 import { Fn, Stack, aws_apigateway as apigateway } from 'aws-cdk-lib';
 
-import { resolveModelResourceId } from './openapi-adapter';
+import { resolveModelResourceId } from './private/openapi-adapter';
 
 /**
  * Extended `JsonSchema`.
