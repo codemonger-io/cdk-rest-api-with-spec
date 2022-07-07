@@ -27,6 +27,7 @@ export class ExampleStack extends Stack {
       openApiInfo: {
         version: documentationVersion,
       },
+      openApiOutputPath: 'openapi.json',
       deploy: true,
       deployOptions: {
         stageName: 'staging',

@@ -52,8 +52,6 @@ export interface RestApiWithSpecProps extends apigateway.RestApiProps {
    * @remarks
    *
    * An instance of {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi} will be created if omitted.
-   *
-   * @beta
    */
   newRestApi?: RestApiFactory;
   /**
@@ -64,21 +62,22 @@ export interface RestApiWithSpecProps extends apigateway.RestApiProps {
    * Corresponds to
    * {@link https://spec.openapis.org/oas/latest.html#info-object | info}
    * in the OpenAPI specification.
-   *
-   * @beta
    */
   openApiInfo: Partial<InfoObject> & Pick<InfoObject, 'version'>;
-  // more straightforward form `Omit<InfoObject, 'title'> & {title?: string}`
-  // does not work. it makes `version: any`.
-  //
-  // here are my reasoning,
-  // 1. `Omit` is defined as `Omit<T, K> = Pick<T, Exclude<keyof T, K>>`
-  // 2. `InfoObject` extends `ISpecificationExtension`
-  // 3. `ISpecificationExtension` has `[extensionName: string]: any`
-  // 4. (my guess) most inclusive `string` wins `keyof T` binding
-  // 5. (my guess) `Exclude` leaves `string` because it does not extend "title"
-  // 6. (my guess) `Pick` selects properties accessible with `string`; i.e.,
-  //    every property falls to `any`
+    // more straightforward form `Omit<InfoObject, 'title'> & {title?: string}`
+    // does not work. it makes `version: any`.
+    //
+    // here is my reasoning,
+    // 1. `Omit` is defined as `Omit<T, K> = Pick<T, Exclude<keyof T, K>>`
+    // 2. `InfoObject` extends `ISpecificationExtension`
+    // 3. `ISpecificationExtension` has `[extensionName: string]: any`
+    // 4. (my guess) most inclusive `string` wins `keyof T` binding
+    // 5. (my guess) `Exclude` leaves `string` because it does not extend
+    //    "title"
+    // 6. (my guess) `Pick` selects properties accessible with `string`; i.e.,
+    //    every property falls to `any`
+  /** Path to the output file where the OpenAPI specification is to be saved. */
+  openApiOutputPath: string;
 }
 
 const defaultRestApiFactory: RestApiFactory =
@@ -226,9 +225,10 @@ export class RestApiWithSpec {
 
   /** Synthesizes the OpenAPI specification. */
   private synthesizeOpenApi(): string[] {
-    console.log('synthesizeOpenApi', 'synthesizing the OpenAPI specification');
-    // TODO: let a user choose the destination
-    fs.writeFileSync('openapi.json', this.builder.getSpecAsJson(undefined, 2));
+    fs.writeFileSync(
+      this.props.openApiOutputPath,
+      this.builder.getSpecAsJson(undefined, 2),
+    );
     return [];
   }
 }
