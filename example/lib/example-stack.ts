@@ -24,7 +24,9 @@ export class ExampleStack extends Stack {
 
     const api = RestApiWithSpec.createRestApi(this, 'example-api', {
       description: 'Example of RestApiWithSpec',
-      documentationVersion,
+      openApiInfo: {
+        version: documentationVersion,
+      },
       deploy: true,
       deployOptions: {
         stageName: 'staging',

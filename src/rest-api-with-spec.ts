@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import { Stack, aws_apigateway as apigateway } from 'aws-cdk-lib';
 import { Construct, Node } from 'constructs';
 import {
+  InfoObject,
   OpenApiBuilder,
   OperationObject,
   ParameterObject,
@@ -56,17 +57,28 @@ export interface RestApiWithSpecProps extends apigateway.RestApiProps {
    */
   newRestApi?: RestApiFactory;
   /**
-   * Version of the documentation.
+   * Info object of the OpenAPI specification.
    *
    * @remarks
    *
    * Corresponds to
-   * {@link https://spec.openapis.org/oas/latest.html#info-object | info.version}
+   * {@link https://spec.openapis.org/oas/latest.html#info-object | info}
    * in the OpenAPI specification.
    *
    * @beta
    */
-  documentationVersion: string;
+  openApiInfo: Partial<InfoObject> & Pick<InfoObject, 'version'>;
+  // more straightforward form `Omit<InfoObject, 'title'> & {title?: string}`
+  // does not work. it makes `version: any`.
+  //
+  // here are my reasoning,
+  // 1. `Omit` is defined as `Omit<T, K> = Pick<T, Exclude<keyof T, K>>`
+  // 2. `InfoObject` extends `ISpecificationExtension`
+  // 3. `ISpecificationExtension` has `[extensionName: string]: any`
+  // 4. (my guess) most inclusive `string` wins `keyof T` binding
+  // 5. (my guess) `Exclude` leaves `string` because it does not extend "title"
+  // 6. (my guess) `Pick` selects properties accessible with `string`; i.e.,
+  //    every property falls to `any`
 }
 
 const defaultRestApiFactory: RestApiFactory =
@@ -106,7 +118,8 @@ export class RestApiWithSpec {
       openapi: '3.1.0',
       info: {
         title: restApi.restApiName,
-        version: props.documentationVersion,
+        description: props.description,
+        ...props.openApiInfo,
       },
       paths: {},
       // ends up with crash if no empty defaults
@@ -134,9 +147,18 @@ export class RestApiWithSpec {
    * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}.
    *
    * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApiProps.html#restapiname | props.restApiName}
-   * corresponds to
+   * is the default value of
    * {@link https://spec.openapis.org/oas/latest.html#info-object | info.title}
    * in the OpenAPI specification.
+   * You can override this by specifying the `title` property of
+   * {@link RestApiWithSpecProps.openApiInfo}.
+   *
+   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApiProps.html#description | props.description}
+   * is the default value of
+   * {@link https://spec.openapis.org/oas/latest.html#info-object | info.description}
+   * in the OpenAPI specification.
+   * You can override this by specifying the `description` property of
+   * {@link RestApiWithSpecProps.openApiInfo}.
    *
    * @beta
    */
