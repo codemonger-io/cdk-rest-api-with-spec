@@ -7,7 +7,7 @@ import { JsonSchemaEx } from './json-schema-ex';
 
 /**
  * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}
- * augmented with the features to build the OpenAPI specification.
+ * augmented with the features to build the OpenAPI definition.
  *
  * @beta
  */
@@ -21,29 +21,19 @@ export interface IRestApiWithSpec extends apigateway.RestApi {
    *
    * If you directly change this object, the {@link IRestApiWithSpec} instance
    * cannot sync with your updates.
-   *
-   * @beta
    */
   underlying: apigateway.RestApi;
 
-  /**
-   * Root resource ('/') with the features to build the OpenAPI specification.
-   *
-   * @beta
-   */
+  /** Root resource ('/') with the features to build the OpenAPI definition. */
   root: IBaseResourceWithSpec;
 
-  /**
-   * Adds a new model.
-   *
-   * @beta
-   */
+  /** Adds a new model. */
   addModel(id: string, props: ModelOptionsWithSpec): apigateway.Model;
 }
 
 /**
  * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IResource.html | aws_apigateway.IResource}
- * augmented with the features to build the OpenAPI specification.
+ * augmented with the features to build the OpenAPI definition.
  *
  * @remarks
  *
@@ -58,11 +48,7 @@ export interface IRestApiWithSpec extends apigateway.RestApi {
  * @beta
  */
 export interface IBaseResourceWithSpec extends apigateway.IResource {
-  /**
-   * Default method options with the OpenAPI specification.
-   *
-   * @beta
-   */
+  /** Default method options with the OpenAPI definition. */
   defaultMethodOptions?: MethodOptionsWithSpec;
 
   /**
@@ -71,26 +57,16 @@ export interface IBaseResourceWithSpec extends apigateway.IResource {
    * @remarks
    *
    * `undefined` if this resource represents the root.
-   *
-   * @beta
    */
   parentResource?: IBaseResourceWithSpec;
 
-  /**
-   * Adds a new child resource with the OpenAPI specification.
-   *
-   * @beta
-   */
+  /** Adds a new child resource with the OpenAPI definition. */
   addResource(
     pathPart: string,
     options?: ResourceOptionsWithSpec,
   ): IResourceWithSpec;
 
-  /**
-   * Adds a method with the OpenAPI specification.
-   *
-   * @beta
-   */
+  /** Adds a method with the OpenAPI definition. */
   addMethod(
     httpMethod: string,
     target?: apigateway.Integration,
@@ -100,16 +76,12 @@ export interface IBaseResourceWithSpec extends apigateway.IResource {
 
 /**
  * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.Resource.html | aws_apigateway.Resource}
- * augmented with the features to build the OpenAPI specification.
+ * augmented with the features to build the OpenAPI definition.
  *
  * @beta
  */
 export interface IResourceWithSpec extends apigateway.Resource {
-  /**
-   * Default method options with the OpenAPI specification.
-   *
-   * @beta
-   */
+  /** Default method options with the OpenAPI definition. */
   defaultMethodOptions?: MethodOptionsWithSpec;
 
   /**
@@ -118,26 +90,16 @@ export interface IResourceWithSpec extends apigateway.Resource {
    * @remarks
    *
    * `undefined` if this resource is the root.
-   *
-   * @beta
    */
   parentResource?: IBaseResourceWithSpec;
 
-  /**
-   * Adds a new child resource with the OpenAPI specification.
-   *
-   * @beta
-   */
+  /** Adds a new child resource with the OpenAPI definition. */
   addResource(
     pathPart: string,
     options?: ResourceOptionsWithSpec,
   ): IResourceWithSpec;
 
-  /**
-   * Adds a method with the OpenAPI specification.
-   *
-   * @beta
-   */
+  /** Adds a method with the OpenAPI definition. */
   addMethod(
     httpMethod: string,
     target?: apigateway.Integration,
@@ -147,7 +109,7 @@ export interface IResourceWithSpec extends apigateway.Resource {
 
 /**
  * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.ModelOptions.html | aws_apigateway.ModelOptions}
- * augmented with the properties necessary to build the OpenAPI specification.
+ * augmented with the properties necessary to build the OpenAPI definition.
  *
  * @remarks
  *
@@ -156,48 +118,36 @@ export interface IResourceWithSpec extends apigateway.Resource {
  * @beta
  */
 export interface ModelOptionsWithSpec extends apigateway.ModelOptions {
-  /**
-   * Extended schema definition.
-   *
-   * @beta
-   */
+  /** Extended schema definition. */
   schema: JsonSchemaEx;
 }
 
 /**
  * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.ResourceOptions.html | aws_apigateway.ResourceOptions}
- * augmented with the properties necessary to build the OpenAPI specification.
+ * augmented with the properties necessary to build the OpenAPI definition.
  *
  * @beta
  */
 export interface ResourceOptionsWithSpec extends apigateway.ResourceOptions {
-  /**
-   * Default method options with the OpenAPI specification.
-   *
-   * @beta
-   */
+  /** Default method options with the OpenAPI definition. */
   defaultMethodOptions?: MethodOptionsWithSpec;
 }
 
 /**
  * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodOptions.html | aws_apigateway.MethodOptions}
- * augmented with the properties necessary to build the OpenAPI specification.
+ * augmented with the properties necessary to build the OpenAPI definition.
  *
  * @remarks
  *
  * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodOptions.html#operationname | operationName}
  * corresponds to
  * {@link https://spec.openapis.org/oas/latest.html#operation-object | paths[path][method].operationId}
- * in the OpenAPI specification.
+ * in the OpenAPI definition.
  *
  * @beta
  */
 export interface MethodOptionsWithSpec extends apigateway.MethodOptions {
-  /**
-   * Authorizer augmented with the OpenAPI specification.
-   *
-   * @beta
-   */
+  /** Authorizer augmented with the OpenAPI definition. */
   authorizer?: IAuthorizerWithSpec;
   /**
    * Summary of the method.
@@ -206,9 +156,7 @@ export interface MethodOptionsWithSpec extends apigateway.MethodOptions {
    *
    * Corresponds to
    * {@link https://spec.openapis.org/oas/latest.html#operation-object | paths[path][method].summary}
-   * in the OpenAPI specification.
-   *
-   * @beta
+   * in the OpenAPI definition.
    */
   summary?: string;
   /**
@@ -218,20 +166,18 @@ export interface MethodOptionsWithSpec extends apigateway.MethodOptions {
    *
    * Corresponds to
    * {@link https://spec.openapis.org/oas/latest.html#operation-object | paths[path][method].description}
-   * in the OpenAPI specification.
-   *
-   * @beta
+   * in the OpenAPI definition.
    */
   description?: string;
   /**
-   * Request parameters which maps parameter objects for the OpenAPI
-   * specification instead of boolean values.
+   * Request parameters which maps parameter objects for the OpenAPI definition
+   * instead of boolean values.
    *
    * @remarks
    *
    * Corresponds to
    * {@link https://spec.openapis.org/oas/latest.html#operation-object | paths[path][method].parameters}
-   * in the OpenAPI specification.
+   * in the OpenAPI definition.
    *
    * Possible keys are the same as those of
    * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodOptions.html#requestparameters | requestParameters};
@@ -244,7 +190,7 @@ export interface MethodOptionsWithSpec extends apigateway.MethodOptions {
    * ```
    *
    * A key represents the following properties of the parameter object of the
-   * OpenAPI specification,
+   * OpenAPI definition,
    *
    * ```
    * - name = <parameter-name>
@@ -262,31 +208,23 @@ export interface MethodOptionsWithSpec extends apigateway.MethodOptions {
    * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodOptions.html#requestparameters | requestParameters}
    * and `requestParameterSchemas` are specified, `requestParameterSchemas`
    * precedes.
-   *
-   * @beta
    */
   requestParameterSchemas?: { [key: string]: BaseParameterObject };
   /**
    * Method responses augmented with properties necessary for the OpenAPI
-   * specification.
-   *
-   * @beta
+   * definition.
    */
   methodResponses?: MethodResponseWithSpec[],
 }
 
 /**
  * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodResponse.html | aws_apigateway.MethodResponse}
- * augmented with properties necessary for the OpenAPI specification.
+ * augmented with properties necessary for the OpenAPI definition.
  *
  * @beta
  */
 export interface MethodResponseWithSpec extends apigateway.MethodResponse {
-  /**
-   * Description of the response.
-   *
-   * @beta
-   */
+  /** Description of the response. */
   description?: string;
 }
 
@@ -337,8 +275,6 @@ export class ParameterKey {
    * @throws RangeError
    *
    *   If `key` is not a valid parameter key.
-   *
-   * @beta
    */
   static parseParameterKey(key: string): ParameterKey {
     const match = key.match(/^method\.(request|response)\.(path|querystring|multivaluequerystring|header|multivalueheader)\.(.+)/);

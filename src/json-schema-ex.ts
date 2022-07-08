@@ -169,12 +169,12 @@ type MapSchemaProperty = typeof MAP_SCHEMA_PROPERTIES[number];
 /**
  * Output type of {@link translateJsonSchemaEx}.
  *
- * @beta
+ * @internal
  */
 export type TranslateJsonSchemaExOutput = {
   /** Equivalent `JsonSchema` for the API Gateway model. */
   gatewaySchema: apigateway.JsonSchema;
-  /** Equivalent `JsonSchemaEx` for the OpenAPI specification. */
+  /** Equivalent `JsonSchemaEx` for the OpenAPI definition. */
   openapiSchema: JsonSchemaEx;
 };
 
@@ -184,13 +184,13 @@ export type TranslateJsonSchemaExOutput = {
  * @remarks
  *
  * Intepretation of {@link JsonSchemaEx.modelRef} is different between the API
- * Gateway model and the OpenAPI specification.
+ * Gateway model and the OpenAPI definition.
  * ```
  * - interpreted as an external model URL for the API Gateway model.
- * - interpreted as an internal hash for the OpenAPI specification.
+ * - interpreted as an internal hash for the OpenAPI definition.
  * ```
  *
- * @beta
+ * @internal
  */
 export function translateJsonSchemaEx(
   restApi: apigateway.IRestApi,

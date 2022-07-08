@@ -1,5 +1,5 @@
 /**
- * Describe the Amazon API Gateway and OpenAPI specification at once with CDK.
+ * Describe the Amazon API Gateway and OpenAPI definition at once with CDK.
  *
  * @packageDocumentation
  */

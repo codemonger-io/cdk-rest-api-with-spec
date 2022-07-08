@@ -55,13 +55,13 @@ export interface RestApiWithSpecProps extends apigateway.RestApiProps {
    */
   newRestApi?: RestApiFactory;
   /**
-   * Info object of the OpenAPI specification.
+   * Info object of the OpenAPI definition.
    *
    * @remarks
    *
    * Corresponds to
    * {@link https://spec.openapis.org/oas/latest.html#info-object | info}
-   * in the OpenAPI specification.
+   * in the OpenAPI definition.
    */
   openApiInfo: Partial<InfoObject> & Pick<InfoObject, 'version'>;
     // more straightforward form `Omit<InfoObject, 'title'> & {title?: string}`
@@ -76,7 +76,7 @@ export interface RestApiWithSpecProps extends apigateway.RestApiProps {
     //    "title"
     // 6. (my guess) `Pick` selects properties accessible with `string`; i.e.,
     //    every property falls to `any`
-  /** Path to the output file where the OpenAPI specification is to be saved. */
+  /** Path to an output file where the OpenAPI definition is to be saved. */
   openApiOutputPath: string;
 }
 
@@ -85,13 +85,13 @@ const defaultRestApiFactory: RestApiFactory =
 
 /**
  * CDK construct that provisions an API Gateway REST API endpoint and also
- * synthesizes the OpenAPI specification for it.
+ * synthesizes the OpenAPI definition for it.
  *
  * @remarks
  *
  * NOTE: Please turn on the validation of CDK stacks.
  * If you skip the validation of CDK stacks, this construct cannot synthesize
- * the specification.
+ * the OpenAPI definition.
  * Because this construct utilizes the validation as a trigger to start
  * synthesis.
  *
@@ -101,7 +101,7 @@ const defaultRestApiFactory: RestApiFactory =
  * @beta
  */
 export class RestApiWithSpec {
-  /** builder of the OpenAPI specification. */
+  /** builder of the OpenAPI definition. */
   private builder: OpenApiBuilder;
   /** user-facing object returned by `createRestApi`. */
   private facade: IRestApiWithSpec;
@@ -110,7 +110,6 @@ export class RestApiWithSpec {
 
   private constructor(
     private readonly restApi: apigateway.RestApi,
-    /** Properties. */
     readonly props: RestApiWithSpecProps,
   ) {
     this.builder = new OpenApiBuilder({
@@ -128,7 +127,7 @@ export class RestApiWithSpec {
         securitySchemes: {},
       },
     });
-    // synthesizes the OpenAPI specification at validation.
+    // synthesizes the OpenAPI definition at validation.
     Node.of(restApi).addValidation({
       validate: () => this.synthesizeOpenApi(),
     });
@@ -137,7 +136,7 @@ export class RestApiWithSpec {
   /**
    * Creates an instance of
    * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}
-   * that also synthesizes the OpenAPI specification.
+   * that also synthesizes the OpenAPI definition.
    *
    * @remarks
    *
@@ -148,14 +147,14 @@ export class RestApiWithSpec {
    * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApiProps.html#restapiname | props.restApiName}
    * is the default value of
    * {@link https://spec.openapis.org/oas/latest.html#info-object | info.title}
-   * in the OpenAPI specification.
+   * in the OpenAPI definition.
    * You can override this by specifying the `title` property of
    * {@link RestApiWithSpecProps.openApiInfo}.
    *
    * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApiProps.html#description | props.description}
    * is the default value of
    * {@link https://spec.openapis.org/oas/latest.html#info-object | info.description}
-   * in the OpenAPI specification.
+   * in the OpenAPI definition.
    * You can override this by specifying the `description` property of
    * {@link RestApiWithSpecProps.openApiInfo}.
    *
@@ -189,7 +188,7 @@ export class RestApiWithSpec {
 
   /**
    * Returns the root resource augmented with the features to build the OpenAPI
-   * specification.
+   * definition.
    */
   private getRoot(): IRestApiWithSpec['root'] {
     // reuses the instance
@@ -206,7 +205,7 @@ export class RestApiWithSpec {
 
   /**
    * Returns the `addModel` function augmented with the features to build the
-   * OpenAPI specification.
+   * OpenAPI definition.
    */
   private getAddModel(): IRestApiWithSpec['addModel'] {
     return (id, props) => {
@@ -217,13 +216,13 @@ export class RestApiWithSpec {
       } = translateModelOptionsWithSpec(this.restApi, props);
       const model = this.restApi.addModel(id, modelOptions);
       const modelId = resolveResourceId(Stack.of(this.restApi), model.modelId);
-      // registers the model as a schema
+      // registers the model as a schema component
       this.builder.addSchema(modelId, schema);
       return model;
     };
   }
 
-  /** Synthesizes the OpenAPI specification. */
+  /** Synthesizes the OpenAPI definition. */
   private synthesizeOpenApi(): string[] {
     fs.writeFileSync(
       this.props.openApiOutputPath,
@@ -239,10 +238,8 @@ export class RestApiWithSpec {
  * @remarks
  *
  * Returns an object with the following properties,
- *
  * - `modelOptions`: `ModelOptions` for the underlying `addModel`.
- *
- * - `schema`: `SchemaObject` for the OpenAPI specification.
+ * - `schema`: `SchemaObject` for the OpenAPI definition.
  *
  * @private
  */
@@ -267,7 +264,7 @@ function translateModelOptionsWithSpec(
 }
 
 /**
- * Resource with the OpenAPI specification.
+ * Resource with the OpenAPI definition.
  *
  * @remarks
  *
@@ -289,11 +286,11 @@ class ResourceWithSpec {
 
   /**
    * Augments a given `aws_apigateway.IResource` with the features necessary to
-   * synthesize the OpenAPI specification.
+   * synthesize the OpenAPI definition.
    *
    * @param builder
    *
-   *   `OpenApiBuilder` that builds the entire OpenAPI specification.
+   *   `OpenApiBuilder` that builds the entire OpenAPI definition.
    *
    * @param restApi
    *
@@ -355,7 +352,7 @@ class ResourceWithSpec {
 
   /**
    * Returns the `addResource` function that takes properties necessary to build
-   * the OpenAPI specification.
+   * the OpenAPI definition.
    */
   private getAddResource(): IResourceWithSpec['addResource'] {
     return (pathPart, options) => {
@@ -371,7 +368,7 @@ class ResourceWithSpec {
 
   /**
    * Returns the `addMethod` function that takes properties necessary to build
-   * the OpenAPI specification.
+   * the OpenAPI definition.
    */
   private getAddMethod(): IResourceWithSpec['addMethod'] {
     return (httpMethod, target, options) => {
@@ -396,7 +393,7 @@ class ResourceWithSpec {
         this.builder.addSecurityScheme(
           authorizerId,
           authorizer.securitySchemeObject,
-        ); // this overwrites the security schema every time the authorizer is
+        ); // this overwrites the security scheme every time the authorizer is
            // referenced in a MethodOptions but should not matter
         security = [
           {
@@ -462,7 +459,7 @@ function translatePathPart(
  *
  * Returns an object containing the following fields,
  * - `methodOptions`: `MethodOptions` for the underlying `addMethod`.
- * - `parameters`: `ParameterObject[]` for the OpenAPI specification.
+ * - `parameters`: `ParameterObject[]` for the OpenAPI definition.
  *
  * `options.requestParameters` is first evaluated and translated into
  * equivalent `ParameterObject`s.

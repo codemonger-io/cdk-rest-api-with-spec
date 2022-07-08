@@ -2,7 +2,7 @@ import { aws_apigateway as apigateway } from 'aws-cdk-lib';
 import { SecuritySchemeObject } from 'openapi3-ts';
 
 /**
- * Authorizer augmented with the features to describe the OpenAPI specification.
+ * Authorizer augmented with the features to describe the OpenAPI definition.
  *
  * @beta
  */
