@@ -3,7 +3,6 @@ node_modules
 
 # build artifacts
 /dist
-/api-docs/markdown
 
 # editor artifacts
 *~
