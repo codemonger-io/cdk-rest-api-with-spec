@@ -1,10 +1,12 @@
+English / [日本語](./README.ja.md)
+
 # cdk-rest-api-with-spec
 
 Describe an [Amazon API Gateway (API Gateway)](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) REST API and the [OpenAPI](https://spec.openapis.org/oas/latest.html) definition at once with `cdk-rest-api-with-spec`.
 
 ## For whom is this library?
 
-This library could help you if you would like to write a REST API and the OpenAPI definition at once using the CDK building blocks.
+This library could help you if you would like to write a REST API and the OpenAPI definition at once using the [AWS Cloud Development Kit (CDK)](https://docs.aws.amazon.com/cdk/v2/guide/home.html) building blocks.
 See [_Background_](#background) for more details.
 
 ## Prerequisites
@@ -12,14 +14,14 @@ See [_Background_](#background) for more details.
 You have to install [Node.js](https://nodejs.org/en/) v12 or later.
 I have developed this library with Node.js v16.x.
 
-This library is implemented for the [AWS Cloud Development Kit (CDK)](https://docs.aws.amazon.com/cdk/v2/guide/home.html) **version 2** and does not work with the CDK version 1.
+This library is implemented for the CDK **version 2** (CDK v2) and does not work with the CDK version 1.
 
 ## How to install
 
 Please add this repository to your dependencies.
 
 ```sh
-npm install https://github.com/codemonger-io/cdk-cors-utils.git#v0.1.0
+npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.1.0
 ```
 
 This library is supposed to be used in a CDK v2 project, so it does not include the following modules in the `dependencies` but does in the `peerDependencies`.
@@ -31,7 +33,7 @@ As long as you are working on a CDK v2 project, you should not have to separatel
 ## Getting started
 
 Please use [`RestApiWithSpec.createRestApi`](./api-docs/markdown/cdk-rest-api-with-spec.restapiwithspec.createrestapi.md) instead of the constructor of [`aws_apigateway.RestApi`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html).
-It will return an object which augments [`aws_apigateway.RestApi`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html) with the features to describe the OpenAPI definition.
+This function will return an object which augments [`aws_apigateway.RestApi`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html) with the features to describe the OpenAPI definition.
 
 ```ts
 const api = RestApiWithSpec.createRestApi(this, 'example-api', {
@@ -70,7 +72,7 @@ I think writing a plain OpenAPI definition could bring the pain back to me, thou
 ### Third option
 
 Thus, I want a third option that enables me to **write a REST API and the OpenAPI definition at once** using the CDK building blocks.
-I hope this library would be the solution.
+And I hope this library would be the solution.
 
 ## Difference between SpecRestApi
 
@@ -119,7 +121,7 @@ findByStatus.addMethod(
   }),
   {
     operationName: 'findPetsByStatus',
-    requestParameterSchemas: {
+    requestParameterSchemas: { // NEW!
       'method.request.querystring.status': {
         description: 'Status values that need to be considered for filter',
         required: false,
@@ -135,8 +137,8 @@ findByStatus.addMethod(
 );
 ```
 
-The [`requestParameterSchemas`](./api-docs/markdown/cdk-rest-api-with-spec.methodoptionswithspec.requestparameterschemas.md) is a collection of key-value pairs and takes the same key as the [`requestParameters`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodOptions.html#requestparameters) property, but it maps a key to an object which represents a [Parameter Object](https://spec.openapis.org/oas/latest.html#parameter-object), except for the `name` and `in` properties, in the OpenAPI definition rather than a `boolean` value.
-The `name` and `in` properties of the [Parameter Object](https://spec.openapis.org/oas/latest.html#parameter-object) are inferred from the key.
+The [`requestParameterSchemas`](./api-docs/markdown/cdk-rest-api-with-spec.methodoptionswithspec.requestparameterschemas.md) property is a collection of key-value pairs and takes the same key as the [`requestParameters`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodOptions.html#requestparameters) property, but it maps a key to an object which represents a [Parameter Object](https://spec.openapis.org/oas/latest.html#parameter-object), except for the `name` and `in` properties, in the OpenAPI definition rather than a `boolean` value.
+The `name` and `in` properties of the [Parameter Object](https://spec.openapis.org/oas/latest.html#parameter-object) are derived from the key.
 So the above [`requestParameterSchemas`](./api-docs/markdown/cdk-rest-api-with-spec.methodoptionswithspec.requestparameterschemas.md) will become the following [Parameter Object](https://spec.openapis.org/oas/latest.html#parameter-object),
 
 ```ts
@@ -263,7 +265,8 @@ will become a [Responses Object](https://spec.openapis.org/oas/latest.html#respo
 The CloudFormation resource ID given to an [`aws_apigateway.IModel`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IModel.html) is used to represent the reference path to the [`aws_apigateway.IModel`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IModel.html).
 
 [`JsonSchemaEx`](./api-docs/markdown/cdk-rest-api-with-spec.jsonschemaex.md) which extends [`aws_apigateway.JsonSchema`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html) has an additional property [`modelRef`](./api-docs/markdown/cdk-rest-api-with-spec.jsonschemaex.modelref.md).
-You can reference another [`aws_apigateway.IModel`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IModel.html) by using the [`modelRef`](./api-docs/markdown/cdk-rest-api-with-spec.jsonschemaex.modelref.md) property.
+You can reference another [`aws_apigateway.IModel`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IModel.html) in a schema by using the [`modelRef`](./api-docs/markdown/cdk-rest-api-with-spec.jsonschemaex.modelref.md) property.
+The following is an example of referencing another [`aws_apigateway.IModel`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IModel.html) to specify the type of array items,
 
 ```ts
 const petArrayModel = api.addModel('PetArrayModel', {
