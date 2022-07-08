@@ -46,6 +46,8 @@ const api = RestApiWithSpec.createRestApi(this, 'example-api', {
 });
 ```
 
+After synthesizing the CDK stack, you will find a file `openapi.json` containing the OpenAPI definition created.
+
 Please refer to the [use cases](#use-cases) and the [API documentation](#api-documentation) for more details.
 You can also find a working example in the [`example`](./example) folder.
 

@@ -46,6 +46,8 @@ const api = RestApiWithSpec.createRestApi(this, 'example-api', {
 });
 ```
 
+CDKスタックを合成すると、OpenAPI定義を含む`openapi.json`ファイルが作成されます。
+
 より詳しくは[使用例](#使用例)と[APIドキュメンテーション](#apiドキュメンテーション)をご参照ください。
 実際に動くサンプルも[`example`](./example/README.ja.md)フォルダにあります。
 
