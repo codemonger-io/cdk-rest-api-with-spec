@@ -5,6 +5,6 @@
  */
 
 export * from './authorizer';
-export * from './json-schema-ex';
+export { JsonSchemaEx } from './json-schema-ex';
 export * from './models';
 export * from './rest-api-with-spec';
