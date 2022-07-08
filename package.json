@@ -10,9 +10,9 @@
     "dist/index.js.map"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && api-extractor run --local",
     "prepare": "npm run build",
-    "doc": "npm run build && api-extractor run --local && api-documenter markdown --input-folder ./temp --output-folder ./api-docs/markdown",
+    "doc": "npm run build && api-documenter markdown --input-folder ./temp --output-folder ./api-docs/markdown",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
