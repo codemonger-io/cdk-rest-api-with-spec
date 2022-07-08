@@ -7,7 +7,7 @@ Describe an [Amazon API Gateway (API Gateway)](https://docs.aws.amazon.com/apiga
 ## For whom is this library?
 
 This library could help you if you would like to write a REST API and the OpenAPI definition at once using the [AWS Cloud Development Kit (CDK)](https://docs.aws.amazon.com/cdk/v2/guide/home.html) building blocks.
-See [_Background_](#background) for more details.
+See ["Background"](#background) for more details.
 
 ## Prerequisites
 
@@ -48,7 +48,7 @@ const api = RestApiWithSpec.createRestApi(this, 'example-api', {
 
 After synthesizing the CDK stack, you will find a file `openapi.json` containing the OpenAPI definition created.
 
-Please refer to the [use cases](#use-cases) and the [API documentation](#api-documentation) for more details.
+Please refer to the sections ["Use cases"](#use-cases) and ["API documentation"](#api-documentation) for more details.
 You can also find a working example in the [`example`](./example) folder.
 
 ## Background
