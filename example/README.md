@@ -1,3 +1,5 @@
+English / [日本語](./README.ja.md)
+
 # Example CDK stack
 
 An example CDK stack for `cdk-rest-api-with-spec`.
@@ -16,7 +18,7 @@ The CDK version is 2.
 You have to install [Node.js](https://nodejs.org/en/).
 v16.x should work.
 
-## Development
+## Deploying the CDK stack
 
 ### Setting AWS_PROFILE
 
@@ -48,6 +50,8 @@ npx cdk bootstrap --toolkit-stack-name $TOOLKIT_STACK_NAME --qualifier $TOOLKIT_
 npx cdk synth -c "@aws-cdk/core:bootstrapQualifier=$TOOLKIT_QUALIFIER"
 ```
 
+You will find the OpenAPI definition created or updated in the file `openapi.json`.
+
 ### Deploying the CDK stack
 
 ```sh
@@ -55,3 +59,5 @@ npx cdk deploy --toolkit-stack-name $TOOLKIT_STACK_NAME -c "@aws-cdk/core:bootst
 ```
 
 You will find a CloudFormation stack `api-with-spec-example` created or updated.
+
+You will also find the OpenAPI definition created or updated in the file `openapi.json`.
