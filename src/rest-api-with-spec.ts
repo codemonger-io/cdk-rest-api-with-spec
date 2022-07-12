@@ -524,6 +524,9 @@ function translateRequestParameters(
         name: parsedKey.name,
         in: parsedKey.location,
         required,
+        schema: {
+          type: 'string',
+        },
       });
     }
   }
