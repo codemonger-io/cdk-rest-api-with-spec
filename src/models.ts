@@ -11,19 +11,7 @@ import { JsonSchemaEx } from './json-schema-ex';
  *
  * @beta
  */
-export interface IRestApiWithSpec extends apigateway.RestApi {
-  /**
-   * Underlying
-   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}
-   * object.
-   *
-   * @remarks
-   *
-   * If you directly change this object, the {@link IRestApiWithSpec} instance
-   * cannot sync with your updates.
-   */
-  underlying: apigateway.RestApi;
-
+export interface IRestApiWithSpec extends apigateway.IRestApi {
   /** Root resource ('/') with the features to build the OpenAPI definition. */
   root: IBaseResourceWithSpec;
 
