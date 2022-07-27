@@ -12,7 +12,6 @@ import {
 
 import { translateJsonSchemaEx } from './json-schema-ex';
 import {
-  IBaseResourceWithSpec,
   IResourceWithSpec,
   IRestApiWithSpec,
   MethodOptionsWithSpec,
@@ -184,7 +183,7 @@ class ResourceWithSpec {
     private builder: OpenApiBuilder,
     private restApi: IRestApiWithSpec,
     private resource: apigateway.IResource,
-    private parent?: IBaseResourceWithSpec,
+    private parent?: IResourceWithSpec,
   ) {}
 
   /**
@@ -213,7 +212,7 @@ class ResourceWithSpec {
     builder: OpenApiBuilder,
     restApi: IRestApiWithSpec,
     resource: apigateway.IResource,
-    parent?: IBaseResourceWithSpec,
+    parent?: IResourceWithSpec,
   ): IResourceWithSpec {
     const wrapper = new ResourceWithSpec(builder, restApi, resource, parent);
     wrapper.facade = new Proxy(resource, {
@@ -335,7 +334,7 @@ class ResourceWithSpec {
  * @private
  */
 function translatePathPart(
-  resource: IBaseResourceWithSpec,
+  resource: IResourceWithSpec,
 ): ParameterObject[] | undefined {
   // locates /{name} at the end
   const match = resource.path.match(/\/\{(.+)\}$/);
