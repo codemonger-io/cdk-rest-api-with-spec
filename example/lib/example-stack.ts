@@ -22,7 +22,7 @@ export class ExampleStack extends Stack {
 
     const documentationVersion = '0.0.1';
 
-    const api = RestApiWithSpec.createRestApi(this, 'example-api', {
+    const api = new RestApiWithSpec(this, 'example-api', {
       description: 'Example of RestApiWithSpec',
       openApiInfo: {
         version: documentationVersion,

@@ -22,17 +22,23 @@ v16.x should work.
 
 ### Setting AWS_PROFILE
 
+Example,
+
 ```sh
 export AWS_PROFILE=kikuo-jp
 ```
 
 ### Setting the toolkit stack name
 
+Example,
+
 ```sh
 TOOLKIT_STACK_NAME=api-with-spec-example-toolkit
 ```
 
 ### Setting the synthesizer qualifier
+
+Example,
 
 ```sh
 TOOLKIT_QUALIFIER=apispc2022

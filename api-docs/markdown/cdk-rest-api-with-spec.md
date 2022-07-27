@@ -24,8 +24,7 @@ Describe the Amazon API Gateway and OpenAPI definition at once with CDK.
 |  Interface | Description |
 |  --- | --- |
 |  [IAuthorizerWithSpec](./cdk-rest-api-with-spec.iauthorizerwithspec.md) | <b><i>(BETA)</i></b> Authorizer augmented with the features to describe the OpenAPI definition. |
-|  [IBaseResourceWithSpec](./cdk-rest-api-with-spec.ibaseresourcewithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.IResource](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IResource.html) augmented with the features to build the OpenAPI definition. |
-|  [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.Resource](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.Resource.html) augmented with the features to build the OpenAPI definition. |
+|  [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.IResource](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IResource.html) augmented with the features to build the OpenAPI definition. |
 |  [IRestApiWithSpec](./cdk-rest-api-with-spec.irestapiwithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.RestApi](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html) augmented with the features to build the OpenAPI definition. |
 |  [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) | <b><i>(BETA)</i></b> Extended [aws\_apigateway.JsonSchema](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html)<!-- -->. |
 |  [MethodOptionsWithSpec](./cdk-rest-api-with-spec.methodoptionswithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.MethodOptions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodOptions.html) augmented with the properties necessary to build the OpenAPI definition. |
@@ -33,10 +32,4 @@ Describe the Amazon API Gateway and OpenAPI definition at once with CDK.
 |  [ModelOptionsWithSpec](./cdk-rest-api-with-spec.modeloptionswithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.ModelOptions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.ModelOptions.html) augmented with the properties necessary to build the OpenAPI definition. |
 |  [ResourceOptionsWithSpec](./cdk-rest-api-with-spec.resourceoptionswithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.ResourceOptions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.ResourceOptions.html) augmented with the properties necessary to build the OpenAPI definition. |
 |  [RestApiWithSpecProps](./cdk-rest-api-with-spec.restapiwithspecprops.md) | <b><i>(BETA)</i></b> Properties for [RestApiWithSpec](./cdk-rest-api-with-spec.restapiwithspec.md)<!-- -->. |
-
-## Type Aliases
-
-|  Type Alias | Description |
-|  --- | --- |
-|  [RestApiFactory](./cdk-rest-api-with-spec.restapifactory.md) | <b><i>(BETA)</i></b> Factory method of a [aws\_apigateway.RestApi](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html)<!-- -->. |
 

@@ -1,6 +1,6 @@
 {
   "name": "cdk-rest-api-with-spec",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Describe Amazon API Gateway and OpenAPI at once with CDK",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "build": "rollup -c && api-extractor run --local",
+    "build:tsc": "tsc",
     "prepare": "npm run build",
     "doc": "npm run build && api-documenter markdown --input-folder ./temp --output-folder ./api-docs/markdown",
     "test": "echo \"Error: no test specified\" && exit 1"

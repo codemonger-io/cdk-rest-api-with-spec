@@ -12,24 +12,32 @@ CDK construct that provisions an API Gateway REST API endpoint and also synthesi
 <b>Signature:</b>
 
 ```typescript
-export declare class RestApiWithSpec 
+export declare class RestApiWithSpec extends apigateway.RestApi implements IRestApiWithSpec 
 ```
+<b>Extends:</b> apigateway.RestApi
+
+<b>Implements:</b> [IRestApiWithSpec](./cdk-rest-api-with-spec.irestapiwithspec.md)
 
 ## Remarks
 
 NOTE: Please turn on the validation of CDK stacks. If you skip the validation of CDK stacks, this construct cannot synthesize the OpenAPI definition. Because this construct utilizes the validation as a trigger to start synthesis.
 
-The constructor is private. Use [RestApiWithSpec.createRestApi()](./cdk-rest-api-with-spec.restapiwithspec.createrestapi.md) instead.
+## Constructors
+
+|  Constructor | Modifiers | Description |
+|  --- | --- | --- |
+|  [(constructor)(scope, id, props)](./cdk-rest-api-with-spec.restapiwithspec._constructor_.md) |  | <b><i>(BETA)</i></b> Initializes a REST API with the OpenAPI specification. |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [props](./cdk-rest-api-with-spec.restapiwithspec.props.md) | <code>readonly</code> | [RestApiWithSpecProps](./cdk-rest-api-with-spec.restapiwithspecprops.md) | <b><i>(BETA)</i></b> |
+|  [root](./cdk-rest-api-with-spec.restapiwithspec.root.md) | <code>readonly</code> | [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | <b><i>(BETA)</i></b> Root resource with the OpenAPI definition. |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [createRestApi(scope, id, props)](./cdk-rest-api-with-spec.restapiwithspec.createrestapi.md) | <code>static</code> | <b><i>(BETA)</i></b> Creates an instance of [aws\_apigateway.RestApi](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html) that also synthesizes the OpenAPI definition. |
+|  [addModel(id, props)](./cdk-rest-api-with-spec.restapiwithspec.addmodel.md) |  | <b><i>(BETA)</i></b> Returns the <code>addModel</code> function augmented with the features to build the OpenAPI definition. |
 

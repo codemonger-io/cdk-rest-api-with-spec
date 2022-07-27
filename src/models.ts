@@ -11,21 +11,9 @@ import { JsonSchemaEx } from './json-schema-ex';
  *
  * @beta
  */
-export interface IRestApiWithSpec extends apigateway.RestApi {
-  /**
-   * Underlying
-   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}
-   * object.
-   *
-   * @remarks
-   *
-   * If you directly change this object, the {@link IRestApiWithSpec} instance
-   * cannot sync with your updates.
-   */
-  underlying: apigateway.RestApi;
-
+export interface IRestApiWithSpec extends apigateway.IRestApi {
   /** Root resource ('/') with the features to build the OpenAPI definition. */
-  root: IBaseResourceWithSpec;
+  readonly root: IResourceWithSpec;
 
   /** Adds a new model. */
   addModel(id: string, props: ModelOptionsWithSpec): apigateway.Model;
@@ -37,46 +25,10 @@ export interface IRestApiWithSpec extends apigateway.RestApi {
  *
  * @remarks
  *
- * This interface duplicates {@link IResourceWithSpec} but is necessary because
- * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html#root | aws_apigateway.RestApi.root}
- * might not satisfy
- * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.Resource.html | aws_apigateway.Resource}.
- *
- * It might not be obvious but this interface is a super-interface of
- * {@link IResourceWithSpec}.
- *
- * @beta
- */
-export interface IBaseResourceWithSpec extends apigateway.IResource {
-  /** Default method options with the OpenAPI definition. */
-  defaultMethodOptions?: MethodOptionsWithSpec;
-
-  /**
-   * Parent resource.
-   *
-   * @remarks
-   *
-   * `undefined` if this resource represents the root.
-   */
-  parentResource?: IBaseResourceWithSpec;
-
-  /** Adds a new child resource with the OpenAPI definition. */
-  addResource(
-    pathPart: string,
-    options?: ResourceOptionsWithSpec,
-  ): IResourceWithSpec;
-
-  /** Adds a method with the OpenAPI definition. */
-  addMethod(
-    httpMethod: string,
-    target?: apigateway.Integration,
-    options?: MethodOptionsWithSpec,
-  ): apigateway.Method;
-}
-
-/**
- * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.Resource.html | aws_apigateway.Resource}
- * augmented with the features to build the OpenAPI definition.
+ * Although this interface actually inherits
+ * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.Resource.html | aws_apigateway.Resource},
+ * you should rely on only properties defined in
+ * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IResource.html | aws_apigateway.IResource}.
  *
  * @beta
  */
@@ -91,7 +43,7 @@ export interface IResourceWithSpec extends apigateway.Resource {
    *
    * `undefined` if this resource is the root.
    */
-  parentResource?: IBaseResourceWithSpec;
+  parentResource?: IResourceWithSpec;
 
   /** Adds a new child resource with the OpenAPI definition. */
   addResource(
@@ -208,6 +160,10 @@ export interface MethodOptionsWithSpec extends apigateway.MethodOptions {
    * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodOptions.html#requestparameters | requestParameters}
    * and `requestParameterSchemas` are specified, `requestParameterSchemas`
    * precedes.
+   *
+   * Please refer to
+   * {@link https://github.com/metadevpro/openapi3-ts | OpenApi3-TS}
+   * for more details about `BaseParameterObject`.
    */
   requestParameterSchemas?: { [key: string]: BaseParameterObject };
   /**

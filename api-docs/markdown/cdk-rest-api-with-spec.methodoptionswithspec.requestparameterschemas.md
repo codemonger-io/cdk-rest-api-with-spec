@@ -41,3 +41,5 @@ Values of `required` properties are copied to corresponding boolean values of [r
 
 If both [requestParameters](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodOptions.html#requestparameters) and `requestParameterSchemas` are specified, `requestParameterSchemas` precedes.
 
+Please refer to [OpenApi3-TS](https://github.com/metadevpro/openapi3-ts) for more details about `BaseParameterObject`<!-- -->.
+

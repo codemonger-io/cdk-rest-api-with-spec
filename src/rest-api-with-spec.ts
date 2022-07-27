@@ -12,7 +12,6 @@ import {
 
 import { translateJsonSchemaEx } from './json-schema-ex';
 import {
-  IBaseResourceWithSpec,
   IResourceWithSpec,
   IRestApiWithSpec,
   MethodOptionsWithSpec,
@@ -27,33 +26,11 @@ import {
 import { resolveResourceId } from './private/utils';
 
 /**
- * Factory method of a
- * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}.
- *
- * @beta
- */
-export type RestApiFactory = (
-  scope: Construct,
-  id: string,
-  props?: apigateway.RestApiProps,
-) => apigateway.RestApi;
-
-/**
  * Properties for {@link RestApiWithSpec}.
  *
  * @beta
  */
 export interface RestApiWithSpecProps extends apigateway.RestApiProps {
-  /**
-   * Factory method of a
-   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}
-   * construct.
-   *
-   * @remarks
-   *
-   * An instance of {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi} will be created if omitted.
-   */
-  newRestApi?: RestApiFactory;
   /**
    * Info object of the OpenAPI definition.
    *
@@ -80,9 +57,6 @@ export interface RestApiWithSpecProps extends apigateway.RestApiProps {
   openApiOutputPath: string;
 }
 
-const defaultRestApiFactory: RestApiFactory =
-  (scope, id, props) => new apigateway.RestApi(scope, id, props);
-
 /**
  * CDK construct that provisions an API Gateway REST API endpoint and also
  * synthesizes the OpenAPI definition for it.
@@ -95,27 +69,25 @@ const defaultRestApiFactory: RestApiFactory =
  * Because this construct utilizes the validation as a trigger to start
  * synthesis.
  *
- * The constructor is private.
- * Use {@link RestApiWithSpec.createRestApi} instead.
- *
  * @beta
  */
-export class RestApiWithSpec {
+export class RestApiWithSpec extends apigateway.RestApi implements IRestApiWithSpec {
   /** builder of the OpenAPI definition. */
   private builder: OpenApiBuilder;
-  /** user-facing object returned by `createRestApi`. */
-  private facade: IRestApiWithSpec;
-  /** cached root resource. */
-  private _root: IResourceWithSpec;
+  /** Root resource with the OpenAPI definition. */
+  readonly root: IResourceWithSpec;
 
-  private constructor(
-    private readonly restApi: apigateway.RestApi,
+  /** Initializes a REST API with the OpenAPI specification. */
+  constructor(
+    scope: Construct,
+    id: string,
     readonly props: RestApiWithSpecProps,
   ) {
+    super(scope, id, props);
     this.builder = new OpenApiBuilder({
       openapi: '3.1.0',
       info: {
-        title: restApi.restApiName,
+        title: this.restApiName,
         description: props.description,
         ...props.openApiInfo,
       },
@@ -127,99 +99,29 @@ export class RestApiWithSpec {
         securitySchemes: {},
       },
     });
+    // augments and overrides `root`
+    this.root = ResourceWithSpec.augmentResource(this.builder, this, this.root);
     // synthesizes the OpenAPI definition at validation.
-    Node.of(restApi).addValidation({
+    Node.of(this).addValidation({
       validate: () => this.synthesizeOpenApi(),
     });
-  }
-
-  /**
-   * Creates an instance of
-   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}
-   * that also synthesizes the OpenAPI definition.
-   *
-   * @remarks
-   *
-   * Specify {@link RestApiWithSpecProps.newRestApi | props.newRestApi}
-   * if you want to instantiate a subclass of
-   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html | aws_apigateway.RestApi}.
-   *
-   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApiProps.html#restapiname | props.restApiName}
-   * is the default value of
-   * {@link https://spec.openapis.org/oas/latest.html#info-object | info.title}
-   * in the OpenAPI definition.
-   * You can override this by specifying the `title` property of
-   * {@link RestApiWithSpecProps.openApiInfo}.
-   *
-   * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApiProps.html#description | props.description}
-   * is the default value of
-   * {@link https://spec.openapis.org/oas/latest.html#info-object | info.description}
-   * in the OpenAPI definition.
-   * You can override this by specifying the `description` property of
-   * {@link RestApiWithSpecProps.openApiInfo}.
-   *
-   * @beta
-   */
-  static createRestApi(
-    scope: Construct,
-    id: string,
-    props: RestApiWithSpecProps,
-  ): IRestApiWithSpec {
-    const newRestApi = props?.newRestApi ?? defaultRestApiFactory;
-    const restApi = newRestApi(scope, id, props);
-    const wrapper = new RestApiWithSpec(restApi, props);
-    wrapper.facade = new Proxy(restApi, {
-      get: (target, prop, receiver) => {
-        assert.ok(target === restApi);
-        switch (prop) {
-          case 'underlying':
-            return restApi;
-          case 'root':
-            return wrapper.getRoot();
-          case 'addModel':
-            return wrapper.getAddModel();
-          default:
-            return Reflect.get(target, prop, receiver);
-        }
-      },
-    });
-    return wrapper.facade;
-  }
-
-  /**
-   * Returns the root resource augmented with the features to build the OpenAPI
-   * definition.
-   */
-  private getRoot(): IRestApiWithSpec['root'] {
-    // reuses the instance
-    if (this._root != null) {
-      return this._root;
-    }
-    this._root = ResourceWithSpec.augmentResource(
-      this.builder,
-      this.facade,
-      this.restApi.root,
-    );
-    return this._root;
   }
 
   /**
    * Returns the `addModel` function augmented with the features to build the
    * OpenAPI definition.
    */
-  private getAddModel(): IRestApiWithSpec['addModel'] {
-    return (id, props) => {
-      // translates the schema
-      const {
-        modelOptions,
-        schema,
-      } = translateModelOptionsWithSpec(this.restApi, props);
-      const model = this.restApi.addModel(id, modelOptions);
-      const modelId = resolveResourceId(Stack.of(this.restApi), model.modelId);
-      // registers the model as a schema component
-      this.builder.addSchema(modelId, schema);
-      return model;
-    };
+  addModel(id: string, props: ModelOptionsWithSpec): apigateway.Model {
+    // translates the schema
+    const {
+      modelOptions,
+      schema,
+    } = translateModelOptionsWithSpec(this, props);
+    const model = super.addModel(id, modelOptions);
+    const modelId = resolveResourceId(Stack.of(this), model.modelId);
+    // registers the model as a schema component
+    this.builder.addSchema(modelId, schema);
+    return model;
   }
 
   /** Synthesizes the OpenAPI definition. */
@@ -281,7 +183,7 @@ class ResourceWithSpec {
     private builder: OpenApiBuilder,
     private restApi: IRestApiWithSpec,
     private resource: apigateway.IResource,
-    private parent?: IBaseResourceWithSpec,
+    private parent?: IResourceWithSpec,
   ) {}
 
   /**
@@ -310,7 +212,7 @@ class ResourceWithSpec {
     builder: OpenApiBuilder,
     restApi: IRestApiWithSpec,
     resource: apigateway.IResource,
-    parent?: IBaseResourceWithSpec,
+    parent?: IResourceWithSpec,
   ): IResourceWithSpec {
     const wrapper = new ResourceWithSpec(builder, restApi, resource, parent);
     wrapper.facade = new Proxy(resource, {
@@ -336,7 +238,7 @@ class ResourceWithSpec {
     // creates path-wise parameters shared among all operations under this path
     // 1. creates the default path parameter if the path part is a parameter
     const defaultParameters = translatePathPart(wrapper.facade);
-    // 2. overrides the default path parameter with parameters define in
+    // 2. overrides the default path parameter with parameters defined in
     //    defaultMethodOptions
     const {
       parameters,
@@ -432,7 +334,7 @@ class ResourceWithSpec {
  * @private
  */
 function translatePathPart(
-  resource: IBaseResourceWithSpec,
+  resource: IResourceWithSpec,
 ): ParameterObject[] | undefined {
   // locates /{name} at the end
   const match = resource.path.match(/\/\{(.+)\}$/);
