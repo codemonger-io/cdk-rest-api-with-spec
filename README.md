@@ -21,7 +21,7 @@ This library is implemented for the CDK **version 2** (CDK v2) and does not work
 Please add this repository to your dependencies.
 
 ```sh
-npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.1.1
+npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.2.0
 ```
 
 This library is supposed to be used in a CDK v2 project, so it does not include the following modules in the `dependencies` but does in the `peerDependencies`.
@@ -32,11 +32,10 @@ As long as you are working on a CDK v2 project, you should not have to separatel
 
 ## Getting started
 
-Please use [`RestApiWithSpec.createRestApi`](./api-docs/markdown/cdk-rest-api-with-spec.restapiwithspec.createrestapi.md) instead of the constructor of [`aws_apigateway.RestApi`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html).
-This function will return an object which augments [`aws_apigateway.RestApi`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html) with the features to describe the OpenAPI definition.
+Please instantiate [`RestApiWithSpec`](./api-docs/markdown/cdk-rest-api-with-spec.restapiwithspec.md) instead of [`aws_apigateway.RestApi`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html).
 
 ```ts
-const api = RestApiWithSpec.createRestApi(this, 'example-api', {
+const api = new RestApiWithSpec(this, 'example-api', {
   description: 'Example of RestApiWithSpec',
   openApiInfo: {
     version: '0.0.1',

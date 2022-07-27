@@ -21,7 +21,7 @@
 このレポジトリを依存関係(`dependencies`)に追加してください。
 
 ```sh
-npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.1.1
+npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.2.0
 ```
 
 このライブラリはCDK v2プロジェクトで使用することを想定しており、以下のモジュールは`dependencies`ではなく`peerDependencies`に含んでいます。
@@ -32,11 +32,10 @@ CDK v2プロジェクトで使っている限り、これらを別途インス�
 
 ## 始める
 
-[`aws_apigateway.RestApi`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html)のコンストラクタの代わりに[`RestApiWithSpec.createRestApi`](./api-docs/markdown/cdk-rest-api-with-spec.restapiwithspec.createrestapi.md)を使ってください。
-この関数は[`aws_apigateway.RestApi`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html)をOpenAPI定義を記述する機能で拡張したオブジェクトを返します。
+[`aws_apigateway.RestApi`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html)の代わりに[`RestApiWithSpec`](./api-docs/markdown/cdk-rest-api-with-spec.restapiwithspec.md)をインスタンス化してください。
 
 ```ts
-const api = RestApiWithSpec.createRestApi(this, 'example-api', {
+const api = new RestApiWithSpec(this, 'example-api', {
   description: 'Example of RestApiWithSpec',
   openApiInfo: {
     version: '0.0.1',
