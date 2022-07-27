@@ -19,26 +19,17 @@ export interface IAuthorizerWithSpec extends aws_apigateway.IAuthorizer {
 }
 
 // @beta
-export interface IBaseResourceWithSpec extends aws_apigateway.IResource {
-    addMethod(httpMethod: string, target?: aws_apigateway.Integration, options?: MethodOptionsWithSpec): aws_apigateway.Method;
-    addResource(pathPart: string, options?: ResourceOptionsWithSpec): IResourceWithSpec;
-    defaultMethodOptions?: MethodOptionsWithSpec;
-    parentResource?: IBaseResourceWithSpec;
-}
-
-// @beta
 export interface IResourceWithSpec extends aws_apigateway.Resource {
     addMethod(httpMethod: string, target?: aws_apigateway.Integration, options?: MethodOptionsWithSpec): aws_apigateway.Method;
     addResource(pathPart: string, options?: ResourceOptionsWithSpec): IResourceWithSpec;
     defaultMethodOptions?: MethodOptionsWithSpec;
-    parentResource?: IBaseResourceWithSpec;
+    parentResource?: IResourceWithSpec;
 }
 
 // @beta
-export interface IRestApiWithSpec extends aws_apigateway.RestApi {
+export interface IRestApiWithSpec extends aws_apigateway.IRestApi {
     addModel(id: string, props: ModelOptionsWithSpec): aws_apigateway.Model;
-    root: IBaseResourceWithSpec;
-    underlying: aws_apigateway.RestApi;
+    readonly root: IResourceWithSpec;
 }
 
 // @beta
@@ -109,18 +100,16 @@ export interface ResourceOptionsWithSpec extends aws_apigateway.ResourceOptions 
 }
 
 // @beta
-export type RestApiFactory = (scope: Construct, id: string, props?: aws_apigateway.RestApiProps) => aws_apigateway.RestApi;
-
-// @beta
-export class RestApiWithSpec {
-    static createRestApi(scope: Construct, id: string, props: RestApiWithSpecProps): IRestApiWithSpec;
+export class RestApiWithSpec extends aws_apigateway.RestApi implements IRestApiWithSpec {
+    constructor(scope: Construct, id: string, props: RestApiWithSpecProps);
+    addModel(id: string, props: ModelOptionsWithSpec): aws_apigateway.Model;
     // (undocumented)
     readonly props: RestApiWithSpecProps;
+    readonly root: IResourceWithSpec;
 }
 
 // @beta
 export interface RestApiWithSpecProps extends aws_apigateway.RestApiProps {
-    newRestApi?: RestApiFactory;
     openApiInfo: Partial<InfoObject> & Pick<InfoObject, 'version'>;
     openApiOutputPath: string;
 }

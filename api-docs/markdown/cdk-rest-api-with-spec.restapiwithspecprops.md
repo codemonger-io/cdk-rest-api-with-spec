@@ -20,7 +20,6 @@ export interface RestApiWithSpecProps extends apigateway.RestApiProps
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [newRestApi?](./cdk-rest-api-with-spec.restapiwithspecprops.newrestapi.md) |  | [RestApiFactory](./cdk-rest-api-with-spec.restapifactory.md) | <b><i>(BETA)</i></b> <i>(Optional)</i> Factory method of a [aws\_apigateway.RestApi](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html) construct. |
 |  [openApiInfo](./cdk-rest-api-with-spec.restapiwithspecprops.openapiinfo.md) |  | Partial&lt;InfoObject&gt; &amp; Pick&lt;InfoObject, 'version'&gt; | <b><i>(BETA)</i></b> Info object of the OpenAPI definition. |
 |  [openApiOutputPath](./cdk-rest-api-with-spec.restapiwithspecprops.openapioutputpath.md) |  | string | <b><i>(BETA)</i></b> Path to an output file where the OpenAPI definition is to be saved. |
 

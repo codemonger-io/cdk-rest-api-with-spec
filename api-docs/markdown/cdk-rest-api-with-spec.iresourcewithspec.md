@@ -7,7 +7,7 @@
 > This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
-[aws\_apigateway.Resource](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.Resource.html) augmented with the features to build the OpenAPI definition.
+[aws\_apigateway.IResource](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IResource.html) augmented with the features to build the OpenAPI definition.
 
 <b>Signature:</b>
 
@@ -16,12 +16,16 @@ export interface IResourceWithSpec extends apigateway.Resource
 ```
 <b>Extends:</b> apigateway.Resource
 
+## Remarks
+
+Although this interface actually inherits [aws\_apigateway.Resource](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.Resource.html)<!-- -->, you should rely on only properties defined in [aws\_apigateway.IResource](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IResource.html)<!-- -->.
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [defaultMethodOptions?](./cdk-rest-api-with-spec.iresourcewithspec.defaultmethodoptions.md) |  | [MethodOptionsWithSpec](./cdk-rest-api-with-spec.methodoptionswithspec.md) | <b><i>(BETA)</i></b> <i>(Optional)</i> Default method options with the OpenAPI definition. |
-|  [parentResource?](./cdk-rest-api-with-spec.iresourcewithspec.parentresource.md) |  | [IBaseResourceWithSpec](./cdk-rest-api-with-spec.ibaseresourcewithspec.md) | <b><i>(BETA)</i></b> <i>(Optional)</i> Parent resource. |
+|  [parentResource?](./cdk-rest-api-with-spec.iresourcewithspec.parentresource.md) |  | [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | <b><i>(BETA)</i></b> <i>(Optional)</i> Parent resource. |
 
 ## Methods
 

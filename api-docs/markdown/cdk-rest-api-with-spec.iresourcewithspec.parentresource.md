@@ -12,7 +12,7 @@ Parent resource.
 <b>Signature:</b>
 
 ```typescript
-parentResource?: IBaseResourceWithSpec;
+parentResource?: IResourceWithSpec;
 ```
 
 ## Remarks

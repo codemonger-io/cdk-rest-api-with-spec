@@ -12,16 +12,15 @@
 <b>Signature:</b>
 
 ```typescript
-export interface IRestApiWithSpec extends apigateway.RestApi 
+export interface IRestApiWithSpec extends apigateway.IRestApi 
 ```
-<b>Extends:</b> apigateway.RestApi
+<b>Extends:</b> apigateway.IRestApi
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [root](./cdk-rest-api-with-spec.irestapiwithspec.root.md) |  | [IBaseResourceWithSpec](./cdk-rest-api-with-spec.ibaseresourcewithspec.md) | <b><i>(BETA)</i></b> Root resource ('/') with the features to build the OpenAPI definition. |
-|  [underlying](./cdk-rest-api-with-spec.irestapiwithspec.underlying.md) |  | apigateway.RestApi | <b><i>(BETA)</i></b> Underlying [aws\_apigateway.RestApi](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html) object. |
+|  [root](./cdk-rest-api-with-spec.irestapiwithspec.root.md) | <code>readonly</code> | [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | <b><i>(BETA)</i></b> Root resource ('/') with the features to build the OpenAPI definition. |
 
 ## Methods
 
