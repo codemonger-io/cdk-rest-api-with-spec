@@ -12,6 +12,7 @@
   "scripts": {
     "build": "rollup -c && api-extractor run --local",
     "build:tsc": "tsc",
+    "type-check": "tsc --noEmit",
     "prepare": "npm run build",
     "doc": "npm run build && api-documenter markdown --input-folder ./temp --output-folder ./api-docs/markdown",
     "test": "echo \"Error: no test specified\" && exit 1"
