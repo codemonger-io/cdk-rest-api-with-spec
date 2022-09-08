@@ -337,7 +337,8 @@ function translatePathPart(
   resource: IResourceWithSpec,
 ): ParameterObject[] | undefined {
   // locates /{name} at the end
-  const match = resource.path.match(/\/\{(.+)\}$/);
+  // `name` must not contain a slash: https://github.com/codemonger-io/cdk-rest-api-with-spec/issues/8
+  const match = resource.path.match(/\/\{([^\/]+)\}$/);
   if (match == null) {
     return undefined;
   }
