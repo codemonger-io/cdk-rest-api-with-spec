@@ -16,7 +16,7 @@ CDKのバージョンは2です。
 ### Node.jsのインストール
 
 [Node.js](https://nodejs.org/en/)をインストールしてください。
-v16.xで大丈夫なはずです。
+v18.xで大丈夫なはずです。
 
 ## CDKスタックをデプロイする
 
@@ -47,13 +47,13 @@ TOOLKIT_QUALIFIER=apispc2022
 ### ツールキットスタックのBootstrap
 
 ```sh
-npx cdk bootstrap --toolkit-stack-name $TOOLKIT_STACK_NAME --qualifier $TOOLKIT_QUALIFIER
+pnpm cdk bootstrap --toolkit-stack-name $TOOLKIT_STACK_NAME --qualifier $TOOLKIT_QUALIFIER
 ```
 
 ### CloudFormationテンプレートを合成する
 
 ```sh
-npx cdk synth -c "@aws-cdk/core:bootstrapQualifier=$TOOLKIT_QUALIFIER"
+pnpm cdk synth -c "@aws-cdk/core:bootstrapQualifier=$TOOLKIT_QUALIFIER"
 ```
 
 OpenAPI定義を含む`openapi.json`ファイルが作成または更新されます。
@@ -61,7 +61,7 @@ OpenAPI定義を含む`openapi.json`ファイルが作成または更新され�
 ### CDKスタックをデプロイする
 
 ```sh
-npx cdk deploy --toolkit-stack-name $TOOLKIT_STACK_NAME -c "@aws-cdk/core:bootstrapQualifier=$TOOLKIT_QUALIFIER"
+pnpm cdk deploy --toolkit-stack-name $TOOLKIT_STACK_NAME -c "@aws-cdk/core:bootstrapQualifier=$TOOLKIT_QUALIFIER"
 ```
 
 `api-with-spec-example`というCloudFormationスタックが作成または更新されます。
