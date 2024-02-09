@@ -1,0 +1,222 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "example-api",
+    "description": "Example of RestApiWithSpec",
+    "version": "0.0.1"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Get root",
+        "description": "Returns the root object",
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/pet": {
+      "post": {
+        "summary": "Add pet",
+        "description": "Adds a new pet to the store",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/exampleapiPetModel43E308F7"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "ExampleAuthorizer6BF672C7": []
+          }
+        ]
+      }
+    },
+    "/pet/findByStatus": {
+      "get": {
+        "summary": "Finds Pets by status",
+        "description": "Multiple status values can be provided with comma separated strings",
+        "parameters": [
+          {
+            "description": "Status values that need to be considered for filter",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "available",
+                "pending",
+                "sold"
+              ],
+              "default": "available"
+            },
+            "name": "status",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/exampleapiPetArrayModel74DA5883"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pet/{petId}": {
+      "parameters": [
+        {
+          "description": "ID of pet",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "example": 123
+          },
+          "name": "petId",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "summary": "Find pet by ID",
+        "description": "Returns a single pet",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/exampleapiPetModel43E308F7"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        }
+      },
+      "post": {
+        "summary": "Updates a pet in the store with form data",
+        "description": "",
+        "parameters": [
+          {
+            "description": "ID of pet that needs to be updated",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 123
+            },
+            "name": "petId",
+            "in": "path"
+          },
+          {
+            "description": "Name of pet that needs to be updated",
+            "schema": {
+              "type": "string"
+            },
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "description": "Status of pet that needs to be updated",
+            "schema": {
+              "type": "string"
+            },
+            "name": "status",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "ExampleAuthorizer6BF672C7": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "exampleapiPetModel43E308F7": {
+        "description": "A pet",
+        "properties": {
+          "id": {
+            "description": "ID of the pet",
+            "example": 123,
+            "format": "int64",
+            "type": "integer"
+          },
+          "name": {
+            "description": "Name of the pet",
+            "example": "Monaka",
+            "type": "string"
+          },
+          "status": {
+            "description": "Status of the pet",
+            "enum": [
+              "available",
+              "pending",
+              "sold"
+            ],
+            "example": "sold",
+            "type": "string"
+          }
+        },
+        "title": "pet",
+        "type": "object"
+      },
+      "exampleapiPetArrayModel74DA5883": {
+        "description": "An array of pets",
+        "example": [
+          {
+            "id": 123,
+            "name": "Monaka",
+            "status": "sold"
+          }
+        ],
+        "items": {
+          "$ref": "#/components/schemas/exampleapiPetModel43E308F7"
+        },
+        "title": "petArray",
+        "type": "array"
+      }
+    },
+    "securitySchemes": {
+      "ExampleAuthorizer6BF672C7": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  }
+}
