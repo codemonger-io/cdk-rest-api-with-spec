@@ -45,7 +45,7 @@ export class ExampleStack extends Stack {
         {
           handler: new nodejs.NodejsFunction(this, 'authorizer', {
             description: 'Example authorizer',
-            runtime: lambda.Runtime.NODEJS_16_X,
+            runtime: lambda.Runtime.NODEJS_18_X,
           }),
         },
       ),
