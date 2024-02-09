@@ -1,6 +1,6 @@
 {
   "name": "cdk-rest-api-with-spec",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Describe Amazon API Gateway and OpenAPI at once with CDK",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -32,15 +32,15 @@
     "openapi3-ts": "^2.0.2"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.18.1",
-    "@microsoft/api-extractor": "^7.28.3",
-    "@rollup/plugin-typescript": "^8.3.3",
-    "@types/node": "10.17.27",
+    "@microsoft/api-documenter": "^7.23.23",
+    "@microsoft/api-extractor": "^7.40.1",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "^20.11.17",
     "aws-cdk-lib": "^2.31.0",
     "constructs": "^10.1.43",
-    "rollup": "^2.75.7",
-    "tslib": "^2.4.0",
-    "typescript": "^4.7.4"
+    "rollup": "^4.9.6",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
   },
   "peerDependecnies": {
     "aws-cdk-lib": "^2.0",
