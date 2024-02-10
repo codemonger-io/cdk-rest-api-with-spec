@@ -17,6 +17,7 @@ import {
   MethodOptionsWithSpec,
   ModelOptionsWithSpec,
   ParameterKey,
+  ResourceOptionsWithSpec,
 } from './models';
 import {
   jsonSchemaToSchemaObject,
@@ -258,10 +259,16 @@ class ResourceWithSpec {
    */
   private getAddResource(): IResourceWithSpec['addResource'] {
     return (pathPart, options) => {
+      // merges requestParameterSchemas in defaultMethodOptions
+      // so that the one in `options` does not replace that of the parent
+      const mergedOptions = passDownRequestParameterSchemas(
+        this.facade.defaultMethodOptions,
+        options,
+      );
       return ResourceWithSpec.augmentResource(
         this.builder,
         this.restApi,
-        this.resource.addResource(pathPart, options),
+        this.resource.addResource(pathPart, mergedOptions),
         this.facade,
       );
       // TODO: interpret options
@@ -505,4 +512,53 @@ function mergeParameterObjects(
     }
   }
   return mergedParameters;
+}
+
+/**
+ * Passes down `requestParameterSchemas` from parent's `defaultMethodOptions`
+ * to child resource options.
+ *
+ * @remarks
+ *
+ * Merges `parentDefaultMethodOptions.requestParameterSchemas` with
+ * `options.defaultMethodOptions.requestParameterSchemas`.
+ *
+ * @returns
+ *
+ *   New `ResourceOptionsWithSpec` instance that has the merged
+ *   `defaultMethodOptions.requestParameterSchemas` and the other fields from
+ *   `options`.
+ *
+ *   `options` if `parentDefaultMethodOptions` is `undefined`,
+ *   or if `parentDefaultMethodOptions.requestParameterSchemas` is `undefined`,
+ *   or if `options` is `undefined`,
+ *   or if `options.defaultMethodOptions` is `undefined`,
+ *   or if `options.defaultMethodOptions.requestParameterSchemas` is
+ *   `undefined`.
+ *
+ * @private
+ */
+function passDownRequestParameterSchemas(
+  parentDefaultMethodOptions?: MethodOptionsWithSpec,
+  options?: ResourceOptionsWithSpec,
+): ResourceOptionsWithSpec | undefined {
+  if (
+    parentDefaultMethodOptions == null ||
+    parentDefaultMethodOptions.requestParameterSchemas == null ||
+    options == null ||
+    options.defaultMethodOptions == null ||
+    options.defaultMethodOptions.requestParameterSchemas == null
+  ) {
+    return options;
+  }
+  return {
+    ...options,
+    defaultMethodOptions: {
+      ...options.defaultMethodOptions,
+      requestParameterSchemas: {
+        ...parentDefaultMethodOptions.requestParameterSchemas,
+        ...options.defaultMethodOptions.requestParameterSchemas,
+      },
+    },
+  };
 }
