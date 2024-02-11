@@ -4,12 +4,12 @@
 
 ## ParameterKey.parseParameterKey() method
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 Parses a given request or response parameter key.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static parseParameterKey(key: string): ParameterKey;
@@ -21,7 +21,7 @@ static parseParameterKey(key: string): ParameterKey;
 |  --- | --- | --- |
 |  key | string | Parameter key to be parsed. |
 
-<b>Returns:</b>
+**Returns:**
 
 [ParameterKey](./cdk-rest-api-with-spec.parameterkey.md)
 

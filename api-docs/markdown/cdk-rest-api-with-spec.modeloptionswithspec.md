@@ -4,17 +4,17 @@
 
 ## ModelOptionsWithSpec interface
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 [aws\_apigateway.ModelOptions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.ModelOptions.html) augmented with the properties necessary to build the OpenAPI definition.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface ModelOptionsWithSpec extends apigateway.ModelOptions 
 ```
-<b>Extends:</b> apigateway.ModelOptions
+**Extends:** apigateway.ModelOptions
 
 ## Remarks
 
@@ -24,5 +24,5 @@ Has an extended `schema`<!-- -->.
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [schema](./cdk-rest-api-with-spec.modeloptionswithspec.schema.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) | <b><i>(BETA)</i></b> Extended schema definition. |
+|  [schema](./cdk-rest-api-with-spec.modeloptionswithspec.schema.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) | **_(BETA)_** Extended schema definition. |
 

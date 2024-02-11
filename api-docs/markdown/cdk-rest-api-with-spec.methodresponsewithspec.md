@@ -4,21 +4,21 @@
 
 ## MethodResponseWithSpec interface
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 [aws\_apigateway.MethodResponse](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodResponse.html) augmented with properties necessary for the OpenAPI definition.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface MethodResponseWithSpec extends apigateway.MethodResponse 
 ```
-<b>Extends:</b> apigateway.MethodResponse
+**Extends:** apigateway.MethodResponse
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [description?](./cdk-rest-api-with-spec.methodresponsewithspec.description.md) |  | string | <b><i>(BETA)</i></b> <i>(Optional)</i> Description of the response. |
+|  [description?](./cdk-rest-api-with-spec.methodresponsewithspec.description.md) |  | string | **_(BETA)_** _(Optional)_ Description of the response. |
 

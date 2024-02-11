@@ -23,10 +23,10 @@ devDependencies:
     specifier: ^20.11.17
     version: 20.11.17
   aws-cdk-lib:
-    specifier: ^2.31.0
+    specifier: ^2.126.0
     version: 2.126.0(constructs@10.3.0)
   constructs:
-    specifier: ^10.1.43
+    specifier: ^10.3.0
     version: 10.3.0
   rollup:
     specifier: ^4.9.6

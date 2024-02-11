@@ -4,21 +4,21 @@
 
 ## IAuthorizerWithSpec interface
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 Authorizer augmented with the features to describe the OpenAPI definition.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface IAuthorizerWithSpec extends apigateway.IAuthorizer 
 ```
-<b>Extends:</b> apigateway.IAuthorizer
+**Extends:** apigateway.IAuthorizer
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [securitySchemeObject?](./cdk-rest-api-with-spec.iauthorizerwithspec.securityschemeobject.md) |  | SecuritySchemeObject | <b><i>(BETA)</i></b> <i>(Optional)</i> Security scheme object representing this authorizer. |
+|  [securitySchemeObject?](./cdk-rest-api-with-spec.iauthorizerwithspec.securityschemeobject.md) |  | SecuritySchemeObject | **_(BETA)_** _(Optional)_ Security scheme object representing this authorizer. |
 

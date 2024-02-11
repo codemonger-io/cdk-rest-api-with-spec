@@ -4,27 +4,27 @@
 
 ## IRestApiWithSpec interface
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 [aws\_apigateway.RestApi](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html) augmented with the features to build the OpenAPI definition.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface IRestApiWithSpec extends apigateway.IRestApi 
 ```
-<b>Extends:</b> apigateway.IRestApi
+**Extends:** apigateway.IRestApi
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [root](./cdk-rest-api-with-spec.irestapiwithspec.root.md) | <code>readonly</code> | [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | <b><i>(BETA)</i></b> Root resource ('/') with the features to build the OpenAPI definition. |
+|  [root](./cdk-rest-api-with-spec.irestapiwithspec.root.md) | <code>readonly</code> | [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | **_(BETA)_** Root resource ('/') with the features to build the OpenAPI definition. |
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [addModel(id, props)](./cdk-rest-api-with-spec.irestapiwithspec.addmodel.md) | <b><i>(BETA)</i></b> Adds a new model. |
+|  [addModel(id, props)](./cdk-rest-api-with-spec.irestapiwithspec.addmodel.md) | **_(BETA)_** Adds a new model. |
 

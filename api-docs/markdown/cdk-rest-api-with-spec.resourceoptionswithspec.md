@@ -4,21 +4,21 @@
 
 ## ResourceOptionsWithSpec interface
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 [aws\_apigateway.ResourceOptions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.ResourceOptions.html) augmented with the properties necessary to build the OpenAPI definition.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface ResourceOptionsWithSpec extends apigateway.ResourceOptions 
 ```
-<b>Extends:</b> apigateway.ResourceOptions
+**Extends:** apigateway.ResourceOptions
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [defaultMethodOptions?](./cdk-rest-api-with-spec.resourceoptionswithspec.defaultmethodoptions.md) |  | [MethodOptionsWithSpec](./cdk-rest-api-with-spec.methodoptionswithspec.md) | <b><i>(BETA)</i></b> <i>(Optional)</i> Default method options with the OpenAPI definition. |
+|  [defaultMethodOptions?](./cdk-rest-api-with-spec.resourceoptionswithspec.defaultmethodoptions.md) |  | [MethodOptionsWithSpec](./cdk-rest-api-with-spec.methodoptionswithspec.md) | **_(BETA)_** _(Optional)_ Default method options with the OpenAPI definition. |
 

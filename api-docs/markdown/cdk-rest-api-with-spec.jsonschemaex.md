@@ -4,17 +4,17 @@
 
 ## JsonSchemaEx interface
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 Extended [aws\_apigateway.JsonSchema](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html)<!-- -->.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface JsonSchemaEx extends apigateway.JsonSchema 
 ```
-<b>Extends:</b> apigateway.JsonSchema
+**Extends:** apigateway.JsonSchema
 
 ## Remarks
 
@@ -29,19 +29,19 @@ Introduces the following new properties,
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [additionalItems?](./cdk-rest-api-with-spec.jsonschemaex.additionalitems.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\] | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [additionalItems](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#additionalitems)<!-- -->. |
-|  [additionalProperties?](./cdk-rest-api-with-spec.jsonschemaex.additionalproperties.md) |  | boolean \| [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [additionalProperties](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#additionalproperties)<!-- -->. |
-|  [allOf?](./cdk-rest-api-with-spec.jsonschemaex.allof.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\] | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [allOf](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#allof)<!-- -->. |
-|  [anyOf?](./cdk-rest-api-with-spec.jsonschemaex.anyof.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\] | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [anyOf](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#anyof)<!-- -->. |
-|  [contains?](./cdk-rest-api-with-spec.jsonschemaex.contains.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) \| [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\] | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [contains](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#contains)<!-- -->. |
-|  [definitions?](./cdk-rest-api-with-spec.jsonschemaex.definitions.md) |  | { \[k: string\]: [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->; } | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [definitions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#definitions)<!-- -->. |
-|  [dependencies?](./cdk-rest-api-with-spec.jsonschemaex.dependencies.md) |  | { \[k: string\]: [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) \| string\[\]; } | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [dependencies](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#dependencies)<!-- -->. |
-|  [example?](./cdk-rest-api-with-spec.jsonschemaex.example.md) |  | any | <b><i>(BETA)</i></b> <i>(Optional)</i> Example value. |
-|  [items?](./cdk-rest-api-with-spec.jsonschemaex.items.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) \| [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\] | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [items](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#items)<!-- -->. |
-|  [modelRef?](./cdk-rest-api-with-spec.jsonschemaex.modelref.md) |  | apigateway.IModel | <b><i>(BETA)</i></b> <i>(Optional)</i> Reference to another [aws\_apigateway.IModel](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IModel.html)<!-- -->. |
-|  [not?](./cdk-rest-api-with-spec.jsonschemaex.not.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [not](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#not)<!-- -->. |
-|  [oneOf?](./cdk-rest-api-with-spec.jsonschemaex.oneof.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\] | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [oneOf](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#oneof)<!-- -->. |
-|  [patternProperties?](./cdk-rest-api-with-spec.jsonschemaex.patternproperties.md) |  | { \[k: string\]: [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->; } | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [patternProperties](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#patternproperties)<!-- -->. |
-|  [properties?](./cdk-rest-api-with-spec.jsonschemaex.properties.md) |  | { \[k: string\]: [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->; } | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [properties](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#properties-1)<!-- -->. |
-|  [propertyNames?](./cdk-rest-api-with-spec.jsonschemaex.propertynames.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) | <b><i>(BETA)</i></b> <i>(Optional)</i> Extension of [propertyNames](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#propertynames)<!-- -->. |
+|  [additionalItems?](./cdk-rest-api-with-spec.jsonschemaex.additionalitems.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\] | **_(BETA)_** _(Optional)_ Extension of [additionalItems](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#additionalitems)<!-- -->. |
+|  [additionalProperties?](./cdk-rest-api-with-spec.jsonschemaex.additionalproperties.md) |  | boolean \| [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) | **_(BETA)_** _(Optional)_ Extension of [additionalProperties](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#additionalproperties)<!-- -->. |
+|  [allOf?](./cdk-rest-api-with-spec.jsonschemaex.allof.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\] | **_(BETA)_** _(Optional)_ Extension of [allOf](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#allof)<!-- -->. |
+|  [anyOf?](./cdk-rest-api-with-spec.jsonschemaex.anyof.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\] | **_(BETA)_** _(Optional)_ Extension of [anyOf](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#anyof)<!-- -->. |
+|  [contains?](./cdk-rest-api-with-spec.jsonschemaex.contains.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) \| [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\] | **_(BETA)_** _(Optional)_ Extension of [contains](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#contains)<!-- -->. |
+|  [definitions?](./cdk-rest-api-with-spec.jsonschemaex.definitions.md) |  | { \[k: string\]: [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->; } | **_(BETA)_** _(Optional)_ Extension of [definitions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#definitions)<!-- -->. |
+|  [dependencies?](./cdk-rest-api-with-spec.jsonschemaex.dependencies.md) |  | { \[k: string\]: [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) \| string\[\]; } | **_(BETA)_** _(Optional)_ Extension of [dependencies](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#dependencies)<!-- -->. |
+|  [example?](./cdk-rest-api-with-spec.jsonschemaex.example.md) |  | any | **_(BETA)_** _(Optional)_ Example value. |
+|  [items?](./cdk-rest-api-with-spec.jsonschemaex.items.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) \| [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\] | **_(BETA)_** _(Optional)_ Extension of [items](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#items)<!-- -->. |
+|  [modelRef?](./cdk-rest-api-with-spec.jsonschemaex.modelref.md) |  | apigateway.IModel | **_(BETA)_** _(Optional)_ Reference to another [aws\_apigateway.IModel](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IModel.html)<!-- -->. |
+|  [not?](./cdk-rest-api-with-spec.jsonschemaex.not.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) | **_(BETA)_** _(Optional)_ Extension of [not](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#not)<!-- -->. |
+|  [oneOf?](./cdk-rest-api-with-spec.jsonschemaex.oneof.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\] | **_(BETA)_** _(Optional)_ Extension of [oneOf](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#oneof)<!-- -->. |
+|  [patternProperties?](./cdk-rest-api-with-spec.jsonschemaex.patternproperties.md) |  | { \[k: string\]: [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->; } | **_(BETA)_** _(Optional)_ Extension of [patternProperties](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#patternproperties)<!-- -->. |
+|  [properties?](./cdk-rest-api-with-spec.jsonschemaex.properties.md) |  | { \[k: string\]: [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->; } | **_(BETA)_** _(Optional)_ Extension of [properties](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#properties-1)<!-- -->. |
+|  [propertyNames?](./cdk-rest-api-with-spec.jsonschemaex.propertynames.md) |  | [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) | **_(BETA)_** _(Optional)_ Extension of [propertyNames](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#propertynames)<!-- -->. |
 
