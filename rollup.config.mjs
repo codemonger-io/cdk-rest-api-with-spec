@@ -8,6 +8,13 @@ export default [
       format: 'cjs',
       sourcemap: true,
     },
+    external: [
+      'assert',
+      'aws-cdk-lib',
+      'constructs',
+      'fs',
+      'openapi3-ts'
+    ],
     plugins: [typescript()],
   },
 ];
