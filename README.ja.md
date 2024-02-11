@@ -21,7 +21,7 @@
 このレポジトリを依存関係(`dependencies`)に追加してください。
 
 ```sh
-npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.2.2
+npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.2.3
 ```
 
 このライブラリはCDK v2プロジェクトで使用することを想定しており、以下のモジュールは`dependencies`ではなく`peerDependencies`に含んでいます。
@@ -297,7 +297,7 @@ const authorizer = augmentAuthorizer(
     {
       handler: new nodejs.NodejsFunction(this, 'authorizer', {
         description: 'Example authorizer',
-        runtime: lambda.Runtime.NODEJS_16_X,
+        runtime: lambda.Runtime.NODEJS_18_X,
       }),
     },
   ),
