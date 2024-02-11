@@ -28,6 +28,7 @@ export class ExampleStack extends Stack {
         version: documentationVersion,
       },
       openApiOutputPath: 'openapi.json',
+      binaryMediaTypes: ['image/png'],
       deploy: true,
       deployOptions: {
         stageName: 'staging',
@@ -55,6 +56,11 @@ export class ExampleStack extends Stack {
         name: 'Authorization',
       },
     );
+    // returns a tiny image
+    const getImageLambda = new nodejs.NodejsFunction(this, 'getimage', {
+      description: 'Returns a tiny image',
+      runtime: lambda.Runtime.NODEJS_18_X,
+    });
 
     // validators
     // - full request validator
@@ -352,6 +358,67 @@ export class ExampleStack extends Stack {
           {
             statusCode: '405',
             description: 'Invalid input',
+          },
+        ],
+      },
+    );
+    // /pet/{petId}/photo
+    const petPhoto = petId.addResource('photo')
+    // /pet/{petId}/photo/{photoId}
+    const petPhotoId = petPhoto.addResource('{photoId}', {
+      defaultMethodOptions: {
+        requestParameterSchemas: {
+          'method.request.path.photoId': {
+            description: 'ID of pet\'s photo',
+            required: true,
+            schema: {
+              type: apigateway.JsonSchemaType.INTEGER,
+              format: 'int64',
+              example: 123,
+            },
+          },
+        },
+      },
+    });
+    // - GET
+    petPhotoId.addMethod(
+      'GET',
+      new apigateway.LambdaIntegration(getImageLambda, {
+        proxy: false,
+        passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
+        requestTemplates: {
+          'application/json': '{"statusCode": 200}',
+        },
+        integrationResponses: [
+          {
+            statusCode: '200',
+            contentHandling: apigateway.ContentHandling.CONVERT_TO_BINARY,
+            responseParameters: {
+              'method.response.header.Content-Type': "'image/png'",
+            },
+          },
+        ],
+      }),
+      {
+        operationName: 'getPetPhotoById',
+        summary: 'Find pet photo by ID',
+        description: 'Returns a single pet photo',
+        requestValidator: fullRequestValidator,
+        methodResponses: [
+          {
+            statusCode: '200',
+            description: 'successful operation',
+            responseParameters: {
+              'method.response.header.Content-Type': true,
+            },
+          },
+          {
+            statusCode: '400',
+            description: 'Invalid ID supplied',
+          },
+          {
+            statusCode: '404',
+            description: 'Pet photo not found',
           },
         ],
       },
