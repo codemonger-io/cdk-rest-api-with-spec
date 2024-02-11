@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "aws-cdk-lib": "^2.126.0",
-    "cdk-rest-api-with-spec": "github:codemonger-io/cdk-rest-api-with-spec#v0.2.2",
+    "cdk-rest-api-with-spec": "github:codemonger-io/cdk-rest-api-with-spec#v0.2.3",
     "constructs": "^10.3.0",
     "source-map-support": "^0.5.21"
   }

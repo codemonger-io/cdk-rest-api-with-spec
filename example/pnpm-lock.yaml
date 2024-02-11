@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.126.0
     version: 2.126.0(constructs@10.3.0)
   cdk-rest-api-with-spec:
-    specifier: github:codemonger-io/cdk-rest-api-with-spec#v0.2.2
-    version: github.com/codemonger-io/cdk-rest-api-with-spec/b8722a5b9371894d2b066cf7cdea6c0097a50f61
+    specifier: github:codemonger-io/cdk-rest-api-with-spec#v0.2.3
+    version: github.com/codemonger-io/cdk-rest-api-with-spec/e4d5f729dc4ba65fdcf1670ed777a0f88b48f96f
   constructs:
     specifier: ^10.3.0
     version: 10.3.0
@@ -2506,11 +2506,12 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/codemonger-io/cdk-rest-api-with-spec/b8722a5b9371894d2b066cf7cdea6c0097a50f61:
-    resolution: {tarball: https://codeload.github.com/codemonger-io/cdk-rest-api-with-spec/tar.gz/b8722a5b9371894d2b066cf7cdea6c0097a50f61}
+  github.com/codemonger-io/cdk-rest-api-with-spec/e4d5f729dc4ba65fdcf1670ed777a0f88b48f96f:
+    resolution: {tarball: https://codeload.github.com/codemonger-io/cdk-rest-api-with-spec/tar.gz/e4d5f729dc4ba65fdcf1670ed777a0f88b48f96f}
     name: cdk-rest-api-with-spec
-    version: 0.2.2
+    version: 0.2.3
     engines: {node: '>=12.0'}
+    prepare: true
     requiresBuild: true
     dependencies:
       openapi3-ts: 2.0.2
