@@ -4,12 +4,12 @@
 
 ## IResourceWithSpec.addResource() method
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 Adds a new child resource with the OpenAPI definition.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 addResource(pathPart: string, options?: ResourceOptionsWithSpec): IResourceWithSpec;
@@ -20,9 +20,9 @@ addResource(pathPart: string, options?: ResourceOptionsWithSpec): IResourceWithS
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  pathPart | string |  |
-|  options | [ResourceOptionsWithSpec](./cdk-rest-api-with-spec.resourceoptionswithspec.md) | <i>(Optional)</i> |
+|  options | [ResourceOptionsWithSpec](./cdk-rest-api-with-spec.resourceoptionswithspec.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md)
 

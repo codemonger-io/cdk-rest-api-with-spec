@@ -4,12 +4,12 @@
 
 ## JsonSchemaEx.properties property
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 Extension of [properties](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#properties-1)<!-- -->.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 properties?: {

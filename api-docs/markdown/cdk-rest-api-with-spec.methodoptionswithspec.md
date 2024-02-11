@@ -4,17 +4,17 @@
 
 ## MethodOptionsWithSpec interface
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 [aws\_apigateway.MethodOptions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodOptions.html) augmented with the properties necessary to build the OpenAPI definition.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface MethodOptionsWithSpec extends apigateway.MethodOptions 
 ```
-<b>Extends:</b> apigateway.MethodOptions
+**Extends:** apigateway.MethodOptions
 
 ## Remarks
 
@@ -24,9 +24,9 @@ export interface MethodOptionsWithSpec extends apigateway.MethodOptions
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [authorizer?](./cdk-rest-api-with-spec.methodoptionswithspec.authorizer.md) |  | [IAuthorizerWithSpec](./cdk-rest-api-with-spec.iauthorizerwithspec.md) | <b><i>(BETA)</i></b> <i>(Optional)</i> Authorizer augmented with the OpenAPI definition. |
-|  [description?](./cdk-rest-api-with-spec.methodoptionswithspec.description.md) |  | string | <b><i>(BETA)</i></b> <i>(Optional)</i> Description of the method. |
-|  [methodResponses?](./cdk-rest-api-with-spec.methodoptionswithspec.methodresponses.md) |  | [MethodResponseWithSpec](./cdk-rest-api-with-spec.methodresponsewithspec.md)<!-- -->\[\] | <b><i>(BETA)</i></b> <i>(Optional)</i> Method responses augmented with properties necessary for the OpenAPI definition. |
-|  [requestParameterSchemas?](./cdk-rest-api-with-spec.methodoptionswithspec.requestparameterschemas.md) |  | { \[key: string\]: BaseParameterObject; } | <b><i>(BETA)</i></b> <i>(Optional)</i> Request parameters which maps parameter objects for the OpenAPI definition instead of boolean values. |
-|  [summary?](./cdk-rest-api-with-spec.methodoptionswithspec.summary.md) |  | string | <b><i>(BETA)</i></b> <i>(Optional)</i> Summary of the method. |
+|  [authorizer?](./cdk-rest-api-with-spec.methodoptionswithspec.authorizer.md) |  | [IAuthorizerWithSpec](./cdk-rest-api-with-spec.iauthorizerwithspec.md) | **_(BETA)_** _(Optional)_ Authorizer augmented with the OpenAPI definition. |
+|  [description?](./cdk-rest-api-with-spec.methodoptionswithspec.description.md) |  | string | **_(BETA)_** _(Optional)_ Description of the method. |
+|  [methodResponses?](./cdk-rest-api-with-spec.methodoptionswithspec.methodresponses.md) |  | [MethodResponseWithSpec](./cdk-rest-api-with-spec.methodresponsewithspec.md)<!-- -->\[\] | **_(BETA)_** _(Optional)_ Method responses augmented with properties necessary for the OpenAPI definition. |
+|  [requestParameterSchemas?](./cdk-rest-api-with-spec.methodoptionswithspec.requestparameterschemas.md) |  | { \[key: string\]: BaseParameterObject; } | **_(BETA)_** _(Optional)_ Request parameters which maps parameter objects for the OpenAPI definition instead of boolean values. |
+|  [summary?](./cdk-rest-api-with-spec.methodoptionswithspec.summary.md) |  | string | **_(BETA)_** _(Optional)_ Summary of the method. |
 

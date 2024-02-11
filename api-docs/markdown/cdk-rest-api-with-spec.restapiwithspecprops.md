@@ -4,22 +4,22 @@
 
 ## RestApiWithSpecProps interface
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 Properties for [RestApiWithSpec](./cdk-rest-api-with-spec.restapiwithspec.md)<!-- -->.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface RestApiWithSpecProps extends apigateway.RestApiProps 
 ```
-<b>Extends:</b> apigateway.RestApiProps
+**Extends:** apigateway.RestApiProps
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [openApiInfo](./cdk-rest-api-with-spec.restapiwithspecprops.openapiinfo.md) |  | Partial&lt;InfoObject&gt; &amp; Pick&lt;InfoObject, 'version'&gt; | <b><i>(BETA)</i></b> Info object of the OpenAPI definition. |
-|  [openApiOutputPath](./cdk-rest-api-with-spec.restapiwithspecprops.openapioutputpath.md) |  | string | <b><i>(BETA)</i></b> Path to an output file where the OpenAPI definition is to be saved. |
+|  [openApiInfo](./cdk-rest-api-with-spec.restapiwithspecprops.openapiinfo.md) |  | Partial&lt;InfoObject&gt; &amp; Pick&lt;InfoObject, 'version'&gt; | **_(BETA)_** Info object of the OpenAPI definition. |
+|  [openApiOutputPath](./cdk-rest-api-with-spec.restapiwithspecprops.openapioutputpath.md) |  | string | **_(BETA)_** Path to an output file where the OpenAPI definition is to be saved. |
 

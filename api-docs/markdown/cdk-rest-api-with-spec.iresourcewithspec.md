@@ -4,17 +4,17 @@
 
 ## IResourceWithSpec interface
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 [aws\_apigateway.IResource](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IResource.html) augmented with the features to build the OpenAPI definition.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface IResourceWithSpec extends apigateway.Resource 
 ```
-<b>Extends:</b> apigateway.Resource
+**Extends:** apigateway.Resource
 
 ## Remarks
 
@@ -24,13 +24,13 @@ Although this interface actually inherits [aws\_apigateway.Resource](https://doc
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [defaultMethodOptions?](./cdk-rest-api-with-spec.iresourcewithspec.defaultmethodoptions.md) |  | [MethodOptionsWithSpec](./cdk-rest-api-with-spec.methodoptionswithspec.md) | <b><i>(BETA)</i></b> <i>(Optional)</i> Default method options with the OpenAPI definition. |
-|  [parentResource?](./cdk-rest-api-with-spec.iresourcewithspec.parentresource.md) |  | [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | <b><i>(BETA)</i></b> <i>(Optional)</i> Parent resource. |
+|  [defaultMethodOptions?](./cdk-rest-api-with-spec.iresourcewithspec.defaultmethodoptions.md) |  | [MethodOptionsWithSpec](./cdk-rest-api-with-spec.methodoptionswithspec.md) | **_(BETA)_** _(Optional)_ Default method options with the OpenAPI definition. |
+|  [parentResource?](./cdk-rest-api-with-spec.iresourcewithspec.parentresource.md) |  | [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | **_(BETA)_** _(Optional)_ Parent resource. |
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [addMethod(httpMethod, target, options)](./cdk-rest-api-with-spec.iresourcewithspec.addmethod.md) | <b><i>(BETA)</i></b> Adds a method with the OpenAPI definition. |
-|  [addResource(pathPart, options)](./cdk-rest-api-with-spec.iresourcewithspec.addresource.md) | <b><i>(BETA)</i></b> Adds a new child resource with the OpenAPI definition. |
+|  [addMethod(httpMethod, target, options)](./cdk-rest-api-with-spec.iresourcewithspec.addmethod.md) | **_(BETA)_** Adds a method with the OpenAPI definition. |
+|  [addResource(pathPart, options)](./cdk-rest-api-with-spec.iresourcewithspec.addresource.md) | **_(BETA)_** Adds a new child resource with the OpenAPI definition. |
 

@@ -4,12 +4,12 @@
 
 ## IResourceWithSpec.addMethod() method
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 Adds a method with the OpenAPI definition.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 addMethod(httpMethod: string, target?: apigateway.Integration, options?: MethodOptionsWithSpec): apigateway.Method;
@@ -20,10 +20,10 @@ addMethod(httpMethod: string, target?: apigateway.Integration, options?: MethodO
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  httpMethod | string |  |
-|  target | apigateway.Integration | <i>(Optional)</i> |
-|  options | [MethodOptionsWithSpec](./cdk-rest-api-with-spec.methodoptionswithspec.md) | <i>(Optional)</i> |
+|  target | apigateway.Integration | _(Optional)_ |
+|  options | [MethodOptionsWithSpec](./cdk-rest-api-with-spec.methodoptionswithspec.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 apigateway.Method
 

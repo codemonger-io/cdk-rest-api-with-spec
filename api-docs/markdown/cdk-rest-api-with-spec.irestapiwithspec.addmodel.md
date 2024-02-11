@@ -4,12 +4,12 @@
 
 ## IRestApiWithSpec.addModel() method
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 Adds a new model.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 addModel(id: string, props: ModelOptionsWithSpec): apigateway.Model;
@@ -22,7 +22,7 @@ addModel(id: string, props: ModelOptionsWithSpec): apigateway.Model;
 |  id | string |  |
 |  props | [ModelOptionsWithSpec](./cdk-rest-api-with-spec.modeloptionswithspec.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 apigateway.Model
 

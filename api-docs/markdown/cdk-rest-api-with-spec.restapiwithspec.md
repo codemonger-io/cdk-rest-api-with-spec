@@ -4,19 +4,19 @@
 
 ## RestApiWithSpec class
 
-> This API is provided as a preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
+> This API is provided as a beta preview for developers and may change based on feedback that we receive. Do not use this API in a production environment.
 > 
 
 CDK construct that provisions an API Gateway REST API endpoint and also synthesizes the OpenAPI definition for it.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class RestApiWithSpec extends apigateway.RestApi implements IRestApiWithSpec 
 ```
-<b>Extends:</b> apigateway.RestApi
+**Extends:** apigateway.RestApi
 
-<b>Implements:</b> [IRestApiWithSpec](./cdk-rest-api-with-spec.irestapiwithspec.md)
+**Implements:** [IRestApiWithSpec](./cdk-rest-api-with-spec.irestapiwithspec.md)
 
 ## Remarks
 
@@ -26,18 +26,18 @@ NOTE: Please turn on the validation of CDK stacks. If you skip the validation of
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(scope, id, props)](./cdk-rest-api-with-spec.restapiwithspec._constructor_.md) |  | <b><i>(BETA)</i></b> Initializes a REST API with the OpenAPI specification. |
+|  [(constructor)(scope, id, props)](./cdk-rest-api-with-spec.restapiwithspec._constructor_.md) |  | **_(BETA)_** Initializes a REST API with the OpenAPI specification. |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [props](./cdk-rest-api-with-spec.restapiwithspec.props.md) | <code>readonly</code> | [RestApiWithSpecProps](./cdk-rest-api-with-spec.restapiwithspecprops.md) | <b><i>(BETA)</i></b> |
-|  [root](./cdk-rest-api-with-spec.restapiwithspec.root.md) | <code>readonly</code> | [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | <b><i>(BETA)</i></b> Root resource with the OpenAPI definition. |
+|  [props](./cdk-rest-api-with-spec.restapiwithspec.props.md) | <code>readonly</code> | [RestApiWithSpecProps](./cdk-rest-api-with-spec.restapiwithspecprops.md) | **_(BETA)_** |
+|  [root](./cdk-rest-api-with-spec.restapiwithspec.root.md) | <code>readonly</code> | [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | **_(BETA)_** Root resource with the OpenAPI definition. |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [addModel(id, props)](./cdk-rest-api-with-spec.restapiwithspec.addmodel.md) |  | <b><i>(BETA)</i></b> Returns the <code>addModel</code> function augmented with the features to build the OpenAPI definition. |
+|  [addModel(id, props)](./cdk-rest-api-with-spec.restapiwithspec.addmodel.md) |  | **_(BETA)_** Returns the <code>addModel</code> function augmented with the features to build the OpenAPI definition. |
 

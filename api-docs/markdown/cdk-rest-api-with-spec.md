@@ -10,26 +10,26 @@ Describe the Amazon API Gateway and OpenAPI definition at once with CDK.
 
 |  Class | Description |
 |  --- | --- |
-|  [ParameterKey](./cdk-rest-api-with-spec.parameterkey.md) | <b><i>(BETA)</i></b> Parsed request or response parameter key. |
-|  [RestApiWithSpec](./cdk-rest-api-with-spec.restapiwithspec.md) | <b><i>(BETA)</i></b> CDK construct that provisions an API Gateway REST API endpoint and also synthesizes the OpenAPI definition for it. |
+|  [ParameterKey](./cdk-rest-api-with-spec.parameterkey.md) | **_(BETA)_** Parsed request or response parameter key. |
+|  [RestApiWithSpec](./cdk-rest-api-with-spec.restapiwithspec.md) | **_(BETA)_** CDK construct that provisions an API Gateway REST API endpoint and also synthesizes the OpenAPI definition for it. |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [augmentAuthorizer(authorizer, securitySchemeObject)](./cdk-rest-api-with-spec.augmentauthorizer.md) | <b><i>(BETA)</i></b> Makes a given [aws\_apigateway.IAuthorizer](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IAuthorizer.html) an [IAuthorizerWithSpec](./cdk-rest-api-with-spec.iauthorizerwithspec.md) by augmenting it with a specified security scheme object. |
+|  [augmentAuthorizer(authorizer, securitySchemeObject)](./cdk-rest-api-with-spec.augmentauthorizer.md) | **_(BETA)_** Makes a given [aws\_apigateway.IAuthorizer](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IAuthorizer.html) an [IAuthorizerWithSpec](./cdk-rest-api-with-spec.iauthorizerwithspec.md) by augmenting it with a specified security scheme object. |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [IAuthorizerWithSpec](./cdk-rest-api-with-spec.iauthorizerwithspec.md) | <b><i>(BETA)</i></b> Authorizer augmented with the features to describe the OpenAPI definition. |
-|  [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.IResource](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IResource.html) augmented with the features to build the OpenAPI definition. |
-|  [IRestApiWithSpec](./cdk-rest-api-with-spec.irestapiwithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.RestApi](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html) augmented with the features to build the OpenAPI definition. |
-|  [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) | <b><i>(BETA)</i></b> Extended [aws\_apigateway.JsonSchema](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html)<!-- -->. |
-|  [MethodOptionsWithSpec](./cdk-rest-api-with-spec.methodoptionswithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.MethodOptions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodOptions.html) augmented with the properties necessary to build the OpenAPI definition. |
-|  [MethodResponseWithSpec](./cdk-rest-api-with-spec.methodresponsewithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.MethodResponse](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodResponse.html) augmented with properties necessary for the OpenAPI definition. |
-|  [ModelOptionsWithSpec](./cdk-rest-api-with-spec.modeloptionswithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.ModelOptions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.ModelOptions.html) augmented with the properties necessary to build the OpenAPI definition. |
-|  [ResourceOptionsWithSpec](./cdk-rest-api-with-spec.resourceoptionswithspec.md) | <b><i>(BETA)</i></b> [aws\_apigateway.ResourceOptions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.ResourceOptions.html) augmented with the properties necessary to build the OpenAPI definition. |
-|  [RestApiWithSpecProps](./cdk-rest-api-with-spec.restapiwithspecprops.md) | <b><i>(BETA)</i></b> Properties for [RestApiWithSpec](./cdk-rest-api-with-spec.restapiwithspec.md)<!-- -->. |
+|  [IAuthorizerWithSpec](./cdk-rest-api-with-spec.iauthorizerwithspec.md) | **_(BETA)_** Authorizer augmented with the features to describe the OpenAPI definition. |
+|  [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md) | **_(BETA)_** [aws\_apigateway.IResource](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.IResource.html) augmented with the features to build the OpenAPI definition. |
+|  [IRestApiWithSpec](./cdk-rest-api-with-spec.irestapiwithspec.md) | **_(BETA)_** [aws\_apigateway.RestApi](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html) augmented with the features to build the OpenAPI definition. |
+|  [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md) | **_(BETA)_** Extended [aws\_apigateway.JsonSchema](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html)<!-- -->. |
+|  [MethodOptionsWithSpec](./cdk-rest-api-with-spec.methodoptionswithspec.md) | **_(BETA)_** [aws\_apigateway.MethodOptions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodOptions.html) augmented with the properties necessary to build the OpenAPI definition. |
+|  [MethodResponseWithSpec](./cdk-rest-api-with-spec.methodresponsewithspec.md) | **_(BETA)_** [aws\_apigateway.MethodResponse](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.MethodResponse.html) augmented with properties necessary for the OpenAPI definition. |
+|  [ModelOptionsWithSpec](./cdk-rest-api-with-spec.modeloptionswithspec.md) | **_(BETA)_** [aws\_apigateway.ModelOptions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.ModelOptions.html) augmented with the properties necessary to build the OpenAPI definition. |
+|  [ResourceOptionsWithSpec](./cdk-rest-api-with-spec.resourceoptionswithspec.md) | **_(BETA)_** [aws\_apigateway.ResourceOptions](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.ResourceOptions.html) augmented with the properties necessary to build the OpenAPI definition. |
+|  [RestApiWithSpecProps](./cdk-rest-api-with-spec.restapiwithspecprops.md) | **_(BETA)_** Properties for [RestApiWithSpec](./cdk-rest-api-with-spec.restapiwithspec.md)<!-- -->. |
 
