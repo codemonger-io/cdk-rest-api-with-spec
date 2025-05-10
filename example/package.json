@@ -1,6 +1,7 @@
 {
   "name": "example",
   "version": "0.1.1",
+  "private": true,
   "bin": {
     "example": "bin/example.js"
   },
@@ -12,16 +13,16 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/node": "20.11.17",
+    "@types/node": "22.15.17",
     "aws-cdk": "^2.126.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "~5.3.3"
+    "typescript": "~5.8.3"
   },
   "dependencies": {
     "aws-cdk-lib": "^2.126.0",
-    "cdk-rest-api-with-spec": "github:codemonger-io/cdk-rest-api-with-spec#v0.2.3",
+    "@codemonger-io/cdk-rest-api-with-spec": "workspace:*",
     "constructs": "^10.3.0",
     "source-map-support": "^0.5.21"
   }

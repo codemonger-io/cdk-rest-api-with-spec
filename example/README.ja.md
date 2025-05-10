@@ -2,7 +2,7 @@
 
 # サンプルのCDKスタック
 
-`cdk-rest-api-with-spec`のサンプルCDKスタックです。
+`@codemonger-io/cdk-rest-api-with-spec`のサンプルCDKスタックです。
 このCDKスタックは以下のコマンドで初期化しました。
 
 ```sh

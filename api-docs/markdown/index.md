@@ -6,7 +6,26 @@
 
 ## Packages
 
-|  Package | Description |
-|  --- | --- |
-|  [cdk-rest-api-with-spec](./cdk-rest-api-with-spec.md) | Describe the Amazon API Gateway and OpenAPI definition at once with CDK. |
+<table><thead><tr><th>
 
+Package
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[@codemonger-io/cdk-rest-api-with-spec](./cdk-rest-api-with-spec.md)
+
+
+</td><td>
+
+Describe the Amazon API Gateway and OpenAPI definition at once with CDK.
+
+
+</td></tr>
+</tbody></table>
