@@ -1,8 +1,8 @@
 English / [日本語](./README.ja.md)
 
-# cdk-rest-api-with-spec
+# @codemonger-io/cdk-rest-api-with-spec
 
-Describe an [Amazon API Gateway (API Gateway)](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) REST API and the [OpenAPI](https://spec.openapis.org/oas/latest.html) definition at once with `cdk-rest-api-with-spec`.
+Describe an [Amazon API Gateway (API Gateway)](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) REST API and the [OpenAPI](https://spec.openapis.org/oas/latest.html) definition at once with `@codemonger-io/cdk-rest-api-with-spec`.
 
 ## For whom is this library?
 
@@ -12,7 +12,7 @@ See ["Background"](#background) for more details.
 ## Prerequisites
 
 You have to install [Node.js](https://nodejs.org/en/) v12 or later.
-I have developed this library with Node.js v16.x.
+I have developed this library with Node.js v22.x.
 
 This library is implemented for the CDK **version 2** (CDK v2) and does not work with the CDK version 1.
 
@@ -320,13 +320,13 @@ The latest API documentation is available on [`api-docs/markdown/index.md`](./ap
 ### Resolving dependencies
 
 ```sh
-npm install
+pnpm install
 ```
 
 ### Building the library
 
 ```sh
-npm run build
+pnpm build
 ```
 
 You will find the following files created or updated in the `dist` folder,
@@ -341,7 +341,7 @@ You will also find the file [`api-docs/cdk-rest-api-with-spec.api.md`](./api-doc
 ### Generating the documentation
 
 ```sh
-npm run doc
+pnpm doc
 ```
 
 This will replace the contents of the [`api-docs/markdown`](./api-docs/markdown) folder.

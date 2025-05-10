@@ -1,8 +1,8 @@
 [English](./README.md) / 日本語
 
-# cdk-rest-api-with-spec
+# @codemonger-io/cdk-rest-api-with-spec
 
-[Amazon API Gateway (API Gateway)](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html)のREST APIとその[OpenAPI](https://spec.openapis.org/oas/latest.html)定義を`cdk-rest-api-with-spec`で一度に記述。
+[Amazon API Gateway (API Gateway)](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html)のREST APIとその[OpenAPI](https://spec.openapis.org/oas/latest.html)定義を`@codemonger-io/cdk-rest-api-with-spec`で一度に記述。
 
 ## 誰のためのライブラリ?
 
@@ -12,7 +12,7 @@
 ## 事前準備
 
 [Node.js](https://nodejs.org/en/) v12かそれ以降をインストールしてください。
-このライブラリはNode.js v16.xで開発しました。
+このライブラリはNode.js v22.xで開発しました。
 
 このライブラリはCDK**バージョン2** (CDK v2)向けに実装されており、CDKバージョン1には対応していません。
 
@@ -320,13 +320,13 @@ const authorizer = augmentAuthorizer(
 ### 依存関係を解決する
 
 ```sh
-npm install
+pnpm install
 ```
 
 ### ライブラリをビルドする
 
 ```sh
-npm run build
+pnpm build
 ```
 
 `dist`フォルダ内で以下のファイルが作成または更新されます。
@@ -341,7 +341,7 @@ npm run build
 ### ドキュメンテーションを生成する
 
 ```sh
-npm run doc
+pnpm doc
 ```
 
 [`api-docs/markdown`](./api-docs/markdown)フォルダのコンテンツを置き換えます。
