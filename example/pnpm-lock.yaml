@@ -8,12 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@codemonger-io/cdk-rest-api-with-spec':
+        specifier: github:codemonger-io/cdk-rest-api-with-spec#v0.2.3
+        version: cdk-rest-api-with-spec@https://codeload.github.com/codemonger-io/cdk-rest-api-with-spec/tar.gz/45bf3dd6de66664f8b9c134690f61a8944b4cebc
       aws-cdk-lib:
         specifier: ^2.126.0
         version: 2.195.0(constructs@10.4.2)
-      cdk-rest-api-with-spec:
-        specifier: github:codemonger-io/cdk-rest-api-with-spec#v0.2.3
-        version: https://codeload.github.com/codemonger-io/cdk-rest-api-with-spec/tar.gz/45bf3dd6de66664f8b9c134690f61a8944b4cebc
       constructs:
         specifier: ^10.3.0
         version: 10.4.2
