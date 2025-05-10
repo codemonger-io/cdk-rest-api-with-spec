@@ -2,7 +2,7 @@ English / [日本語](./README.ja.md)
 
 # Example CDK stack
 
-An example CDK stack for `cdk-rest-api-with-spec`.
+An example CDK stack for `@codemonger-io/cdk-rest-api-with-spec`.
 This CDK stack was initialized with the following command,
 
 ```sh
