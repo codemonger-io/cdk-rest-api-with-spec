@@ -1,6 +1,6 @@
 {
   "name": "@codemonger-io/cdk-rest-api-with-spec",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Describe Amazon API Gateway and OpenAPI at once with CDK",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",

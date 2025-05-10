@@ -21,7 +21,7 @@ This library is implemented for the CDK **version 2** (CDK v2) and does not work
 Please add this repository to your dependencies.
 
 ```sh
-npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.2.3
+npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.3.0
 ```
 
 This library is supposed to be used in a CDK v2 project, so it does not include the following modules in the `dependencies` but does in the `peerDependencies`.
