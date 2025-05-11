@@ -19,6 +19,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Get short commit hash
+        id: commit-hash
+        run: echo "short-commit-hash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Install pnpm ${{ env.pnpm-version }}
         uses: pnpm/action-setup@v4
         with:
@@ -29,6 +33,22 @@ jobs:
         with:
           node-version: ${{ env.node-version }}
           cache: 'pnpm'
+
+      # appends the short commit hash to the version
+      # 1. reads package information
+      # 2. appends the short commit hash to the version and writes it back
+      - name: Extract package information
+        id: package-info
+        # uses the exact commit to prevent harmful updates
+        uses: jaywcjlove/github-action-package@f6a7afaf74f96a166243f05560d5af4bd4eaa570
+        with:
+          path: package.json
+      - name: Append short commit hash to the version
+        # uses the exact commit to prevent harmful updates
+        uses: jaywcjlove/github-action-package@f6a7afaf74f96a166243f05560d5af4bd4eaa570
+        with:
+          path: package.json
+          version: ${{ steps.package-info.outputs.version }}-${{ steps.commit-hash.outputs.short-commit-hash }}
 
       - name: Install dependencies
         run: pnpm install
