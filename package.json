@@ -7,7 +7,8 @@
   "files": [
     "dist/index.js",
     "dist/index.d.ts",
-    "dist/index.js.map"
+    "dist/index.js.map",
+    "README.ja.md"
   ],
   "scripts": {
     "build": "rimraf dist && rollup -c && api-extractor run --local",
