@@ -2,6 +2,16 @@ name: Publish a package
 
 on:
   workflow_call:
+    inputs:
+      npm-registry-url:
+        description: 'URL of the npm registry to publish to; e.g., https://npm.pkg.github.com for GitHub Packages'
+        type: string
+        required: true
+
+    secrets:
+      npm-token:
+        description: 'Token that is allowed to publish to the npm registry; e.g., GITHUB_TOKEN for GitHub Packages'
+        required: true
 
 env:
   node-version: 22
@@ -33,6 +43,7 @@ jobs:
         with:
           node-version: ${{ env.node-version }}
           cache: 'pnpm'
+          registry-url: ${{ inputs.npm-registry-url }}
 
       # appends the short commit hash to the version
       # 1. reads package information
@@ -53,5 +64,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build
-        run: pnpm build
+      # the build script is executed by the prepare script
+      - name: Build and publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm-token }}
+        run: pnpm publish

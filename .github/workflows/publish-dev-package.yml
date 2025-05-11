@@ -12,3 +12,9 @@ permissions:
 jobs:
   publish:
     uses: ./.github/workflows/publish-package.yml
+
+    with:
+      npm-registry-url: 'https://npm.pkg.github.com'
+
+    secrets:
+      npm-token: ${{ secrets.GITHUB_TOKEN }}
