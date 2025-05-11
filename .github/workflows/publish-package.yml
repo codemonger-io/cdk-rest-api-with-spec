@@ -44,6 +44,7 @@ jobs:
           node-version: ${{ env.node-version }}
           cache: 'pnpm'
           registry-url: ${{ inputs.npm-registry-url }}
+          scope: '@codemonger-io'
 
       # appends the short commit hash to the version
       # 1. reads package information
