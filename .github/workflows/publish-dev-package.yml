@@ -1,0 +1,14 @@
+name: Publish a developer package
+
+on:
+  push:
+    branches:
+      - dev
+
+permissions:
+  packages: write
+  contents: read
+
+jobs:
+  publish:
+    uses: ./.github/workflows/publish-package.yml

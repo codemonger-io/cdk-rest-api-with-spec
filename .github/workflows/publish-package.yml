@@ -1,0 +1,37 @@
+name: Publish a package
+
+on:
+  workflow_call:
+
+env:
+  node-version: 22
+  pnpm-version: 10
+
+permissions:
+  packages: write
+  contents: read
+
+jobs:
+  build-dist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm ${{ env.pnpm-version }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.pnpm-version }}
+
+      - name: Setup Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
