@@ -30,6 +30,40 @@ This library is supposed to be used in a CDK v2 project, so it does not include 
 
 As long as you are working on a CDK v2 project, you should not have to separately install them.
 
+### Installing from GitHub Packages
+
+Every time commits are pushed to the `main` branch, a developer package is published to the npm registry managed by GitHub Packages.
+The version of a developer package is represented by the next release version followed by a dash (`-`) plus the short commit hash; e.g., `0.3.0-abc1234` where `abc1234` is the short commit hash of the commit used to build the package (*snapshot*).
+You can find developer packages [here](https://github.com/codemonger-io/cdk-rest-api-with-spec/pkgs/npm/cdk-rest-api-with-spec).
+
+#### Configuring GitHub personal access token
+
+To install a developer package, you need to configure a **classic** GitHub personal access token (PAT) with at least the `read:packages` scope.
+Below briefly explains how to configure a PAT.
+Please refer to the [GitHub documentation](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry) for more details.
+
+Once you have a PAT, please create a `.npmrc` file in your home directory with the following content,
+
+```
+//npm.pkg.github.com/:_authToken=$YOUR_GITHUB_PAT
+```
+
+Please replace `$YOUR_GITHUB_PAT` with your PAT.
+
+In the root directory of your project, please create a `.npmrc` file with the following content,
+
+```
+@codemonger-io:registry=https://npm.pkg.github.com
+```
+
+Then you can install a developer package with the following command,
+
+```sh
+npm install @codemonger-io/cdk-rest-api-with-spec@0.3.0-abc1234
+```
+
+Please replace `abc1234` with the short commit hash of the *snapshot* you want to install.
+
 ## Getting started
 
 Please instantiate [`RestApiWithSpec`](./api-docs/markdown/cdk-rest-api-with-spec.restapiwithspec.md) instead of [`aws_apigateway.RestApi`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html).
