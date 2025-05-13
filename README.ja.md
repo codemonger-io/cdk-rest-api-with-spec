@@ -30,6 +30,40 @@ npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.3.0
 
 CDK v2プロジェクトで使っている限り、これらを別途インストールする必要はないはずです。
 
+### GitHub Packagesからインストールする
+
+`main`ブランチにコミットがプッシュされるたびに、開発者用パッケージがGitHub Packagesの管理するnpmレジストリにパブリッシュされます。
+開発者用パッケージのバージョンは次のリリースバージョンとハイフン(`-`)と短いコミットハッシュををつなげたもので表現されます。例、`0.3.0-abc1234` (`abc1234`はパッケージをビルドするのに使ったコミット(*スナップショット*)のコミットハッシュ)。
+開発者用パッケージは[こちら](https://github.com/codemonger-io/cdk-rest-api-with-spec/pkgs/npm/cdk-rest-api-with-spec)にあります。
+
+#### GitHubパーソナルアクセストークンの設定
+
+開発者用パッケージをインストールするには、最低限`read:packages`スコープの**クラッシック**GitHubパーソナルアクセストークン(PAT)を設定する必要があります。
+以下、簡単にPATの設定方法を説明します。
+より詳しくは[GitHubのドキュメント](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry)をご参照ください。
+
+PATが手に入ったら以下の内容の`.npmrc`ファイルをホームディレクトリに作成してください。
+
+```
+//npm.pkg.github.com/:_authToken=$YOUR_GITHUB_PAT
+```
+
+`$YOUR_GITHUB_PAT`はご自身のPATに置き換えてください。
+
+プロジェクトのルートディレクトリに以下の内容の`.npmrc`ファイルを作成してください。
+
+```
+@codemonger-io:registry=https://npm.pkg.github.com
+```
+
+これで以下のコマンドで開発者パッケージをインストールできます。
+
+```sh
+npm install @codemonger-io/cdk-rest-api-with-spec@0.3.0-abc1234
+```
+
+`abc1234`はインストールしたい*スナップショット*の短いコミットハッシュに置き換えてください。
+
 ## 始める
 
 [`aws_apigateway.RestApi`](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.RestApi.html)の代わりに[`RestApiWithSpec`](./api-docs/markdown/cdk-rest-api-with-spec.restapiwithspec.md)をインスタンス化してください。

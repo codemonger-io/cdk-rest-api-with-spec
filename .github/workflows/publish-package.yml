@@ -1,0 +1,72 @@
+name: Publish a package
+
+on:
+  workflow_call:
+    inputs:
+      npm-registry-url:
+        description: 'URL of the npm registry to publish to; e.g., https://npm.pkg.github.com for GitHub Packages'
+        type: string
+        required: true
+
+    secrets:
+      npm-token:
+        description: 'Token that is allowed to publish to the npm registry; e.g., GITHUB_TOKEN for GitHub Packages'
+        required: true
+
+env:
+  node-version: 22
+  pnpm-version: 10
+
+permissions:
+  packages: write
+  contents: read
+
+jobs:
+  build-dist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get short commit hash
+        id: commit-hash
+        run: echo "short-commit-hash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Install pnpm ${{ env.pnpm-version }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.pnpm-version }}
+
+      - name: Setup Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node-version }}
+          cache: 'pnpm'
+          registry-url: ${{ inputs.npm-registry-url }}
+          scope: '@codemonger-io'
+
+      # appends the short commit hash to the version
+      # 1. reads package information
+      # 2. appends the short commit hash to the version and writes it back
+      - name: Extract package information
+        id: package-info
+        # uses the exact commit to prevent harmful updates
+        uses: jaywcjlove/github-action-package@f6a7afaf74f96a166243f05560d5af4bd4eaa570
+        with:
+          path: package.json
+      - name: Append short commit hash to the version
+        # uses the exact commit to prevent harmful updates
+        uses: jaywcjlove/github-action-package@f6a7afaf74f96a166243f05560d5af4bd4eaa570
+        with:
+          path: package.json
+          version: ${{ steps.package-info.outputs.version }}-${{ steps.commit-hash.outputs.short-commit-hash }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      # the build script is executed by the prepare script
+      - name: Build and publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm-token }}
+        run: pnpm publish --no-git-checks
