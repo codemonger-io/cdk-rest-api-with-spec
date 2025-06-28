@@ -28,7 +28,7 @@ export interface JsonSchemaEx extends apigateway.JsonSchema {
    * Extension of
    * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#additionalitems | additionalItems}.
    */
-  additionalItems?: JsonSchemaEx[];
+  additionalItems?: boolean | JsonSchemaEx;
   /**
    * Extension of
    * {@link https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_apigateway.JsonSchema.html#additionalproperties | additionalProperties}.
@@ -136,7 +136,6 @@ type SingleSchemaProperty = typeof SINGLE_SCHEMA_PROPERTIES[number];
  * → `JsonSchema[]`
  */
 const ARRAY_SCHEMA_PROPERTIES = [
-  'additionalItems',
   'allOf',
   'anyOf',
   'oneOf',
@@ -165,6 +164,17 @@ const MAP_SCHEMA_PROPERTIES = [
   'properties',
 ] as const;
 type MapSchemaProperty = typeof MAP_SCHEMA_PROPERTIES[number];
+
+/**
+ * Boolean or schema properties of `JsonSchemaEx`.
+ *
+ * → `boolean | JsonSchema`
+ */
+const BOOLEAN_OR_SCHEMA_PROPERTIES = [
+  'additionalItems',
+  'additionalProperties',
+] as const;
+type BooleanOrSchemaProperty = typeof BOOLEAN_OR_SCHEMA_PROPERTIES[number];
 
 /**
  * Output type of {@link translateJsonSchemaEx}.
@@ -258,18 +268,10 @@ export function translateJsonSchemaEx(
   for (const prop of MAP_SCHEMA_PROPERTIES) {
     translateProperty(prop, translateMapSchemaProperty);
   }
+  for (const prop of BOOLEAN_OR_SCHEMA_PROPERTIES) {
+    translateProperty(prop, translateBooleanOrSchemaProperty);
+  }
   // deals with corner cases
-  // - additionalProperties: boolean | JsonSchemaEx
-  translateProperty('additionalProperties', (_, value) => {
-    if (typeof value === 'boolean') {
-      return {
-        gatewayValue: value,
-        openapiValue: value,
-      };
-    } else {
-      return translateSingleSchemaProperty(restApi, value);
-    }
-  });
   // - definitions: { [k: string]: JsonSchemaEx | string[] }
   translateProperty('dependencies', (_, map) => {
     const gatewayValue: { [k: string]: apigateway.JsonSchema | string[] } = {};
@@ -406,4 +408,22 @@ function translateMapSchemaProperty(
     gatewayValue,
     openapiValue,
   };
+}
+
+/** Translates a boolean or schema property. */
+function translateBooleanOrSchemaProperty(
+  restApi: apigateway.IRestApi,
+  value: boolean | JsonSchemaEx,
+): {
+  gatewayValue: boolean | apigateway.JsonSchema,
+  openapiValue: boolean | JsonSchemaEx,
+} {
+  if (typeof value === 'boolean') {
+    return {
+      gatewayValue: value,
+      openapiValue: value,
+    };
+  } else {
+    return translateSingleSchemaProperty(restApi, value);
+  }
 }
