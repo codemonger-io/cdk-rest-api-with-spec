@@ -15,13 +15,14 @@
 このライブラリはNode.js v22.xで開発しました。
 
 このライブラリはCDK**バージョン2** (CDK v2)向けに実装されており、CDKバージョン1には対応していません。
+また、[`aws-cdk-lib`](https://www.npmjs.com/package/aws-cdk-lib)はv2.201.0以降が必要です。
 
 ## インストール方法
 
 このレポジトリを依存関係(`dependencies`)に追加してください。
 
 ```sh
-npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.3.0
+npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.4.0
 ```
 
 このライブラリはCDK v2プロジェクトで使用することを想定しており、以下のモジュールは`dependencies`ではなく`peerDependencies`に含んでいます。
@@ -33,7 +34,7 @@ CDK v2プロジェクトで使っている限り、これらを別途インス�
 ### GitHub Packagesからインストールする
 
 `main`ブランチにコミットがプッシュされるたびに、開発者用パッケージがGitHub Packagesの管理するnpmレジストリにパブリッシュされます。
-開発者用パッケージのバージョンは次のリリースバージョンとハイフン(`-`)と短いコミットハッシュををつなげたもので表現されます。例、`0.3.0-abc1234` (`abc1234`はパッケージをビルドするのに使ったコミット(*スナップショット*)のコミットハッシュ)。
+開発者用パッケージのバージョンは次のリリースバージョンとハイフン(`-`)と短いコミットハッシュををつなげたもので表現されます。例、`0.4.0-abc1234` (`abc1234`はパッケージをビルドするのに使ったコミット(*スナップショット*)のコミットハッシュ)。
 開発者用パッケージは[こちら](https://github.com/codemonger-io/cdk-rest-api-with-spec/pkgs/npm/cdk-rest-api-with-spec)にあります。
 
 #### GitHubパーソナルアクセストークンの設定
@@ -59,7 +60,7 @@ PATが手に入ったら以下の内容の`.npmrc`ファイルをホームディ
 これで以下のコマンドで開発者パッケージをインストールできます。
 
 ```sh
-npm install @codemonger-io/cdk-rest-api-with-spec@0.3.0-abc1234
+npm install @codemonger-io/cdk-rest-api-with-spec@0.4.0-abc1234
 ```
 
 `abc1234`はインストールしたい*スナップショット*の短いコミットハッシュに置き換えてください。

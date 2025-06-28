@@ -15,13 +15,14 @@ You have to install [Node.js](https://nodejs.org/en/) v12 or later.
 I have developed this library with Node.js v22.x.
 
 This library is implemented for the CDK **version 2** (CDK v2) and does not work with the CDK version 1.
+And [`aws-cdk-lib`](https://www.npmjs.com/package/aws-cdk-lib) v2.201.0 or later is required.
 
 ## How to install
 
 Please add this repository to your dependencies.
 
 ```sh
-npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.3.0
+npm install https://github.com/codemonger-io/cdk-rest-api-with-spec.git#v0.4.0
 ```
 
 This library is supposed to be used in a CDK v2 project, so it does not include the following modules in the `dependencies` but does in the `peerDependencies`.
@@ -33,7 +34,7 @@ As long as you are working on a CDK v2 project, you should not have to separatel
 ### Installing from GitHub Packages
 
 Every time commits are pushed to the `main` branch, a developer package is published to the npm registry managed by GitHub Packages.
-The version of a developer package is represented by the next release version followed by a dash (`-`) plus the short commit hash; e.g., `0.3.0-abc1234` where `abc1234` is the short commit hash of the commit used to build the package (*snapshot*).
+The version of a developer package is represented by the next release version followed by a dash (`-`) plus the short commit hash; e.g., `0.4.0-abc1234` where `abc1234` is the short commit hash of the commit used to build the package (*snapshot*).
 You can find developer packages [here](https://github.com/codemonger-io/cdk-rest-api-with-spec/pkgs/npm/cdk-rest-api-with-spec).
 
 #### Configuring GitHub personal access token
@@ -59,7 +60,7 @@ In the root directory of your project, please create a `.npmrc` file with the fo
 Then you can install a developer package with the following command,
 
 ```sh
-npm install @codemonger-io/cdk-rest-api-with-spec@0.3.0-abc1234
+npm install @codemonger-io/cdk-rest-api-with-spec@0.4.0-abc1234
 ```
 
 Please replace `abc1234` with the short commit hash of the *snapshot* you want to install.
