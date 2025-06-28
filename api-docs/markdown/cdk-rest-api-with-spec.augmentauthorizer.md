@@ -66,6 +66,7 @@ Security scheme object to add to `authorizer`<!-- -->.
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [IAuthorizerWithSpec](./cdk-rest-api-with-spec.iauthorizerwithspec.md)

@@ -12,5 +12,5 @@ Extension of [additionalItems](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-c
 **Signature:**
 
 ```typescript
-additionalItems?: JsonSchemaEx[];
+additionalItems?: boolean | JsonSchemaEx;
 ```

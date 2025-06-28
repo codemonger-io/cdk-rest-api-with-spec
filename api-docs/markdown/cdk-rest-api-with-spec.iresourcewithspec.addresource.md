@@ -64,6 +64,7 @@ _(Optional)_
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 [IResourceWithSpec](./cdk-rest-api-with-spec.iresourcewithspec.md)

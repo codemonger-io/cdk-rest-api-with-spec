@@ -29,3 +29,4 @@ Describe the Amazon API Gateway and OpenAPI definition at once with CDK.
 
 </td></tr>
 </tbody></table>
+
