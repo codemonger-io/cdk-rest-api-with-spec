@@ -1,3 +1,8 @@
 packages:
   - .
   - example
+
+# version of common dependencies
+catalog:
+  aws-cdk-lib: 2.202.0
+  typescript: 5.8.3
