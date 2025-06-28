@@ -272,7 +272,7 @@ export function translateJsonSchemaEx(
     translateProperty(prop, translateBooleanOrSchemaProperty);
   }
   // deals with corner cases
-  // - definitions: { [k: string]: JsonSchemaEx | string[] }
+  // - dependencies: { [k: string]: JsonSchemaEx | string[] }
   translateProperty('dependencies', (_, map) => {
     const gatewayValue: { [k: string]: apigateway.JsonSchema | string[] } = {};
     const openapiValue: { [k: string]: JsonSchemaEx | string[] } =
