@@ -58,7 +58,7 @@ Description
 
 </td><td>
 
-[JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)<!-- -->\[\]
+boolean \| [JsonSchemaEx](./cdk-rest-api-with-spec.jsonschemaex.md)
 
 
 </td><td>
@@ -334,3 +334,4 @@ apigateway.IModel
 
 </td></tr>
 </tbody></table>
+

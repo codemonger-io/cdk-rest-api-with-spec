@@ -62,6 +62,7 @@ props
 
 </td></tr>
 </tbody></table>
+
 **Returns:**
 
 apigateway.Model

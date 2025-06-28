@@ -34,7 +34,7 @@ export interface IRestApiWithSpec extends aws_apigateway.IRestApi {
 
 // @beta
 export interface JsonSchemaEx extends aws_apigateway.JsonSchema {
-    additionalItems?: JsonSchemaEx[];
+    additionalItems?: boolean | JsonSchemaEx;
     additionalProperties?: boolean | JsonSchemaEx;
     allOf?: JsonSchemaEx[];
     anyOf?: JsonSchemaEx[];
