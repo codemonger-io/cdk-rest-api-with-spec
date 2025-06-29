@@ -56,7 +56,7 @@ pnpm cdk bootstrap --toolkit-stack-name $TOOLKIT_STACK_NAME --qualifier $TOOLKIT
 pnpm cdk synth -c "@aws-cdk/core:bootstrapQualifier=$TOOLKIT_QUALIFIER"
 ```
 
-OpenAPI定義を含む`openapi.json`ファイルが作成または更新されます。
+OpenAPI定義を含む`openapi/openapi.json`ファイルが作成または更新されます。
 
 ### CDKスタックをデプロイする
 
@@ -66,4 +66,4 @@ pnpm cdk deploy --toolkit-stack-name $TOOLKIT_STACK_NAME -c "@aws-cdk/core:boots
 
 `api-with-spec-example`というCloudFormationスタックが作成または更新されます。
 
-OpenAPI定義を含む`openapi.json`ファイルも作成または更新されます。
+OpenAPI定義を含む`openapi/openapi.json`ファイルも作成または更新されます。
