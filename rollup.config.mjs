@@ -12,7 +12,8 @@ export default [
       'assert',
       'aws-cdk-lib',
       'constructs',
-      'fs',
+      'node:fs',
+      'node:path',
       'openapi3-ts'
     ],
     plugins: [typescript()],

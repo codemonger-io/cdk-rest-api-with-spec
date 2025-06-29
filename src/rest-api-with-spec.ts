@@ -1,5 +1,6 @@
 import * as assert from 'assert';
-import * as fs from 'fs';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import { Stack, aws_apigateway as apigateway } from 'aws-cdk-lib';
 import { Construct, Node } from 'constructs';
 import {
@@ -127,6 +128,11 @@ export class RestApiWithSpec extends apigateway.RestApi implements IRestApiWithS
 
   /** Synthesizes the OpenAPI definition. */
   private synthesizeOpenApi(): string[] {
+    // makes sure that the output folder exists. if not, creates it.
+    const outputDir = path.dirname(this.props.openApiOutputPath);
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
     fs.writeFileSync(
       this.props.openApiOutputPath,
       this.builder.getSpecAsJson(undefined, 2),
