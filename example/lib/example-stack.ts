@@ -27,7 +27,7 @@ export class ExampleStack extends Stack {
       openApiInfo: {
         version: documentationVersion,
       },
-      openApiOutputPath: 'openapi.json',
+      openApiOutputPath: 'openapi/openapi.json',
       binaryMediaTypes: ['image/png'],
       deploy: true,
       deployOptions: {
