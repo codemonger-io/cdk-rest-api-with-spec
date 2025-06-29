@@ -56,7 +56,7 @@ pnpm cdk bootstrap --toolkit-stack-name $TOOLKIT_STACK_NAME --qualifier $TOOLKIT
 pnpm cdk synth -c "@aws-cdk/core:bootstrapQualifier=$TOOLKIT_QUALIFIER"
 ```
 
-You will find the OpenAPI definition created or updated in the file `openapi.json`.
+You will find the OpenAPI definition created or updated in the file `openapi/openapi.json`.
 
 ### Deploying the CDK stack
 
@@ -66,4 +66,4 @@ pnpm cdk deploy --toolkit-stack-name $TOOLKIT_STACK_NAME -c "@aws-cdk/core:boots
 
 You will find a CloudFormation stack `api-with-spec-example` created or updated.
 
-You will also find the OpenAPI definition created or updated in the file `openapi.json`.
+You will also find the OpenAPI definition created or updated in the file `openapi/openapi.json`.
