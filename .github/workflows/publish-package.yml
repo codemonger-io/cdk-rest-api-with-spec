@@ -14,7 +14,7 @@ on:
         required: true
 
 env:
-  node-version: 22
+  node-version: 24
   pnpm-version: 10
 
 permissions:
@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Get short commit hash
         id: commit-hash
@@ -39,7 +39,7 @@ jobs:
           version: ${{ env.pnpm-version }}
 
       - name: Setup Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.node-version }}
           cache: 'pnpm'
@@ -69,4 +69,4 @@ jobs:
       - name: Build and publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm-token }}
-        run: pnpm publish --no-git-checks
+        run: pnpm publish --no-git-checks --tag latest
