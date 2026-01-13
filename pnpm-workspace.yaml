@@ -4,5 +4,7 @@ packages:
 
 # version of common dependencies
 catalog:
-  aws-cdk-lib: 2.202.0
-  typescript: 5.8.3
+  "@types/node": 24.10.7
+  aws-cdk-lib: 2.234.1
+  constructs: 10.4.4
+  typescript: 5.8.2 # used by @microsoft/api-extractor
