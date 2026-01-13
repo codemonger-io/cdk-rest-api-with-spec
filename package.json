@@ -38,16 +38,16 @@
     "openapi3-ts": "^2.0.2"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.28.2",
-    "@microsoft/api-extractor": "^7.55.2",
-    "@rollup/plugin-typescript": "^12.3.0",
+    "@microsoft/api-documenter": "7.28.2",
+    "@microsoft/api-extractor": "7.55.2",
+    "@rollup/plugin-typescript": "12.3.0",
     "@types/node": "catalog:",
     "aws-cdk-lib": "catalog:",
     "constructs": "catalog:",
     "npm-run-all2": "^8.0.4",
     "rimraf": "^6.1.2",
     "rollup": "^4.55.1",
-    "tslib": "^2.6.2",
+    "tslib": "^2.8.1",
     "typescript": "catalog:"
   },
   "peerDependencies": {
