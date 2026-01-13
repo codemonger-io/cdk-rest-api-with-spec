@@ -15,7 +15,6 @@ on:
 
 env:
   node-version: 24
-  pnpm-version: 10
 
 permissions:
   packages: write
@@ -33,10 +32,9 @@ jobs:
         id: commit-hash
         run: echo "short-commit-hash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-      - name: Install pnpm ${{ env.pnpm-version }}
+      - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.pnpm-version }}
+        # version is omitted here, because package.json specifies it
 
       - name: Setup Node.js ${{ env.node-version }}
         uses: actions/setup-node@v6
